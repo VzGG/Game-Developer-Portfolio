@@ -31,7 +31,11 @@ https://user-images.githubusercontent.com/115569550/195343464-8d0037a0-0d9f-44e2
 At the end of each level (except the last level), players can improve their ship parts (Weapon, Armour, Booster, Frame, Core) by augmenting them. Each augments have tiers where the higher the tier the stronger the improvement on that ship part, but in exchange, it requires a higher cost.
 
 ##### **Randomised And Balanced Ship Parts**
+<img align="center" width=33% height=33% src="https://user-images.githubusercontent.com/115569550/195622574-8187acd9-dede-41a8-a5b0-51ed9a3a5737.png"> <img align="center" width=33% height=33% src="https://user-images.githubusercontent.com/115569550/195626486-4b6adb39-a3ca-4ed0-b211-f489033e5ef4.png"> <img align="center" width=33% height=33% src="https://user-images.githubusercontent.com/115569550/195626499-0cf8918a-10a5-4679-be53-c9b2a2eb6f26.png">
 
 
+At every run the player has randomised but balanced ship parts. A weapon, for instance, with lower power such as 100 will have the same total damage done in a given time (10 seconds) as a higher power such as 1500, this is due to the fire rate being slower at higher power and faster at lower power. These balancing concepts have also been applied to all the other ship parts - the higher the primary value is, the lower the secondary value.
 
+
+------------
  
