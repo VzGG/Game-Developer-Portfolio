@@ -8,9 +8,11 @@
   - Short Videos + Explanation/Short Description
   
 ------------  
-### Project 1 - Finite Labryinth
+### Project 1 - Finite Labryinth (C#, Unity, Final Year Project)
+
+A simple 2D Roguelike Space Shooter (prototype) where the player must clear 3 levels in total, and the goal for each level is to simply destroy the required number of enemy ships. Clearing each incrementing level rewards the player with powerups to tackle stronger enemies. The level environment, enemy ships, and the player are mostly randomised to provide the player a finite amount of new experiences.
   
-  A simple 2D Roguelike Space Shooter (prototype) where the player must clear 3 levels in total, and the goal for each level is to simply destroy the required number of enemy ships. Clearing each incrementing level rewards the player with powerups to tackle stronger enemies. The level environment, enemy ships, and the player are mostly randomised to provide the player a finite amount of new experiences.
+Development Time: 1-2 Months 
 
 ##### **Combat Gameplay**
 https://user-images.githubusercontent.com/115569550/195172027-6882dbeb-2435-43ff-aab4-3719c1019698.mp4
@@ -38,4 +40,10 @@ At every run the player has randomised but balanced ship parts. A weapon, for in
 
 
 ------------
- 
+### Project 2 - Oswald: The Savior's Freedom (C#, Unity, Indiviudal Coursework Project)
+
+A 2D RPG Platform game where the player must traverse through 3 levels with each level having their own conditions to progress through the next level.
+
+Development Time: 1 Month 
+
+
