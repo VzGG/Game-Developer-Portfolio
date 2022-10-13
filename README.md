@@ -44,6 +44,6 @@ At every run the player has randomised but balanced ship parts. A weapon, for in
 
 A 2D RPG Platform game where the player must traverse through 3 levels with each level having their own conditions to progress through the next level.
 
-Development Time: 1 Month 
+Development Time: 1 Month
 
 
