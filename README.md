@@ -42,11 +42,12 @@ At every run the player has randomised but balanced ship parts. A weapon, for in
 ------------
 ### Project 2 - Oswald: The Savior's Freedom (C#, Unity, Indiviudal Coursework Project)
 
-A 2D RPG Platform game where the player must traverse through 3 levels with each level having their own conditions to progress through the next level.
+A 2D RPG Platform game where the player must traverse through 3 levels with each level having their own conditions to progress through the next level. Progress through the levels as quick as possible and the game's story may differ.
 
 Development Time: 1 Month
 
-##### **Combat Gameplay**
+##### **Combat Gameplay (With Audio)** 
 https://user-images.githubusercontent.com/115569550/195849173-953b1aeb-9d5f-49df-9bb2-01f17f4f2fde.mp4
 
 
+The enemies engage with the player once they reach a certain distance and continuously attack until the player dies. The player can dodge attacks by dodging (player slide animation) at the right moment but they must also manage their energy well as you cannot dodge, attack, jump, etc. endlessly.
