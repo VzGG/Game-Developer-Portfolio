@@ -46,4 +46,7 @@ A 2D RPG Platform game where the player must traverse through 3 levels with each
 
 Development Time: 1 Month
 
+##### **Combat Gameplay**
+https://user-images.githubusercontent.com/115569550/195849173-953b1aeb-9d5f-49df-9bb2-01f17f4f2fde.mp4
+
 
