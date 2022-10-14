@@ -57,6 +57,13 @@ The enemies engage with the player once they reach a certain distance and contin
 https://user-images.githubusercontent.com/115569550/195875471-fd1ee027-f6bb-4379-b413-3df3ce710062.mp4
 
 
-The player, by default, does not have a Bow, but the player can get it by traversing through a difficult path. Once unlocked, the player can use it (beware of energy usage) to fire a magic arrow that deals massive damage to enemies. Also note that there are dialogues shown when gaining new powerups.
+The player, by default, does not have a Bow, but the player can get it by traversing through a difficult path. Once unlocked, the player can use it (beware of energy usage) to fire a magic arrow that deals massive damage to enemies. Also note that there are dialogues shown when gaining new powerups such as picking up the Bow or other items.
 
 
+##### **Level Designs (With Audio)**
+https://user-images.githubusercontent.com/115569550/195892588-3f8985ea-019b-4899-82fd-ee459490988a.mp4
+
+
+The game has 3 levels with each level having better design. In particular, level 3 includes unique designs over the previous levels such as rolling boulders, elevators, and missing keys to unlock the door to the boss area. Also note in level 3 and in previous levels, there are 2D tile blocks that may seem to be missing, however they are intended to be missing to reduce taking up space in the total storage required for this application. 
+
+##### **Boss Area, Boss Phases, and Boss Behaviours (With Audio)**
