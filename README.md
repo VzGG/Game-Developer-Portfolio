@@ -51,3 +51,12 @@ https://user-images.githubusercontent.com/115569550/195849173-953b1aeb-9d5f-49df
 
 
 The enemies engage with the player once they reach a certain distance and continuously attack until the player dies. The player can dodge attacks by dodging (player slide animation) at the right moment but they must also manage their energy well as you cannot dodge, attack, jump, etc. endlessly.
+
+
+##### **Unlocking Bow Attack (With Audio)**
+https://user-images.githubusercontent.com/115569550/195875471-fd1ee027-f6bb-4379-b413-3df3ce710062.mp4
+
+
+The player, by default, does not have a Bow, but the player can get it by traversing through a difficult path. Once unlocked, the player can use it (beware of energy usage) to fire a magic arrow that deals massive damage to enemies. Also note that there are dialogues shown when gaining new powerups.
+
+
