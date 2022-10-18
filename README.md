@@ -1,12 +1,21 @@
 # Game-Developer-Portfolio
 
 
-- Table Of Contents
-- Project 1
-  - Short Videos + Explanation/Short Description
-- Project 2
-  - Short Videos + Explanation/Short Description
-  
+### Table Of Contents
+- Project 1: Finite Labryinth (Final Year Project)
+  - Combat Gameplay
+  - Randomly Generated Level Environments
+  - Augment Systems
+  - Randomised And Balanced Ship Parts
+- Project 2: Oswald: The Saviour's Freedom (Individual Coursework Project)
+  - [Combat Gameplay](#combat-gameplay-with-audio)
+  - [Unlocking Bow Attack](#unlocking-bow-attack-with-audio)
+  - [Level Designs](#level-designs-with-audio)
+  - [Boss Entrance](#boss-entrance-with-audio)
+  - [Boss Battle Behaviour And Phases](#boss-battle-behaviours-and-phases-with-audio)
+
+
+
 ------------  
 ### Project 1 - Finite Labryinth (C#, Unity, Final Year Project)
 
@@ -40,7 +49,7 @@ At every run the player has randomised but balanced ship parts. A weapon, for in
 
 
 ------------
-### Project 2 - Oswald: The Savior's Freedom (C#, Unity, Indiviudal Coursework Project)
+### Project 2 - Oswald: The Saviour's Freedom (C#, Unity, Indiviudal Coursework Project)
 
 A 2D RPG Platform game where the player must traverse through 3 levels with each level having their own conditions to progress through the next level. Progress through the levels as quick as possible and the game's story may differ.
 
