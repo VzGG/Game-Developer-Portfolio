@@ -66,8 +66,15 @@ https://user-images.githubusercontent.com/115569550/195892588-3f8985ea-019b-4899
 
 The game has 3 levels with each level having better design. In particular, level 3 includes unique designs over the previous levels such as rolling boulders, elevators, and missing keys to unlock the door to the boss area. Also note in level 3 and in previous levels, there are 2D tile blocks that may seem to be missing, however they are intended to be missing to reduce taking up space in the total storage required for this application. 
 
-##### **Boss Entrance(With Audio)**
+##### **Boss Entrance (With Audio)**
 https://user-images.githubusercontent.com/115569550/196489526-bde01686-9d8d-4abd-a6cd-6eb288af9d3d.mp4
 
 
 The boss entrance requires 4 keys spread throughout the level. When the entrance is unlocked, the floor is destroyed to provide first-time players a suprise moment in thinking the level is almost complete. Then the player must face the final boss to unlock the exit door.
+
+
+##### **Boss Battle Behaviours And Phases (With Audio)**
+https://user-images.githubusercontent.com/115569550/196497190-e82e7c9f-4a19-4687-a90f-0035baeeed23.mp4
+
+
+The boss is very aggressive in its normal and enraged phase. In its normal phase it uses a melee attack to deal great damage to the player. When the boss takes a threshold damage (25% of max health) it becomes enraged and starts to teleport randomly to one of the summoned platforms, then it starts to attack  the player (with massive damage) by using a tracking spell attack on the player's current position. Only when the boss a hit (any damage) will the boss return to its normal phase. Defeating the boss will then unlock the door to the exit to then complete the game.
