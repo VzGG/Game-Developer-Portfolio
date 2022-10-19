@@ -14,7 +14,9 @@
   - [Boss Entrance](#boss-entrance-with-audio)
   - [Boss Battle Behaviour And Phases](#boss-battle-behaviours-and-phases-with-audio)
 
-
+**Contact Info**
+  - Phone Number: 07563932638
+  - Email Address: valdezg@hotmail.co.uk 
 
 ------------  
 ### Project 1 - Finite Labryinth (C#, Unity, Final Year Project)
