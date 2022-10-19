@@ -1,0 +1,2 @@
+C:\Users\Thirdy\unity-spacefile\FYP\obj\Debug\Unity.VisualStudio.Editor.csprojAssemblyReference.cache
+C:\Users\Thirdy\unity-spacefile\FYP\obj\Debug\Unity.VisualStudio.Editor.csproj.CoreCompileInputs.cache

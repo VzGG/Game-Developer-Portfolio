@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2946778019008025640
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2946778019008025641}
+  - component: {fileID: 2946778019008025646}
+  m_Layer: 0
+  m_Name: AsteroidSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2946778019008025641
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2946778019008025640}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2946778019008025646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2946778019008025640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b49e54f9c3ebe6408759df18ff0210d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grid: {fileID: 7177130890892445981, guid: 48e49f39144c00945a14a70b937a9363, type: 3}
+  asteroidRowSpawnPoints: []
+  asteroids:
+  - {fileID: 3555277939061956058, guid: ad7cd8c7ddcad6040ab99ee7304e2353, type: 3}
+  - {fileID: 7110570547364271382, guid: 8f643b5d1be06ff44bfe102b5ae28b64, type: 3}
+  - {fileID: 2818935865639631679, guid: 0e9a45e952d5b8545b8e0d09701debf9, type: 3}
+  - {fileID: 5537600636385171741, guid: 63447abaf68bb094da03958c845ad058, type: 3}
+  asteroidFrontColour: {r: 1, g: 1, b: 1, a: 1}
+  asteroidMiddleColour: {r: 0.2924528, g: 0.21933961, b: 0.21933961, a: 1}
+  asteroidBackColour: {r: 0.16037738, g: 0.12028304, b: 0.12028304, a: 1}
+  rrhc: {fileID: 3867508902459782900, guid: 831cd11b9733e264ba72d1fe3aeb4353, type: 3}
+  testGRID: {fileID: 6452398504284325503, guid: d8d656f0add8911469bdee79a42ab5f3, type: 3}
+  testAsteroidSpawnPoints: []

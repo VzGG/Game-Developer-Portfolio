@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Projectile
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - Player
+  - Enemy
+  - Environment Object
+  - Corridor 1
+  - 
+  - Minimap
+  - Player Projectile
+  - Enemy Projectile
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Ship Weapon
+    uniqueID: 1129099811
+    locked: 0
+  - name: Ship Armour
+    uniqueID: 2419438071
+    locked: 0
+  - name: Ship Booster
+    uniqueID: 3045404949
+    locked: 0
+  - name: Ship Frame
+    uniqueID: 1590263627
+    locked: 0
+  - name: Ship Core
+    uniqueID: 1648170191
+    locked: 0
+  - name: Projectiles
+    uniqueID: 3477079819
+    locked: 0
