@@ -3,10 +3,10 @@
 
 ### Table Of Contents
 - Project 1: Finite Labryinth (Final Year Project)
-  - Combat Gameplay
-  - Randomly Generated Level Environments
-  - Augment Systems
-  - Randomised And Balanced Ship Parts
+  - [Combat Gameplay](#combat-gameplay)
+  - [Randomly Generated Level Environments](#randomly-generated-level-environments)
+  - [Augment System](#augment-system)
+  - [Randomised And Balanced Ship Parts](#randomised-and-balanced-ship-parts)
 - Project 2: Oswald: The Saviour's Freedom (Individual Coursework Project)
   - [Combat Gameplay](#combat-gameplay-with-audio)
   - [Unlocking Bow Attack](#unlocking-bow-attack-with-audio)
