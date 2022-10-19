@@ -16,7 +16,14 @@
 
 **Contact Info**
   - Phone Number: 07563932638
-  - Email Address: valdezg@hotmail.co.uk 
+  - Email Address: valdezg@hotmail.co.uk
+  
+**How To Access The Projects**
+  - Please download this whole repository via **_Code_** then **_Download Zip_**
+  - Then extract/unzip the downloaded repository
+  - Then go to either **_CS3005_1615900_Coursework_** or **_Final Year Project_** folders
+  - Look at either **_Build_** or **__Build Application_** folders
+  - Lastly, find **_CS3005_1615900_Coursework.exe_** or **_Infinite Labryinth.exe_** applications and run it! 
 
 ------------  
 ### Project 1 - Finite Labryinth (C#, Unity, Final Year Project)
