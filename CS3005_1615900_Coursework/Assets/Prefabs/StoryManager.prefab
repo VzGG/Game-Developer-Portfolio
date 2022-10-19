@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6071185303585594144
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6071185303585594159}
+  - component: {fileID: 6071185303585594158}
+  m_Layer: 0
+  m_Name: StoryManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6071185303585594159
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6071185303585594144}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6071185303585594158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6071185303585594144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f89936fd8069b854ab3eb7f48471f5b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  goodEnding: 'Oswald has defeated the gatekeeper of the mysterious dungeon. Once
+    he reached the exit, cheerful and pleasant voices can be heard from the distant.
+    People were thriving in a familiar area that consisted of a castle surrounded
+    by houses, stores and farms. Looking from the distant, a large sign reads: "Phadon
+    City". Oswald began heading to his long awaited home, but, while being happy
+    from becoming free, he remembered how everything led the way it happened.  He
+    began looking for answers.'
+  badEnding: Oswald has defeated the gatekeeper of the mysterious dungeon. Once he
+    reached the exit, a castle along with nearby houses, stores and farms were covered
+    in flames, while everything were destroyed, a large sign managed to survive -
+    "Phadon C".  Anger, despair and sadness were the first of his emotions, however,
+    what happened has happened. Oswald began his journey to find the answers to this
+    destruction.
+  totalTimeTaken: 0
+  endingStoryTexts: {fileID: 0}

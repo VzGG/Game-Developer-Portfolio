@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7545883249941927883
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7545883249941927880}
+  - component: {fileID: 7545883249941927881}
+  m_Layer: 0
+  m_Name: DialogueManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7545883249941927880
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7545883249941927883}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7545883249941927881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7545883249941927883}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e2e375ecf0c4224c93f2023aa8557db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogues:
+  - How many years have I been here... stuck in this prison...
+  - ???
+  - I guess I am free?
+  - How do I get out of here? I think I need to head east.
+  - Scroll of strength... My powers are slowly returning to me... I need more...
+  - My forgotten bow... it is now in my hands again... (Press Right Mouse Click to
+    use the Bow)
+  - There should be an exit here... but I must defeat these disgusting monsters first.
+  - The portal is here!
+  dialoguesObj: {fileID: 6164991548291069841, guid: ca9d324618e92964bb456c17bc55ca2c, type: 3}
+  timeManager: {fileID: 0}
+  dialoguePanel: {fileID: 0}
+  dialogueSpeakerTextObj: {fileID: 0}
+  dialogueTextObj: {fileID: 0}
