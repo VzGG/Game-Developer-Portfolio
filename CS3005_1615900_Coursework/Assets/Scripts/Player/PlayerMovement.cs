@@ -41,6 +41,9 @@ public class PlayerMovement : MonoBehaviour
     [Header("Sliding Properties")]
     [SerializeField] SpriteRenderer spriteRenderer;
 
+    // Get the playerAttack scripts reference
+    PlayerAttack playerAttack;
+
     // Use this in next level change 
     public void SetMyTimeManager(TimeManager timeManager) { this.timeManager = timeManager; }
 
@@ -48,6 +51,7 @@ public class PlayerMovement : MonoBehaviour
     // And don't destroy this on next level
     private void Awake()
     {
+
         int numberOfCharacters = FindObjectsOfType<PlayerMovement>().Length;
         if (numberOfCharacters > 1)
         {
@@ -56,7 +60,8 @@ public class PlayerMovement : MonoBehaviour
         else
             DontDestroyOnLoad(this.gameObject);
 
-        
+        // Set the reference
+        playerAttack = GetComponent<PlayerAttack>();
     }
 
     void FixedUpdate()
@@ -72,9 +77,13 @@ public class PlayerMovement : MonoBehaviour
             return; } // If time is stopped (true), stop any movement
 
 
+        // When the player uses any attacking animation, stop any movement below
+        if (playerAttack.GetIsAttacking()) { return; }
 
 
+        
         Run();
+        // To Do - when we slide and jump, but not run, we should disable attacking/left click or right clicks from executing to stop having attack "buffers"
         Jump();
         Slide();
     }

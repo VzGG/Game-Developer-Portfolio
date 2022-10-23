@@ -34,7 +34,7 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private float bowDamage = 0f;
     [SerializeField] private float bowEnergy = 20f;
 
-
+    private bool isAttacking = false;
 
     public void SetBowDamage(float bowDamage) { this.bowDamage = bowDamage; }
     public float GetMyBowDamage() { return this.bowDamage; }
@@ -46,6 +46,14 @@ public class PlayerAttack : MonoBehaviour
     // Used by the PlayerArriveLocation.cs script to initialise the time managers.
     public void SetMyTimeManager(TimeManager timeManager) { this.timeManager = timeManager; }
 
+    public void SetIsAttackingTrue()
+    {
+        isAttacking = true;
+    }
+    public void SetIsAttackingFalse() { isAttacking = false; }
+
+    public bool GetIsAttacking() { return this.isAttacking; }
+ 
     // Update is called once per frame
     void Update()
     {
@@ -54,6 +62,8 @@ public class PlayerAttack : MonoBehaviour
         if (timeManager.GetIsTimeStopped() == true) { 
             // Debug.Log("Attempting to attack in a pause state."); 
             return; }
+
+        if (this.isAttacking) { return; }
 
         Attack();
         BowAttack();
@@ -87,13 +97,19 @@ public class PlayerAttack : MonoBehaviour
             // 0 = left click mouse, 1 = right
             if (Input.GetMouseButtonDown(0))
             {
+                // When we attack, along with stopping the movement script, also stop the player from pressing any buttons
+                // doing so stops the player from making the animation being cancelled by repeating the attack animation's first few frames over and over and not running the whole frames
+
                 if (attackCurrentCounter > 3)
                     attackCurrentCounter = attackStartingCounter;   // Reset to the starting counter - starting attack animation
 
                 // If we attack - find the appropriate attack animation  depending on the counter and increment the counter
+                // While in the animation of attacking, the player cannot/should not move, in animation editor tab, add events to disable the playerMovement class)
                 animator.SetTrigger("isAttacking" + attackCurrentCounter.ToString());
 
+
                 myEnergy.UseEnergy(attackEnergy);
+
 
                 if (!audioSource.isPlaying && attackCurrentCounter <= 2)
                 {
@@ -106,15 +122,6 @@ public class PlayerAttack : MonoBehaviour
                 attackCurrentCounter++;
 
 
-                /*                if (!GetComponent<AudioSource>().isPlaying && attackCurrentCounter <= 2)
-                                {
-                                    GetComponent<AudioSource>().PlayOneShot(audioClips[0]);
-                                }
-                                else if (!GetComponent<AudioSource>().isPlaying && attackCurrentCounter == 3)
-                                {
-                                    GetComponent<AudioSource>().PlayOneShot(audioClips[1]);
-                                }
-                                attackCurrentCounter++;*/
 
             }
         }
