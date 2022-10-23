@@ -406,6 +406,7 @@ MonoBehaviour:
   hurtDuration: 0.5
   isEvilWizard: 0
   isBoss: 0
+  isHitDuringEnrage: 0
   accumulatedDamage: 0
   accumulatedDamageThreshold: 0
   isNormalPhase: 1
@@ -425,7 +426,7 @@ MonoBehaviour:
   energyRegeneration: 20
   isEnergyBeingUsed: 0
   time: 0
-  regenWaitTime: 3
+  regenWaitTime: 1.5
 --- !u!114 &1660483836904585233
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -36,6 +36,10 @@ public class PlayerAttack : MonoBehaviour
 
     private bool isAttacking = false;
 
+    // This player movement script is set in PlayerMovement script
+    private PlayerMovement playerMovement;
+
+
     public void SetBowDamage(float bowDamage) { this.bowDamage = bowDamage; }
     public float GetMyBowDamage() { return this.bowDamage; }
     public void SetMyDamage(float damage) { this.myDamage = damage; }
@@ -46,13 +50,12 @@ public class PlayerAttack : MonoBehaviour
     // Used by the PlayerArriveLocation.cs script to initialise the time managers.
     public void SetMyTimeManager(TimeManager timeManager) { this.timeManager = timeManager; }
 
-    public void SetIsAttackingTrue()
-    {
-        isAttacking = true;
-    }
+    public void SetIsAttackingTrue() { isAttacking = true; }
     public void SetIsAttackingFalse() { isAttacking = false; }
 
     public bool GetIsAttacking() { return this.isAttacking; }
+    // To set the reference, called in PlayerMovement
+    public void SetPlayerMovement(PlayerMovement playerMovement) { this.playerMovement = playerMovement; }
  
     // Update is called once per frame
     void Update()
@@ -64,6 +67,8 @@ public class PlayerAttack : MonoBehaviour
             return; }
 
         if (this.isAttacking) { return; }
+        // Cannot attack when we are sliding. Cannot also have animation buffers.
+        if (playerMovement.GetIsSliding()) { return; }
 
         Attack();
         BowAttack();

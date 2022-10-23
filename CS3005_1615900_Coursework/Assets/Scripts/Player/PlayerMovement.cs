@@ -41,11 +41,18 @@ public class PlayerMovement : MonoBehaviour
     [Header("Sliding Properties")]
     [SerializeField] SpriteRenderer spriteRenderer;
 
+    private bool isSliding = false;
+
     // Get the playerAttack scripts reference
-    PlayerAttack playerAttack;
+    private PlayerAttack playerAttack;
+
 
     // Use this in next level change 
     public void SetMyTimeManager(TimeManager timeManager) { this.timeManager = timeManager; }
+    // The methods are made like this as the editor (animation event) cannot take in boolean parameters, but can for others like int and float, etc.
+    public void SetIsSlidingTrue() { this.isSliding = true; }
+    public void SetIsSlidingFalse() { this.isSliding = false; }
+    public bool GetIsSliding() { return this.isSliding; }
 
     // Singleton - only one is alive
     // And don't destroy this on next level
@@ -62,8 +69,18 @@ public class PlayerMovement : MonoBehaviour
 
         // Set the reference
         playerAttack = GetComponent<PlayerAttack>();
+        // Pass this class as the reference for the PlayerAttack to use
+        playerAttack.SetPlayerMovement(this);
+
     }
 
+    // Should put any input events here
+    private void Update()
+    {
+        
+    }
+
+    // Should put any physics related events here like RigidBody component BUT not transform component movements
     void FixedUpdate()
     {
         if (myHealth.GetHealth() <= 0) { return; }          // Stops movement
@@ -154,25 +171,33 @@ public class PlayerMovement : MonoBehaviour
     {
         if (myEnergy.GetEnergy() > 0)
         {
+            // Cannot use GetKeyUp or GetKeyDown in FixedUpdate as this gets called multiple times per frame if needed
+                        // NEED TO MAKE SURE THIS IS ONLY CALLED ONCE!!!
             if (Input.GetKey(KeyCode.LeftShift))
             {
-               // Debug.Log("Sliding!");
-
+                // When sliding, in the animation tab itself, one of its frame should set the isSliding to true
+                // This is to stop attack animation buffers
                 animator.SetBool("isSliding", true);
                 if (isFacingRight)
                 {
-                    myRB2D.AddForce(slideForce, ForceMode2D.Impulse);
+                    // myRB2D.AddForce(slideForce, ForceMode2D.Impulse);
+                    float slideSpeed = 5;
+                    // Do it like the jump movement
+                    myRB2D.velocity = new Vector2(slideSpeed, myRB2D.velocity.y);
                 }
                 else
                 {
-                    myRB2D.AddForce(-slideForce, ForceMode2D.Impulse);
+                    // myRB2D.AddForce(-slideForce, ForceMode2D.Impulse);
+                    float slideSpeed = 5;
+                    // Do it like the jump movement
+                    myRB2D.velocity = new Vector2(-slideSpeed, myRB2D.velocity.y);
                 }
                 // myEnergy.UseEnergy(slideEnergy * Time.deltaTime);
                 myEnergy.UseEnergy(slideEnergy);
                 SetLayer("Dodge");
 
                 // Make mental image of dodging provides I-frames
-                spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, 0.5f);         
+                //spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, 0.5f);         
             }
             else
             {
@@ -182,7 +207,7 @@ public class PlayerMovement : MonoBehaviour
                 /* this.spriteRenderer.color = new Color(1f, 1f, 1f, 1f);*/
 
                 // Undo dodging/sliding visuals
-                spriteRenderer.color = Color.white;
+                //spriteRenderer.color = Color.white;
             }
         }
         else
@@ -192,12 +217,14 @@ public class PlayerMovement : MonoBehaviour
             SetLayer("Player"); // Instead of default 
 
             // Undo dodging/sliding visuals WHEN we run out of energy DURING sliding
-            spriteRenderer.color = Color.white;
+            //spriteRenderer.color = Color.white;
 
 
         }
         
     }
+
+    
 
     #endregion
 
