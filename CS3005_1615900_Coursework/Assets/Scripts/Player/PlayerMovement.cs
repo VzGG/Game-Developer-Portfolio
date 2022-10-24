@@ -43,6 +43,7 @@ public class PlayerMovement : MonoBehaviour
 
     private bool isSliding = false;
 
+    private bool slidePressed = false;
     // Get the playerAttack scripts reference
     private PlayerAttack playerAttack;
 
@@ -77,8 +78,13 @@ public class PlayerMovement : MonoBehaviour
     // Should put any input events here
     private void Update()
     {
-        
+        // Cannot slide when we are in attacking animation
+        if (playerAttack.GetIsAttacking()) { return; }
+
+        SlidePressed();
     }
+
+
 
     // Should put any physics related events here like RigidBody component BUT not transform component movements
     void FixedUpdate()
@@ -102,9 +108,12 @@ public class PlayerMovement : MonoBehaviour
         Run();
         // To Do - when we slide and jump, but not run, we should disable attacking/left click or right clicks from executing to stop having attack "buffers"
         Jump();
-        Slide();
+        SlideNew();
+        //SlideOld();
     }
     #region Player Movements
+
+
 
     // Inspired by... Casanis <add more reference>
     private void Run()
@@ -165,9 +174,50 @@ public class PlayerMovement : MonoBehaviour
         }  */ 
     }
 
+    private void SlidePressed()
+    {
+        // Get left shift input status
+        slidePressed = Input.GetKey(KeyCode.LeftShift);
+        // If we have energy, we should be able to slide
+        if (myEnergy.GetEnergy() > 0f)
+        {
+            if (slidePressed)
+            {
+                // Sliding shows the sliding animation, also takes energy, and allows to "Phase" through enemies using the layering and collision matrix
+                animator.SetTrigger("isSliding2");
+                myEnergy.UseEnergy(slideEnergy * Time.deltaTime * 30f);
+                SetLayer("Dodge");
+            }
+            else
+            {
+                // Set the player back to player to not "Phase" through enemies
+                SetLayer("Player");
+                // Allows the energy to start recovering
+                myEnergy.SetIsEnergyBeingUsed(false);
+            }
+        }
+        else
+        {
+            SetLayer("Player");
+            // Stops us from sliding when we have 0 energy
+            slidePressed = false;
+        }
+    }
+
+    private void SlideNew()
+    {
+        if (slidePressed)
+        {
+            if (isFacingRight)
+                myRB2D.AddForce(myRB2D.velocity + new Vector2(50f, 0f));
+            else
+                myRB2D.AddForce(myRB2D.velocity + new Vector2(-50f, 0f));
+        }
+
+    }
 
     // Dodge ability - to implement iframe
-    private void Slide()
+    private void SlideOld()
     {
         if (myEnergy.GetEnergy() > 0)
         {

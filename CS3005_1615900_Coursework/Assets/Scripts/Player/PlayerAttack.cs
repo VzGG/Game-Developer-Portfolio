@@ -66,6 +66,7 @@ public class PlayerAttack : MonoBehaviour
             // Debug.Log("Attempting to attack in a pause state."); 
             return; }
 
+        // Wait for the attacking animation to finish then we can do any animation
         if (this.isAttacking) { return; }
         // Cannot attack when we are sliding. Cannot also have animation buffers.
         if (playerMovement.GetIsSliding()) { return; }
