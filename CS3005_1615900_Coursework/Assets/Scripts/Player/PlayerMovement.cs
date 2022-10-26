@@ -45,78 +45,18 @@ public class PlayerMovement : MonoBehaviour
 
     private bool slidePressed = false;
     // Get the playerAttack scripts reference
-    private PlayerAttack playerAttack;
 
 
     // Use this in next level change 
     public void SetMyTimeManager(TimeManager timeManager) { this.timeManager = timeManager; }
     // The methods are made like this as the editor (animation event) cannot take in boolean parameters, but can for others like int and float, etc.
-    public void SetIsSlidingTrue() { this.isSliding = true; }
-    public void SetIsSlidingFalse() { this.isSliding = false; }
-    public bool GetIsSliding() { return this.isSliding; }
 
-    // Singleton - only one is alive
-    // And don't destroy this on next level
-    private void Awake()
-    {
-
-        int numberOfCharacters = FindObjectsOfType<PlayerMovement>().Length;
-        if (numberOfCharacters > 1)
-        {
-            Destroy(this.gameObject);
-        }
-        else
-            DontDestroyOnLoad(this.gameObject);
-
-        // Set the reference
-        playerAttack = GetComponent<PlayerAttack>();
-        // Pass this class as the reference for the PlayerAttack to use
-        playerAttack.SetPlayerMovement(this);
-
-    }
-
-    // Should put any input events here
-    private void Update()
-    {
-        // Cannot slide when we are in attacking animation
-        if (playerAttack.GetIsAttacking()) { return; }
-
-        SlidePressed();
-    }
-
-
-
-    // Should put any physics related events here like RigidBody component BUT not transform component movements
-    void FixedUpdate()
-    {
-        if (myHealth.GetHealth() <= 0) { return; }          // Stops movement
-
-        if (timeManager == null) { return; }
-
-        // French, J. (2020). ‘The right way to pause a game in Unity’. [Blog]. 13 February. Available at:
-        // https://gamedevbeginner.com/the-right-way-to-pause-the-game-in-unity/#exclude_objects_from_pause
-        if (timeManager.GetIsTimeStopped() == true) {
-            // Debug.Log("Attempting to move in a pause state");
-            return; } // If time is stopped (true), stop any movement
-
-
-        // When the player uses any attacking animation, stop any movement below
-        if (playerAttack.GetIsAttacking()) { return; }
-
-
-        
-        Run();
-        // To Do - when we slide and jump, but not run, we should disable attacking/left click or right clicks from executing to stop having attack "buffers"
-        Jump();
-        SlideNew();
-        //SlideOld();
-    }
     #region Player Movements
 
 
 
     // Inspired by... Casanis <add more reference>
-    private void Run()
+    public void Run()
     {
         // If we press any of the left, right arrow key or the A or D keys then we get a value here between -1 to 1
         float moveX = Input.GetAxis("Horizontal");
@@ -142,12 +82,10 @@ public class PlayerMovement : MonoBehaviour
     }
 
     // Inspired by... <add reference>
-    private void Jump()
+    public void Jump(Energy myEnergy)
     {
         // If we press jump and is touching the ground - jump
         // Uses energy - We can only jump when we have energy
-        // if (Input.GetKey(KeyCode.Space) && myCollider2D.IsTouchingLayers(LayerMask.GetMask("Ground")) && myEnergy.CanUseEnergy(jumpEnergy))
-
         float jumpCounter = 0;
         if (Input.GetKey(KeyCode.Space) && myCollider2D.IsTouchingLayers(LayerMask.GetMask("Ground")) && myEnergy.GetEnergy() > 0)
         {
@@ -163,18 +101,13 @@ public class PlayerMovement : MonoBehaviour
                 // Get Key is registered more than once
                 myEnergy.UseEnergy(jumpEnergy);
                 jumpCounter = 0;
+                
             }
             
         }
- 
-        // Jump animation when not touching the ground
-/*        if (!myCollider2D.IsTouchingLayers(LayerMask.GetMask("Ground")))
-        {
-            animator.SetTrigger("isJumping 0");
-        }  */ 
     }
 
-    private void SlidePressed()
+    public bool SlidePressed(Energy myEnergy)
     {
         // Get left shift input status
         slidePressed = Input.GetKey(KeyCode.LeftShift);
@@ -187,6 +120,8 @@ public class PlayerMovement : MonoBehaviour
                 animator.SetTrigger("isSliding2");
                 myEnergy.UseEnergy(slideEnergy * Time.deltaTime * 30f);
                 SetLayer("Dodge");
+
+                
             }
             else
             {
@@ -202,79 +137,26 @@ public class PlayerMovement : MonoBehaviour
             // Stops us from sliding when we have 0 energy
             slidePressed = false;
         }
+        return slidePressed;
     }
 
-    private void SlideNew()
+    // Dodge ability - to implement iframe
+    public void SlideNew()
     {
         if (slidePressed)
         {
             if (isFacingRight)
+            {
                 myRB2D.AddForce(myRB2D.velocity + new Vector2(50f, 0f));
+            }
             else
+            {
                 myRB2D.AddForce(myRB2D.velocity + new Vector2(-50f, 0f));
+            }
+                
         }
 
     }
-
-    // Dodge ability - to implement iframe
-    private void SlideOld()
-    {
-        if (myEnergy.GetEnergy() > 0)
-        {
-            // Cannot use GetKeyUp or GetKeyDown in FixedUpdate as this gets called multiple times per frame if needed
-                        // NEED TO MAKE SURE THIS IS ONLY CALLED ONCE!!!
-            if (Input.GetKey(KeyCode.LeftShift))
-            {
-                // When sliding, in the animation tab itself, one of its frame should set the isSliding to true
-                // This is to stop attack animation buffers
-                animator.SetBool("isSliding", true);
-                if (isFacingRight)
-                {
-                    // myRB2D.AddForce(slideForce, ForceMode2D.Impulse);
-                    float slideSpeed = 5;
-                    // Do it like the jump movement
-                    myRB2D.velocity = new Vector2(slideSpeed, myRB2D.velocity.y);
-                }
-                else
-                {
-                    // myRB2D.AddForce(-slideForce, ForceMode2D.Impulse);
-                    float slideSpeed = 5;
-                    // Do it like the jump movement
-                    myRB2D.velocity = new Vector2(-slideSpeed, myRB2D.velocity.y);
-                }
-                // myEnergy.UseEnergy(slideEnergy * Time.deltaTime);
-                myEnergy.UseEnergy(slideEnergy);
-                SetLayer("Dodge");
-
-                // Make mental image of dodging provides I-frames
-                //spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, 0.5f);         
-            }
-            else
-            {
-                animator.SetBool("isSliding", false);
-                SetLayer("Player");                     // Instead of default
-                myEnergy.SetIsEnergyBeingUsed(false);
-                /* this.spriteRenderer.color = new Color(1f, 1f, 1f, 1f);*/
-
-                // Undo dodging/sliding visuals
-                //spriteRenderer.color = Color.white;
-            }
-        }
-        else
-        {
-            // Debug.Log("Attempting to slide!!!");
-            animator.SetBool("isSliding", false);
-            SetLayer("Player"); // Instead of default 
-
-            // Undo dodging/sliding visuals WHEN we run out of energy DURING sliding
-            //spriteRenderer.color = Color.white;
-
-
-        }
-        
-    }
-
-    
 
     #endregion
 

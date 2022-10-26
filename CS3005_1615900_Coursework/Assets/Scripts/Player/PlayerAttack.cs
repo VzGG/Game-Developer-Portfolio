@@ -58,31 +58,18 @@ public class PlayerAttack : MonoBehaviour
     public void SetPlayerMovement(PlayerMovement playerMovement) { this.playerMovement = playerMovement; }
  
     // Update is called once per frame
-    void Update()
+ 
+
+    public bool BowAttack(Energy myEnergy)
     {
-        if (myHealth.GetHealth() <= 0) { return; }      // Stops attacking when we don't have health
-        if (timeManager == null) { return; }            // STOP null reference error
-        if (timeManager.GetIsTimeStopped() == true) { 
-            // Debug.Log("Attempting to attack in a pause state."); 
-            return; }
+        if (!hasBow) { return false; }
 
-        // Wait for the attacking animation to finish then we can do any animation
-        if (this.isAttacking) { return; }
-        // Cannot attack when we are sliding. Cannot also have animation buffers.
-        if (playerMovement.GetIsSliding()) { return; }
-
-        Attack();
-        BowAttack();
-    }
-
-    private void BowAttack()
-    {
-        if (!hasBow) { return; }
-
+        bool isBowAttacking = false;
         if (myEnergy.GetEnergy() > 0)
         {
+            isBowAttacking = Input.GetMouseButtonDown(1);
             // Right mouse click
-            if (Input.GetMouseButtonDown(1))
+            if (isBowAttacking)
             {
                 // Play animation of bow attack
                 animator.SetTrigger("isBowAttacking");
@@ -92,16 +79,19 @@ public class PlayerAttack : MonoBehaviour
             }
         }
 
+        return isBowAttacking;
+
         // Only able to do so when player pick up has a bow picked up
     }
 
-    // TO-DO: at a certain frame in the animation tab, we need an animation event where if it hits while in animation then we damage them, also push back
-    private void Attack()
+    public bool Attack(Energy myEnergy)
     {
+        bool isAttacking = false;
         if (myEnergy.GetEnergy() > 0)
         {
+            isAttacking = Input.GetMouseButtonDown(0);
             // 0 = left click mouse, 1 = right
-            if (Input.GetMouseButtonDown(0))
+            if (isAttacking)
             {
                 // When we attack, along with stopping the movement script, also stop the player from pressing any buttons
                 // doing so stops the player from making the animation being cancelled by repeating the attack animation's first few frames over and over and not running the whole frames
@@ -131,6 +121,8 @@ public class PlayerAttack : MonoBehaviour
 
             }
         }
+
+        return isAttacking;
     }
 
     // Called in the animation tab - from Character's animation

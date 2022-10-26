@@ -36,8 +36,10 @@ public class Energy : MonoBehaviour
 
 
     public void SetEnergy(float energy) { this.energy = energy; }
-    
-    private void Update()
+
+    float time2En = 0f;
+    // Called over and over per frame in the update method
+    public void EnergyRegen()
     {
         if (isEnergyBeingUsed == false)
         {
@@ -45,7 +47,7 @@ public class Energy : MonoBehaviour
             energy = Mathf.Min(energy + energyRegeneration * Time.deltaTime, maxEnergy);
         }
 
-        // If we all energy then we wait for a few seconds to charge our energy
+        // When energy is spent up, wait a few seconds and then start regenerating energy
         if (isEnergyBeingUsed == true && energy <= 1)
         {
             time += Time.deltaTime;
@@ -55,6 +57,35 @@ public class Energy : MonoBehaviour
                 isEnergyBeingUsed = false;
             }
         }
+    }
+
+    // When using energy, we need to set is energy to true, but after that should be setting to false
+    // Jump requires energy -> the moment we press jump we require
+    // Slide requires energy
+    // Attack requires energy
+    public void WhenEnergyIsUsed()
+    {
+
+    }
+
+    private void Update()
+    {
+        //if (isEnergyBeingUsed == false)
+        //{
+        //    // Continuously increase your energy until max
+        //    energy = Mathf.Min(energy + energyRegeneration * Time.deltaTime, maxEnergy);
+        //}
+
+        //// If we all energy then we wait for a few seconds to charge our energy
+        //if (isEnergyBeingUsed == true && energy <= 1)
+        //{
+        //    time += Time.deltaTime;
+        //    if (time > regenWaitTime)
+        //    {
+        //        time = 0f;
+        //        isEnergyBeingUsed = false;
+        //    }
+        //}
 
     }
 }

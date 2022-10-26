@@ -67,6 +67,7 @@ GameObject:
   - component: {fileID: 9057973526240010888}
   - component: {fileID: 9057973526240010903}
   - component: {fileID: 1660483836904585233}
+  - component: {fileID: 6237933760249786851}
   m_Layer: 9
   m_Name: Character
   m_TagString: Player
@@ -448,3 +449,15 @@ MonoBehaviour:
   audioSource: {fileID: 9057973526240010901}
   itemPickupSFX: {fileID: 8300000, guid: f93e072c46dc93047bcd3f027df54ff5, type: 3}
   numberOfKeys: 0
+--- !u!114 &6237933760249786851
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9057973526240010880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3afd3f9eb853f4479d2521449199e48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
