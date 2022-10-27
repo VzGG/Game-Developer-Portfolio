@@ -34,11 +34,6 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private float bowDamage = 0f;
     [SerializeField] private float bowEnergy = 20f;
 
-    private bool isAttacking = false;
-
-    // This player movement script is set in PlayerMovement script
-    private PlayerMovement playerMovement;
-
 
     public void SetBowDamage(float bowDamage) { this.bowDamage = bowDamage; }
     public float GetMyBowDamage() { return this.bowDamage; }
@@ -50,18 +45,10 @@ public class PlayerAttack : MonoBehaviour
     // Used by the PlayerArriveLocation.cs script to initialise the time managers.
     public void SetMyTimeManager(TimeManager timeManager) { this.timeManager = timeManager; }
 
-    public void SetIsAttackingTrue() { isAttacking = true; }
-    public void SetIsAttackingFalse() { isAttacking = false; }
-
-    public bool GetIsAttacking() { return this.isAttacking; }
-    // To set the reference, called in PlayerMovement
-    public void SetPlayerMovement(PlayerMovement playerMovement) { this.playerMovement = playerMovement; }
  
-    // Update is called once per frame
- 
-
     public bool BowAttack(Energy myEnergy)
     {
+        // Only able to do so when player pick up has a bow picked up
         if (!hasBow) { return false; }
 
         bool isBowAttacking = false;
@@ -80,8 +67,6 @@ public class PlayerAttack : MonoBehaviour
         }
 
         return isBowAttacking;
-
-        // Only able to do so when player pick up has a bow picked up
     }
 
     public bool Attack(Energy myEnergy)
@@ -169,39 +154,16 @@ public class PlayerAttack : MonoBehaviour
     // This should call the collider in our character that has OnTrigger to true - should be a small collider just a bit forward on the player's facing direction
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        //Debug.Log("attack hitbox: " + collision.gameObject.name);
-        // Correctly getting the box collider of the skeleton's body NOT ITS HITBOX and others
-        //Debug.Log("This hitbox touching: " + collision.gameObject.GetComponent<BoxCollider2D>().gameObject.name);
-
-        // Debug.Log("My hitbox colliding with enemy's body?: " + myHitBox.IsTouching(  collision.gameObject.GetComponent<BoxCollider2D>()  ));
-
+        // Adds 1 target for us to attack, used for when using any attack animation
         if (collision.tag == "Enemy" && myHitBox.IsTouching(collision.gameObject.GetComponent<BoxCollider2D>()))
         {
             myTarget = collision.gameObject.GetComponent<Health>();
         }
-
-
-        // Gets the collider2d of the target - Gobli or any enemies
-/*        if (collision.tag == "Enemy")
-        {
-            myTarget = collision.gameObject.GetComponent<Health>();
-        }*/
-        
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        //Debug.Log("Triggering exit by: " + collision.tag);
-        // For some reason untagged is also being triggered as its trigger exit
-
-        // Debug.Log("Trigger Exit of hitbox and enemy's box collider: " + myHitBox.IsTouching(collision.gameObject.GetComponent<BoxCollider2D>()));
-
-        // Gets the collider2d of the target - Gobli or any enemies
-/*        if (collision.tag == "Enemy")
-        {
-            myTarget = null;
-        }*/
-
+        // This removes our current target when our hitbox discovers that the enemy leaves our hitbox
         if (collision.tag == "Enemy" && !myHitBox.IsTouching(collision.gameObject.GetComponent<BoxCollider2D>())  )
         {
             myTarget = null;

@@ -59,33 +59,4 @@ public class Energy : MonoBehaviour
         }
     }
 
-    // When using energy, we need to set is energy to true, but after that should be setting to false
-    // Jump requires energy -> the moment we press jump we require
-    // Slide requires energy
-    // Attack requires energy
-    public void WhenEnergyIsUsed()
-    {
-
-    }
-
-    private void Update()
-    {
-        //if (isEnergyBeingUsed == false)
-        //{
-        //    // Continuously increase your energy until max
-        //    energy = Mathf.Min(energy + energyRegeneration * Time.deltaTime, maxEnergy);
-        //}
-
-        //// If we all energy then we wait for a few seconds to charge our energy
-        //if (isEnergyBeingUsed == true && energy <= 1)
-        //{
-        //    time += Time.deltaTime;
-        //    if (time > regenWaitTime)
-        //    {
-        //        time = 0f;
-        //        isEnergyBeingUsed = false;
-        //    }
-        //}
-
-    }
 }

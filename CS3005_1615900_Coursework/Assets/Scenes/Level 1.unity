@@ -43554,6 +43554,10 @@ PrefabInstance:
       propertyPath: dialogueManager
       value: 
       objectReference: {fileID: 451353711}
+    - target: {fileID: 6237933760249786851, guid: f31553829344fdb42a7c78ff689e1630, type: 3}
+      propertyPath: timeManager
+      value: 
+      objectReference: {fileID: 519805111}
     - target: {fileID: 9057973526240010880, guid: f31553829344fdb42a7c78ff689e1630, type: 3}
       propertyPath: m_Name
       value: Character

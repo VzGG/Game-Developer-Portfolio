@@ -41,15 +41,12 @@ public class PlayerMovement : MonoBehaviour
     [Header("Sliding Properties")]
     [SerializeField] SpriteRenderer spriteRenderer;
 
-    private bool isSliding = false;
+
 
     private bool slidePressed = false;
-    // Get the playerAttack scripts reference
-
 
     // Use this in next level change 
     public void SetMyTimeManager(TimeManager timeManager) { this.timeManager = timeManager; }
-    // The methods are made like this as the editor (animation event) cannot take in boolean parameters, but can for others like int and float, etc.
 
     #region Player Movements
 
@@ -92,8 +89,7 @@ public class PlayerMovement : MonoBehaviour
             jumpCounter++;
             // Jump
             myRB2D.velocity = new Vector2(myRB2D.velocity.x, jumpSpeed);
-            // Only here that we take energy away * Time.deltaTime for smoothening
-            // myEnergy.UseEnergy(jumpEnergy * Time.deltaTime);
+            // Change the player animation to jumping
             animator.SetTrigger("isJumping 0");
             if (jumpCounter == 1)
             {
@@ -152,10 +148,8 @@ public class PlayerMovement : MonoBehaviour
             else
             {
                 myRB2D.AddForce(myRB2D.velocity + new Vector2(-50f, 0f));
-            }
-                
+            } 
         }
-
     }
 
     #endregion

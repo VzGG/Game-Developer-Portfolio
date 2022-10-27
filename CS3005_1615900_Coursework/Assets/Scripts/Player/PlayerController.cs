@@ -12,11 +12,13 @@ public class PlayerController : MonoBehaviour
     PlayerMovement myMovement;
     Health myHealth;
     Energy myEnergy;
-    TimeManager timeManager;
+    [SerializeField] TimeManager timeManager;               // Set this value in the editor for each level
 
     // This bool is changed to true at the start of any animation like Attack, Jump, and Slide
     // It is then set to false when we return to Idle
     private bool isUsingActionAnim = false;
+
+    public void SetTimeManager(TimeManager timeManager) { this.timeManager = timeManager; }     // Set this to the timeManager we have at each level, because this gets missing at the end of each level w/o it
 
     private void Awake()
     {
@@ -91,8 +93,6 @@ public class PlayerController : MonoBehaviour
         myHealth = GetComponent<Health>();
         myEnergy = GetComponent<Energy>();
 
-        // Not sure about time manager for now
-        timeManager = FindObjectOfType<TimeManager>();
     }
 
     // Called in Animation Event

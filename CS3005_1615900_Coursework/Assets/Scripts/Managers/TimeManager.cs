@@ -16,6 +16,8 @@ public class TimeManager : MonoBehaviour
 
     public float GetCurrentTime() { return currentTime; }
     public bool GetIsTimeStopped() { return isTimeStopped; }
+
+
     // Update is called once per frame
     void Update()
     {
