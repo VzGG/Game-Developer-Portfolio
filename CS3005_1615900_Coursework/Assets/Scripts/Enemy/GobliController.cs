@@ -32,6 +32,10 @@ public class GobliController : MonoBehaviour
     [SerializeField] BoxCollider2D hitBox;
     [SerializeField] float distance = 2f;
     [SerializeField] float attackDamage = 10f;
+    float attackRate = 1.5f;
+    [SerializeField] float currentAttackTime = 0f;
+
+    bool isAttacking = false;
     /* States of Gobli
  * 
  * Idle - default
@@ -41,6 +45,9 @@ public class GobliController : MonoBehaviour
  * Dead - When hurt too much by character
  */
 
+    public bool GetIsAttacking() { return this.isAttacking; }
+
+    // Should have the physics related here
     private void FixedUpdate()
     {
         if (enemyHealth.GetHealth() <= 0) 
@@ -49,14 +56,15 @@ public class GobliController : MonoBehaviour
             return; 
         }
 
-        // Don't do anything when enemy is hurt
-        if (enemyHealth.GetIsHurt()) { return; }
 
-        
         // If there's no target, the Gobli moves around the ground to find the edge and idles for a bit and finds the edge from
         // the other side and repeat
         if (enemyTarget == null)
         {
+            // When the Gobli is commiting an attack, during attack animation, it should not immediately go to the patrol/idle state
+            // It should wait for the animation to finish - this guard statement should do that
+            if (isAttacking) { return; }
+
             if (!hasReachEdge)
             {
                 NoTargetRun();
@@ -68,11 +76,32 @@ public class GobliController : MonoBehaviour
         }
         else
         {
+            // If there is a target:
+
+            /*
+             * 1. If gobli is not in range, go to player
+             * 2. When attack is ready, attack the player, 
+             * 3. When attacking, stop moving and face that current direction
+             * 4. After attacking, repeat attack if within range, if not, keep going to player
+             * 5. repeat 1-4 
+             * 
+             */
+
+
+            // If there is a target, it should stop the patrol and idle states
             StopCoroutine(wait());
-            // If we have a target
-            //Debug.Log("We have a target");
+
+            // Increase time to attack
+            currentAttackTime += Time.fixedDeltaTime;
+
+
+            // If we have a target, the gobli goes towards the player until a certain distance
+            // And that we are not attacking
             if (Vector2.Distance(this.transform.position, enemyTarget.transform.position) > distance)
             {
+                // Don't move when cannot attack
+                if (isAttacking) { return; }
+
                 animator.SetBool("isRunning", true);
                 // If player is on the left, move towards the left direction
                 if (this.transform.position.x > enemyTarget.transform.position.x)
@@ -92,14 +121,42 @@ public class GobliController : MonoBehaviour
             }
             else
             {
-                // If we are within the distance of the Character and has a health of more than 0, attack  the character
-                if (enemyTarget.GetComponent<Health>().GetHealth() >= 0)
+                Debug.Log("Now need to wait and attack player");
+
+                // If gobli is NOW in attacking distance
+
+                // Go idle state first
+                animator.SetBool("isRunning", false);
+
+                // Then if we can now attack at the given time interval, then attack
+                if (currentAttackTime >= attackRate && !isAttacking)
                 {
-                    animator.SetBool("isRunning", false);
-                    // Show the attacking animation
+                    isAttacking = true;
+
+                    LookAtPlayer();
+                    // Then attack
                     animator.SetTrigger("isAttacking");
+
+                    // Reset time to create an "attack rate"
+                    currentAttackTime = 0f;
+
                 }
             }
+        }
+
+    }
+
+    private void LookAtPlayer()
+    {
+        if (this.transform.position.x > enemyTarget.transform.position.x)
+        {
+            transform.localScale = new Vector3(-0.6f, transform.localScale.y, transform.localScale.y);
+            isFacingRight = false;
+        }
+        else if (this.transform.position.x < enemyTarget.transform.position.x)
+        {
+            transform.localScale = new Vector3(0.6f, transform.localScale.y, transform.localScale.y);
+            isFacingRight = true;
         }
     }
 
@@ -130,7 +187,6 @@ public class GobliController : MonoBehaviour
     // This onTrigger exit should only collide with the ground
     private void OnTriggerExit2D(Collider2D collision)
     {
-        // Debug.Log("Collided: " + collision.gameObject);
         // Should add the onTrigger Exit to check if the exit trigger is the ground
         // If the layer of what we collided on exit is "Ground" -> WE WAIT, otherwise continue forward
         if (collision.gameObject.layer == LayerMask.NameToLayer("Ground")) 
@@ -142,7 +198,13 @@ public class GobliController : MonoBehaviour
         
     }
 
-    
+    #region Called in the Animation tab's Animation Event in Unity Editor
+
+    private void SetReadyToAttackTrue() { this.isAttacking = true; }
+    private void SetReadyToAttackFalse() { this.isAttacking = false; }
+
+    #endregion
+
     // Called from the Animation tab from the Gobli_Attack animation - Animation Event
     private void Attack()
     {

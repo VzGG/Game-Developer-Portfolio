@@ -42,6 +42,10 @@ public class Health : MonoBehaviour
 
     public bool isHitDuringEnrage = false;
 
+    [Space]
+    [SerializeField] GobliController gobliController;           // Set this in the editor
+    [SerializeField] SkeletonController skeletonController;
+
     // This is called only once whenever it takes damage, not like it is called in an update
     public void TakeDamage(float damage) 
     { 
@@ -72,9 +76,18 @@ public class Health : MonoBehaviour
         // Play any VFX when damage taken - For Gobli, and Skeleton enemies
         if (hasFlinch && health > 0)
         {
+            // Need to block below - this if statement below should do that
+            // When gobli is attacking and during that he is hit, do not show the hurt animation, instead fully commit the attack animation
+            if (gobliController.GetIsAttacking()) { return; }
+
+            // Insert skeleton controller guard here
+            
+
+            // ...
+
+            // Show hurt animation
             animator.SetTrigger(animationParameterName);
-            SetIsHurt(true);
-            StartCoroutine(Flinch());
+
         }
 
         // When we die, destroy this gameobject. Play dying VFX if there is
