@@ -4,19 +4,18 @@ using UnityEngine;
 
 public class SearchTargetArea : MonoBehaviour
 {
-    [SerializeField] GobliController gobliController;
+    [SerializeField] NormalEnemyController normalEnemyController;
 
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player")
         {
-            gobliController.SetEnemyTarget(collision.gameObject.GetComponent<PlayerMovement>());
-           // Debug.Log("Character detected!!!");
+            normalEnemyController.SetTarget(collision.gameObject.GetComponent<PlayerController>());
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        gobliController.SetEnemyTarget(null);
+        normalEnemyController.SetTarget(null);
     }
 }

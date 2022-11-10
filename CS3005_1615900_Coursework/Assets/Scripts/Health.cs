@@ -43,8 +43,7 @@ public class Health : MonoBehaviour
     public bool isHitDuringEnrage = false;
 
     [Space]
-    [SerializeField] GobliController gobliController;           // Set this in the editor
-    [SerializeField] SkeletonController skeletonController;
+    [SerializeField] EnemyController enemyController;           // Set in the editor
 
     // This is called only once whenever it takes damage, not like it is called in an update
     public void TakeDamage(float damage) 
@@ -77,13 +76,8 @@ public class Health : MonoBehaviour
         if (hasFlinch && health > 0)
         {
             // Need to block below - this if statement below should do that
-            // When gobli is attacking and during that he is hit, do not show the hurt animation, instead fully commit the attack animation
-            if (gobliController.GetIsAttacking()) { return; }
-
-            // Insert skeleton controller guard here
-            
-
-            // ...
+            // When enemy is attacking and during that he is hit, do not show the hurt animation, instead fully commit the attack animation
+            if (enemyController.GetIsAttacking()) { return; }
 
             // Show hurt animation
             animator.SetTrigger(animationParameterName);

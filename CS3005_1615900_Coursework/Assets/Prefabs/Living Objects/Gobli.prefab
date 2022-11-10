@@ -344,7 +344,7 @@ GameObject:
   - component: {fileID: 5358320873335480532}
   - component: {fileID: 8997636781220968123}
   - component: {fileID: 8997636781220968120}
-  - component: {fileID: 8997636781220968121}
+  - component: {fileID: 5659770827051711640}
   - component: {fileID: 6593807894420185569}
   m_Layer: 11
   m_Name: Gobli
@@ -631,6 +631,9 @@ MonoBehaviour:
   isEvilWizard: 0
   isBoss: 0
   isHitDuringEnrage: 0
+  gobliController: {fileID: 0}
+  skeletonController: {fileID: 0}
+  enemyController: {fileID: 5659770827051711640}
   accumulatedDamage: 0
   accumulatedDamageThreshold: 0
   isNormalPhase: 1
@@ -651,7 +654,7 @@ MonoBehaviour:
   isEnergyBeingUsed: 0
   time: 0
   regenWaitTime: 3
---- !u!114 &8997636781220968121
+--- !u!114 &5659770827051711640
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -660,22 +663,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 8997636781220968114}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 248c63da43d3d184596cab6bc222bd8a, type: 3}
+  m_Script: {fileID: 11500000, guid: 1b745b87a26be1b488273b401d9db2f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 8997636781220968119}
-  enemyHealth: {fileID: 8997636781220968123}
-  enemyEnergy: {fileID: 8997636781220968120}
-  enemyRB2D: {fileID: 8997636781220968118}
-  enemyCollider2D: {fileID: 8997636781220968122}
+  health: {fileID: 8997636781220968123}
+  rb2D: {fileID: 8997636781220968118}
+  coll2D: {fileID: 8997636781220968122}
   moveX: 0.75
   isFacingRight: 1
   waitTime: 3
   hasReachEdge: 0
-  enemyTarget: {fileID: 0}
+  target: {fileID: 0}
   hitBox: {fileID: 8997636782644587423}
-  distance: 0.25
+  distanceToAttack: 0.25
   attackDamage: 10
+  attackRate: 1.5
+  currentAttackTime: 0
+  isAttacking: 0
+  xScale: 0.6
 --- !u!114 &6593807894420185569
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -761,7 +767,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: faa710c48eecb5c46bd1d762cd7b15ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gobliController: {fileID: 8997636781220968121}
+  gobliController: {fileID: 0}
+  normalEnemyController: {fileID: 5659770827051711640}
 --- !u!1 &8997636782644587421
 GameObject:
   m_ObjectHideFlags: 0

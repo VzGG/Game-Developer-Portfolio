@@ -21,7 +21,8 @@ public class Portal : MonoBehaviour
     {
         // Portal can only interact with the player due to the COllion layer matrix in the Edit > Project Settings
         // but checks for it incase
-        if (collision.tag == "Player")
+        // Can also go to the portal when sliding/dodging
+        if (collision.tag == "Player" || collision.tag == "Dodge")
         {
             levelsManager.LoadScene(sceneNameOfNextLevel);
         }

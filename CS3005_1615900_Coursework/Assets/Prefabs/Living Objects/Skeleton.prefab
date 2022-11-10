@@ -345,7 +345,7 @@ GameObject:
   - component: {fileID: 6070849907591194270}
   - component: {fileID: 6070849907591194269}
   - component: {fileID: 8313665186788635076}
-  - component: {fileID: 4243737927434461393}
+  - component: {fileID: 6540220138081288145}
   m_Layer: 11
   m_Name: Skeleton
   m_TagString: Enemy
@@ -452,7 +452,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 1000
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -628,6 +628,15 @@ MonoBehaviour:
   originalColor: {r: 0, g: 0, b: 0, a: 0}
   hurtColor: {r: 0, g: 0, b: 0, a: 0}
   hurtDuration: 0.5
+  isEvilWizard: 0
+  isBoss: 0
+  isHitDuringEnrage: 0
+  gobliController: {fileID: 0}
+  skeletonController: {fileID: 0}
+  enemyController: {fileID: 6540220138081288145}
+  accumulatedDamage: 0
+  accumulatedDamageThreshold: 0
+  isNormalPhase: 1
 --- !u!114 &6070849907591194269
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -660,7 +669,7 @@ MonoBehaviour:
   enemyCanvas: {fileID: 7124500703780333051}
   enemyHealthBar: {fileID: 8522419887344651309}
   enemyHealth: {fileID: 6070849907591194270}
---- !u!114 &4243737927434461393
+--- !u!114 &6540220138081288145
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -669,22 +678,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 6070849907591194263}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c719158cab66134382f4584be82e265, type: 3}
+  m_Script: {fileID: 11500000, guid: 1b745b87a26be1b488273b401d9db2f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 6070849907591194258}
-  enemyHealth: {fileID: 6070849907591194270}
-  enemyEnergy: {fileID: 6070849907591194269}
-  enemyRB2D: {fileID: 6070849907591194259}
-  enemyCollider2D: {fileID: 6070849907591194271}
+  health: {fileID: 6070849907591194270}
+  rb2D: {fileID: 6070849907591194259}
+  coll2D: {fileID: 6070849907591194271}
   moveX: 0.75
   isFacingRight: 1
   waitTime: 3
   hasReachEdge: 0
-  enemyTarget: {fileID: 0}
+  target: {fileID: 0}
   hitBox: {fileID: 6070849909014231994}
-  distance: 0.25
+  distanceToAttack: 0.25
   attackDamage: 10
+  attackRate: 1.5
+  currentAttackTime: 0
+  isAttacking: 0
+  xScale: 1
 --- !u!1 &6070849907921776479
 GameObject:
   m_ObjectHideFlags: 0
@@ -695,7 +707,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6070849907921776472}
   - component: {fileID: 6070849907921776473}
-  - component: {fileID: 3733173989122547334}
+  - component: {fileID: 5548656228777949821}
   m_Layer: 8
   m_Name: SearchTargetArea
   m_TagString: Untagged
@@ -730,7 +742,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.2045101, y: 0}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -741,9 +753,9 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.7806404, y: 0.41156584}
+  m_Size: {x: 2.5, y: 0.41156584}
   m_EdgeRadius: 0
---- !u!114 &3733173989122547334
+--- !u!114 &5548656228777949821
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -752,10 +764,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 6070849907921776479}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f876a570825e874d89a4805b0d4b242, type: 3}
+  m_Script: {fileID: 11500000, guid: faa710c48eecb5c46bd1d762cd7b15ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonController: {fileID: 4243737927434461393}
+  gobliController: {fileID: 0}
+  normalEnemyController: {fileID: 6540220138081288145}
 --- !u!1 &6070849909014231992
 GameObject:
   m_ObjectHideFlags: 0
