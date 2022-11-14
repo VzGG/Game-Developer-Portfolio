@@ -100,13 +100,11 @@ public class PlayerController : MonoBehaviour
 
         // Get A/D or LEFT/RIGHT arrow keys which gives a value between -1 and 1 for moving left or right.
         float moveX = Input.GetAxis("Horizontal");
-        //myMovement.Move(moveX);
         myMovement.Run(rb2d, anim, moveX);
 
         // Cannot do any action based when the player does not have any energy.
         if (!(myEnergy.GetEnergy() > 0)) { return; }
 
-        //if (Input.GetKeyDown(KeyCode.LeftShift) && myMovement.canDash)
         if (Input.GetKeyDown(KeyCode.LeftShift) && myMovement.GetCanSlide())
         {
             // If we press left shift and we can dash, proceed to dash.
