@@ -8,25 +8,29 @@ using UnityEngine;
  * Available at: https://www.udemy.com/course/unitycourse/
  * 
  */
+
+/// <summary>
+/// Contains all attack behaviours i.e., normal grounded attacks, midair attacks and bow attacks. 
+/// Also contain animation events which are called within the Animator's animation event tab.
+/// </summary>
 public class PlayerAttack : MonoBehaviour
 {
-    [SerializeField] private Animator animator;
-    [SerializeField] private const int attackStartingCounter = 1;
+    [Header("My normal attack")]
     [SerializeField] private int attackCurrentCounter = attackStartingCounter;
+    [SerializeField] float attackEnergy = 5f;                                               // How much the attack cost.
+    [SerializeField] float myDamage = 5f;                                                   // How much damage can the player deal to the target.
+    private const float midAirAttackInterval = 0.35f;                                       // The attack rate while mid air.
+    private const int attackStartingCounter = 1;
     [SerializeField] Energy myEnergy;
-    [SerializeField] float attackEnergy = 5f;
-    [SerializeField] float myDamage = 5f;
     [SerializeField] Health myHealth;
+    [SerializeField] BoxCollider2D myHitBox;                                                // The player's hitbox which is a box collider. The first enemy gameobject within it gets registered as the target.
     [Space]
     [Header("My Target")]
     [SerializeField] Health myTarget;
     [Space]
     [Header("Sound")]
-    [SerializeField] AudioSource audioSource;
-    [SerializeField] AudioClip[] audioClips; // Define this in the Editor
-    [Space]
-    [Header("Time manager")]
-    [SerializeField] TimeManager timeManager;
+    [SerializeField] AudioSource audioSource;                                               // The audio player.
+    [SerializeField] AudioClip[] audioClips;                                                // Define this in the Editor.
     [Space]
     [Header("My special attack")]
     [SerializeField] GameObject arrowProjectile;
@@ -35,108 +39,115 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private float bowEnergy = 20f;
 
 
+    #region Getter and Setters
+
     public void SetBowDamage(float bowDamage) { this.bowDamage = bowDamage; }
     public float GetMyBowDamage() { return this.bowDamage; }
     public void SetMyDamage(float damage) { this.myDamage = damage; }
     public float GetMyDamage() { return myDamage; }
-
     public void SetHasBow(bool status) { this.hasBow = status; }
+    public void SetMyTarget(Health target) { this.myTarget = target; }
+    public BoxCollider2D GetMyHitBox() { return this.myHitBox; }
 
-    // Used by the PlayerArriveLocation.cs script to initialise the time managers.
-    public void SetMyTimeManager(TimeManager timeManager) { this.timeManager = timeManager; }
+    #endregion
 
- 
-    public bool BowAttack(Energy myEnergy)
+    /// <summary>
+    /// Change the player's current animation to Bow attack animation which launches an arrow projectile and decreases the player's energy.
+    /// </summary>
+    /// <param name="animator"></param>
+    /// <param name="myEnergy"></param>
+    public void BowAttack(Animator animator, Energy myEnergy)
     {
-        // Only able to do so when player pick up has a bow picked up
-        if (!hasBow) { return false; }
+        // Only able to do so when player pick up has a bow picked up.
+        if (!hasBow) { return; }
 
-        bool isBowAttacking = false;
-        if (myEnergy.GetEnergy() > 0)
-        {
-            isBowAttacking = Input.GetMouseButtonDown(1);
-            // Right mouse click
-            if (isBowAttacking)
-            {
-                // Play animation of bow attack
-                animator.SetTrigger("isBowAttacking");
-
-                // Upon the final animation of bow attack - release the projectile -> this is the ANimationEventAttack_Bow()
-                // and reduce energy by n amount
-            }
-        }
-
-        return isBowAttacking;
+        // Display the bow attack animation and in that also decreases the user's energy.
+        animator.SetTrigger("isBowAttacking");
     }
 
-    public bool Attack(Energy myEnergy)
+    /// <summary>
+    /// Change the player's current animation to an attack animation, which uses energy. If the player is mid air while attacking, it changes to mid air attack animations. 
+    /// Otherwise, grounded attack animations are shown.
+    /// </summary>
+    /// <param name="myRB2D"></param>
+    /// <param name="animator"></param>
+    /// <param name="myEnergy"></param>
+    /// <param name="isMidAir"></param>
+    /// <param name="playerController"></param>
+    public void Attack(Rigidbody2D myRB2D, Animator animator, Energy myEnergy, bool isMidAir, PlayerController playerController)
     {
-        bool isAttacking = false;
-        if (myEnergy.GetEnergy() > 0)
+        // Display attack animation for mid air attacks.
+        if (isMidAir)
         {
-            isAttacking = Input.GetMouseButtonDown(0);
-            // 0 = left click mouse, 1 = right
-            if (isAttacking)
-            {
-                // When we attack, along with stopping the movement script, also stop the player from pressing any buttons
-                // doing so stops the player from making the animation being cancelled by repeating the attack animation's first few frames over and over and not running the whole frames
-
-                if (attackCurrentCounter > 3)
-                    attackCurrentCounter = attackStartingCounter;   // Reset to the starting counter - starting attack animation
-
-                // If we attack - find the appropriate attack animation  depending on the counter and increment the counter
-                // While in the animation of attacking, the player cannot/should not move, in animation editor tab, add events to disable the playerMovement class)
-                animator.SetTrigger("isAttacking" + attackCurrentCounter.ToString());
-
-
-                myEnergy.UseEnergy(attackEnergy);
-
-
-                if (!audioSource.isPlaying && attackCurrentCounter <= 2)
-                {
-                    audioSource.PlayOneShot(audioClips[0]);
-                }
-                else if (!audioSource.isPlaying && attackCurrentCounter == 3)
-                {
-                    audioSource.PlayOneShot(audioClips[1]);
-                }
-                attackCurrentCounter++;
-
-
-
-            }
+            StartCoroutine(MidAirAttack(myRB2D, animator, myEnergy, playerController));
         }
-
-        return isAttacking;
+        // Display grounded attack animations.
+        else
+        {
+            GroundedAttack(animator, myEnergy);
+        }
     }
 
-    // Called in the animation tab - from Character's animation
+    IEnumerator MidAirAttack(Rigidbody2D myRB2D, Animator animator, Energy myEnergy, PlayerController playerController)
+    {
+        Debug.Log("I am attacking mid air");
+        // Change to mid air attack animation and add an minor jump boost while doing so.
+        animator.SetTrigger("isAttack");
+        myRB2D.velocity = new Vector2(0f, 3f);
+        myEnergy.UseEnergy(attackEnergy);
+
+        // Wait for the given time to finish before executing below.
+        yield return new WaitForSeconds(midAirAttackInterval);
+
+        myRB2D.gravityScale = 1f;
+        // At the end of 1 second set isUsingActionAnim to false.
+        playerController.SetIsUsingActionAnim(false);
+    }
+
+    private void GroundedAttack(Animator animator, Energy myEnergy)
+    {
+        // Reset the counter when we use the final and 3rd attack animation to start using the first attack animation again.
+        if (attackCurrentCounter > 3)
+            attackCurrentCounter = attackStartingCounter;
+
+        animator.SetTrigger("isAttacking" + attackCurrentCounter.ToString());
+        myEnergy.UseEnergy(attackEnergy);
+
+        if (!audioSource.isPlaying && attackCurrentCounter <= 2)
+        {
+            audioSource.PlayOneShot(audioClips[0]);
+        }
+        else if (!audioSource.isPlaying && attackCurrentCounter == 3)
+        {
+            audioSource.PlayOneShot(audioClips[1]);
+        }
+        // Increase attack counter to show different attack animations.
+        attackCurrentCounter++;
+    }
+
+    #region Called in the Animator's Animation Event - specifically the sword attack and bow attack animations
+
+    // Called in the animation tab - from Character's animation.
     private void AnimationEventAttack_Bow()
     {
-        // Debug.Log("Attacking with bow!!!");
-
         // Spawn the projectile
         GameObject newArrowProjectile = Instantiate(arrowProjectile, transform.position, Quaternion.identity);
         ArrowProjectile  aP = newArrowProjectile.GetComponent<ArrowProjectile>();                               // Refactoring to optimize frame rate - https://learn.unity.com/tutorial/fixing-performance-problems?courseId=5c87de35edbc2a091bdae346&uv=5.x#5c7f8528edbc2a002053b594
         aP.SetBowDamage(bowDamage);
         aP.SetPlayerScale(this.transform.localScale);
 
-
-        /*        newArrowProjectile.GetComponent<ArrowProjectile>().SetBowDamage(bowDamage);
-                newArrowProjectile.GetComponent<ArrowProjectile>().SetPlayerScale(this.transform.localScale);*/
         // Add an SFX for releasing the arrow
         audioSource.PlayOneShot(audioClips[2]);
-        // USe energy
+        // USe energy when we successfully launched a projectile
         myEnergy.UseEnergy(bowEnergy);
     }
 
-    // Called in the animation tab - from Character's animation
+    // Called in the animation tab - from Character's animation.
     private void AnimationEventAttack()
     {
         // When we press the attack button, the animation event activates this method
-        // At this point we should have an enemy that is in our hitbox
+        // At this point we should have an enemy/target that is in our hitbox
         // If so, then attack
-        
         if (myTarget == null) { Debug.Log("Attacking the air...");  return; }
 
         if (myTarget.GetHealth() <= 0)
@@ -145,43 +156,6 @@ public class PlayerAttack : MonoBehaviour
             return;
         }
         myTarget.TakeDamage(myDamage);
-        // Debug.Log("Attacking: " + myTarget);
-    }
-
-    [SerializeField] BoxCollider2D myHitBox;
-
-    #region Finding An Enemy In Our Character's Hitbox
-    // This should call the collider in our character that has OnTrigger to true - should be a small collider just a bit forward on the player's facing direction
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        // Adds 1 target for us to attack, used for when using any attack animation
-        if (collision.tag == "Enemy" && myHitBox.IsTouching(collision.gameObject.GetComponent<BoxCollider2D>()))
-        {
-            myTarget = collision.gameObject.GetComponent<Health>();
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        // This removes our current target when our hitbox discovers that the enemy leaves our hitbox
-        if (collision.tag == "Enemy" && !myHitBox.IsTouching(collision.gameObject.GetComponent<BoxCollider2D>())  )
-        {
-            myTarget = null;
-        }
-    }
-    #endregion
-
-
-    #region Enemy Projectile Hitting The player
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("EnemyProjectile") && collision.gameObject.tag == "EnemyProjectile")
-        {
-            Debug.Log("being hit");
-            // Debug.Log("Hit by: " + collision.gameObject.name);
-            EnemyArrowProjectile enemyArrowProjectile = collision.gameObject.GetComponent<EnemyArrowProjectile>();
-            myHealth.TakeDamage(enemyArrowProjectile.GetDamage());
-        }
     }
 
     #endregion

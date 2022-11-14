@@ -336,16 +336,19 @@ MonoBehaviour:
   myRB2D: {fileID: 9057973526240010892}
   runningThreshold: 0.01
   moveSpeed: 1.5
-  jumpSpeed: 3
+  jumpSpeed: 3.5
   myCollider2D: {fileID: 9057973526240010891}
   slideForce: {x: 1, y: 0}
   myEnergy: {fileID: 9057973526240010903}
   jumpEnergy: 10
-  slideEnergy: 0.5
+  slideEnergy: 10
   body: {fileID: 9057973525826936322}
   myHealth: {fileID: 9057973526240010888}
   timeManager: {fileID: 0}
   spriteRenderer: {fileID: 9057973526240010895}
+  canDash: 1
+  isDashing: 0
+  slideSpeed: 5
 --- !u!114 &9057973526240010889
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -375,6 +378,9 @@ MonoBehaviour:
   hasBow: 0
   bowDamage: 0
   bowEnergy: 20
+  attackRate: 1
+  currentAttackRate: 0
+  jumpAttackCounter: 0
   myHitBox: {fileID: 9057973526240010902}
 --- !u!114 &9057973526240010888
 MonoBehaviour:
@@ -408,6 +414,7 @@ MonoBehaviour:
   isEvilWizard: 0
   isBoss: 0
   isHitDuringEnrage: 0
+  enemyController: {fileID: 0}
   accumulatedDamage: 0
   accumulatedDamageThreshold: 0
   isNormalPhase: 1
@@ -461,3 +468,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3afd3f9eb853f4479d2521449199e48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timeManager: {fileID: 0}
+  myColl2D: {fileID: 9057973526240010891}
+  myBoxColl2D: {fileID: 9057973526240010902}
+  rb2d: {fileID: 9057973526240010892}
+  anim: {fileID: 9057973526240010893}
+  jumpAnimController: {fileID: 9100000, guid: ed0ba4db53feaf04ba06153ec299af2f, type: 2}
+  mainAnimController: {fileID: 9100000, guid: a3bc2370998ad6b4ca569280580cf327, type: 2}

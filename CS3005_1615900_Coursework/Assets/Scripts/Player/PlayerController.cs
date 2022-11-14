@@ -12,12 +12,20 @@ public class PlayerController : MonoBehaviour
     PlayerMovement myMovement;
     Health myHealth;
     Energy myEnergy;
-    [SerializeField] TimeManager timeManager;               // Set this value in the editor for each level
+    [SerializeField] TimeManager timeManager;                           // Set this value in the editor for each level.
+    [SerializeField] Collider2D myColl2D;                               // Set in the inspector.
+    [SerializeField] Rigidbody2D rb2d;                                  // Set in the inspector.
+    [SerializeField] Animator anim;                                     // Set in the inspector.
+    // This bool is changed to true at the start of any animation like Attack, Jump, and Slide.
+    // It is then set to false when we return to Idle.
+    private bool isUsingActionAnim = false;                             // The players main action status used to only have 1 action at a time and without any action buffers.
+    bool isMidAir = false;                                              // Used to determine whether the player changes animation jump animation or idle animation.
+    bool isJumpAttack3 = false;                                         // Used to determine whether the player uses the final jump attack and lands on the ground.
 
-    // This bool is changed to true at the start of any animation like Attack, Jump, and Slide
-    // It is then set to false when we return to Idle
-    private bool isUsingActionAnim = false;
+    [SerializeField] RuntimeAnimatorController jumpAnimController;      // Jump anim controller - also holds all the mid air attack animations.
+    [SerializeField] RuntimeAnimatorController mainAnimController;      // Main anim controller - includes most of the animations like running, sliding, and grounded attacks.
 
+    public void SetIsUsingActionAnim(bool status) { this.isUsingActionAnim = status; }
     public void SetTimeManager(TimeManager timeManager) { this.timeManager = timeManager; }     // Set this to the timeManager we have at each level, because this gets missing at the end of each level w/o it
 
     private void Awake()
@@ -25,56 +33,11 @@ public class PlayerController : MonoBehaviour
         Singleton();
         SetReferences();
     }
-
-
+    
     // Update is called once per frame - all the logic and input events here
     void Update()
     {
-        if (myHealth.GetHealth() <= 0f) { return; }         // Stops any logic below when player dies
-        if (timeManager == null) { return; }                // Stop null reference error
-        if (timeManager.GetIsTimeStopped()) { return; }     // Pause time should stop any physics movement - https://gamedevbeginner.com/the-right-way-to-pause-the-game-in-unity/#exclude_objects_from_pause
-
-
-        myEnergy.EnergyRegen();                             // Regen my energy
-
-
-        // If there is an animation going on, cannot do any pressing
-        if (isUsingActionAnim) { return; }
-
-
-        // 3 IF Statement, only one should run
-
-        
-        if (myMovement.SlidePressed(myEnergy))              // When we press slide, activate the slide animation in the fixedupdate
-        {
-            // Can only slide, cannot attack at the same time or buffer
-        }
-        else if (myAttack.Attack(myEnergy))                 // When we press attack, show the animation for attacking
-        {
-            // can only attack, cannot slide at the same time or buffer
-        }
-        else if (myAttack.BowAttack(myEnergy))              // When we press the other attack (right click), show bow animation attack
-        {
-
-        }
-         
-    }
-
-    // All physics related movement here
-    private void FixedUpdate()
-    {
-        if (myHealth.GetHealth() <= 0f) { return; }         // Stops any logic below when player dies
-        if (timeManager == null) { return; }                // Stop null reference error
-        if (timeManager.GetIsTimeStopped()) { return; }     // Pause time should stop any physics movement - https://gamedevbeginner.com/the-right-way-to-pause-the-game-in-unity/#exclude_objects_from_pause
-
-        // If there is an animation going on, cannot do any pressing, or any animation in the fixed update
-        if (isUsingActionAnim) { return; }
-
-       
-
-        myMovement.Run();                                   // Run either left or right with a run animation
-        myMovement.Jump(myEnergy);                          // Makes the player jump up with jump animation
-        myMovement.SlideNew();                              // Makes the player slide with slide animation
+        PlayerBehaviour();
     }
 
     private void Singleton()
@@ -95,11 +58,137 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    // Called in Animation Event
-    public void IsUsingActionAnimTrue() { this.isUsingActionAnim = true; }
-    // Called in Animation Event
-    public void IsUsingActionAnimFalse() { this.isUsingActionAnim = false; }
+    /// <summary>
+    /// Contains the player frame by frame logic. i.e., movement, attacking, etc.
+    /// </summary>
+    private void PlayerBehaviour()
+    {
+        if (myHealth.GetHealth() <= 0f) { return; }         // Stops any logic below when player dies
+        if (timeManager == null) { return; }                // Stop null reference error
+        if (timeManager.GetIsTimeStopped()) { return; }     // Pause time should stop any action and physics movement - https://gamedevbeginner.com/the-right-way-to-pause-the-game-in-unity/#exclude_objects_from_pause
 
-   
+
+        myEnergy.EnergyRegen();                             // Always regenerate my energy
+
+        
+        // Always change to the jump anim when we are not touching the ground
+        if (!myColl2D.IsTouchingLayers(LayerMask.GetMask("Ground")))
+        {
+            anim.runtimeAnimatorController = jumpAnimController;
+            isMidAir = true;
+        }
+        else
+        {
+            // During mid jump attack 3 animation and landed on the ground, show the landed attack animation.
+            if (isJumpAttack3)
+            {
+                anim.SetTrigger("isLanded");
+            }
+            else
+            {
+                // Otherwise if we just landed, go straight to the idle animation.
+                anim.runtimeAnimatorController = mainAnimController;
+                isMidAir = false;
+            }
+        }
+
+        // If there is an animation going on, cannot do any pressing
+        if (isUsingActionAnim) { return; }
+
+        // Cannot do any action below when we dash.
+        if (myMovement.GetIsSliding()) { return; }
+
+        // Get A/D or LEFT/RIGHT arrow keys which gives a value between -1 and 1 for moving left or right.
+        float moveX = Input.GetAxis("Horizontal");
+        //myMovement.Move(moveX);
+        myMovement.Run(rb2d, anim, moveX);
+
+        // Cannot do any action based when the player does not have any energy.
+        if (!(myEnergy.GetEnergy() > 0)) { return; }
+
+        //if (Input.GetKeyDown(KeyCode.LeftShift) && myMovement.canDash)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && myMovement.GetCanSlide())
+        {
+            // If we press left shift and we can dash, proceed to dash.
+            StartCoroutine(myMovement.Slide(rb2d, anim, myEnergy));
+        }
+        else if (Input.GetKeyDown(KeyCode.Space) && myColl2D.IsTouchingLayers(LayerMask.GetMask("Ground")))
+        {
+            // Can only jump when we are touching the ground and have pressed the space key.
+            myMovement.Jump(rb2d, anim, myEnergy);
+            anim.runtimeAnimatorController = jumpAnimController;
+            isMidAir = true;
+        }
+        else if (Input.GetMouseButtonDown(0))
+        {
+            // When we left click, proceeed to attack.
+            myAttack.Attack(rb2d, anim, myEnergy, isMidAir, this);
+        }
+        else if (Input.GetMouseButtonDown(1))
+        {
+            // When we right click, proceed to use special attack - bow
+            myAttack.BowAttack(anim, myEnergy);
+        }
+    }
+
+
+    #region Called in Animator's animation event on any action based animations
+
+    // Called in Animation Event.
+    public void IsUsingActionAnimTrue() { this.isUsingActionAnim = true; }
+    // Called in Animation Event.
+    public void IsUsingActionAnimFalse() { this.isUsingActionAnim = false; }
+    // Called in Animation Event.
+    public void IsJumpAttack3True() { this.isJumpAttack3 = true; }
+    // Called in Animation Event.
+    public void IsJumpAttack3False() { this.isJumpAttack3 = false; }
+
+    #endregion
+
+
+    #region Collision Detection Logic - Finding An Enemy In Our Character's Hitbox
+
+    /// <summary>
+    /// This method is called when the player attack class' myHitBox finds an enemy within its box collider range.
+    /// Then the enemy is registered as the player's current target.
+    /// </summary>
+    /// <param name="collision"></param>
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        // Adds 1 target for us to attack, used for when using any attack animation
+        if (collision.tag == "Enemy" && myAttack.GetMyHitBox().IsTouching(collision.gameObject.GetComponent<BoxCollider2D>()))
+        {
+            myAttack.SetMyTarget(collision.gameObject.GetComponent<Health>());
+        }
+    }
+
+    /// <summary>
+    /// Upon exiting the player attack class' myHitBox this method is called to remove the current target.
+    /// </summary>
+    /// <param name="collision"></param>
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        // This removes our current target when our hitbox discovers that the enemy leaves our hitbox
+        if (collision.tag == "Enemy" && !myAttack.GetMyHitBox().IsTouching(collision.gameObject.GetComponent<BoxCollider2D>()))
+        {
+            myAttack.SetMyTarget(null);
+        }
+    }
+
+    #endregion
+
+
+    #region Collision Detection Logic - Enemy Projectile Hitting The Player
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("EnemyProjectile") && collision.gameObject.tag == "EnemyProjectile")
+        {
+            Debug.Log("being hit");
+            EnemyArrowProjectile enemyArrowProjectile = collision.gameObject.GetComponent<EnemyArrowProjectile>();
+            myHealth.TakeDamage(enemyArrowProjectile.GetDamage());
+        }
+    }
+
+    #endregion
 
 }

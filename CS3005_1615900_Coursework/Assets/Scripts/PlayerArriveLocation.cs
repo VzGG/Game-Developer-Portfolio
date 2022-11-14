@@ -27,8 +27,6 @@ public class PlayerArriveLocation : MonoBehaviour
             GameObject character = FindObjectOfType<PlayerMovement>().gameObject;
             character.transform.position = playerArriveLocationPoint;                           // Set the player's position
             TimeManager timeManager = FindObjectOfType<TimeManager>();                          // Get the time manager
-            FindObjectOfType<PlayerMovement>().SetMyTimeManager(timeManager);                   // Set the time manager
-            FindObjectOfType<PlayerAttack>().SetMyTimeManager(timeManager);                     // Set the time manager
             FindObjectOfType<PlayerController>().SetTimeManager(timeManager);                   // Set the time manager
             FindObjectOfType<PlayerCamera>().SetMyTarget(character.transform);                  // Set the camera
 
