@@ -45,81 +45,40 @@ public class Health : MonoBehaviour
     [Space]
     [SerializeField] EnemyController enemyController;           // Set in the editor
 
-    // This is called only once whenever it takes damage, not like it is called in an update
-    public void TakeDamage(float damage) 
-    { 
+
+    public void TakeDamage(float damage)
+    {
         this.health = Mathf.Max(this.health - damage, 0f);
-        
-
-        if (this.gameObject.tag == "Player")
-        {
-            audioSource.PlayOneShot(hurtSFX);
-
-            // Play VFX hurt for the player
-            StartCoroutine(HurtVFX());
-
-            /*playerUI.SetIsAttacked(true);*/
-        }
-        // Boss hurt vfx
-        if (this.gameObject.tag == "Enemy" && isBoss)
-        {
-            StartCoroutine(HurtVFX());
-        }
-
-        // If it's evil wizard
-        if (this.gameObject.tag == "Enemy" && isEvilWizard)
-        {
-            StartCoroutine(HurtVFX());
-        }
-
-        // Play any VFX when damage taken - For Gobli, and Skeleton enemies
-        if (hasFlinch && health > 0)
-        {
-            // Need to block below - this if statement below should do that
-            // When enemy is attacking and during that he is hit, do not show the hurt animation, instead fully commit the attack animation
-            if (enemyController.GetIsAttacking()) { return; }
-
-            // Show hurt animation
-            animator.SetTrigger(animationParameterName);
-
-        }
-
-        // When we die, destroy this gameobject. Play dying VFX if there is
-        if (health <= 0f)
-        {
-            animator.runtimeAnimatorController = animatorController;
-            Instantiate(BloodVFX, transform.position, transform.rotation);      // Instantiate the BloodVFX
-            audioSource.PlayOneShot(deathSFX);                                  // Play the death SFX
-            if (this.gameObject.tag == "Enemy")
-            {
-                FindObjectOfType<ProgressManager>().DeleteEnemy(this.gameObject);
-            }
-            else if (this.gameObject.tag == "Player")
-            {
-                Debug.Log("Player dead, calling game over");
-                StartCoroutine(WaitingToDie());
-                return;
-            }
-            Destroy(gameObject, 5f);
-            return;
-        }
+    }
 
 
-        // This means the take damage method is called when the boss is hit during ENRAGED - OUR CONDITION to stop casting the spell of the boss
-        // If its the boss and is not in normal phase - normal phase = true is default
-        if (isBoss && !isNormalPhase)
-        {
-            // Debug.Log("BOSS IS HIT DURING ENRAGED - RETURN TO normal phase");
-            isHitDuringEnrage = true;
 
-        }
+    // This is called only once whenever it takes damage, not like it is called in an update
+    //public void TakeDamage(float damage) 
+    //{ 
 
-        // Put it below to stop calling this when health is zero or less - should only be called if its a boss
-        BossPhase(damage);
+    //    // Boss hurt vfx
+    //    if (this.gameObject.tag == "Enemy" && isBoss)
+    //    {
+    //        StartCoroutine(HurtVFX());
+    //    }
+
+
+    //    // This means the take damage method is called when the boss is hit during ENRAGED - OUR CONDITION to stop casting the spell of the boss
+    //    // If its the boss and is not in normal phase - normal phase = true is default
+    //    if (isBoss && !isNormalPhase)
+    //    {
+    //        // Debug.Log("BOSS IS HIT DURING ENRAGED - RETURN TO normal phase");
+    //        isHitDuringEnrage = true;
+
+    //    }
+
+    //    // Put it below to stop calling this when health is zero or less - should only be called if its a boss
+    //    BossPhase(damage);
 
  
 
-    }
+    //}
 
     #region Boss phase starter
 
@@ -167,19 +126,25 @@ public class Health : MonoBehaviour
 
     #endregion
 
-
-
-    IEnumerator Flinch()
+    public void BloodEffectVFX()
     {
-        // Mostly used, at the moment, to stop the running animation
-        animator.SetBool(animationParameterName2, false);
-        // Wait for n seconds and set is hurt back to false
-        yield return new WaitForSeconds(isHurtDuration);
-        SetIsHurt(false);
-        
+        Instantiate(BloodVFX, transform.position, transform.rotation);
+
+        Debug.Log("INSTANTIATING BLOOD VFX");
     }
 
-    IEnumerator HurtVFX()
+    public void PlayHurtSFX()
+    {
+        audioSource.PlayOneShot(hurtSFX);
+    }
+
+    public void PlayDeadSFX()
+    {
+        audioSource.PlayOneShot(deathSFX);
+    }
+
+
+    public IEnumerator HurtVFX()
     {
         
         // Change colour to hurt colour
@@ -193,7 +158,7 @@ public class Health : MonoBehaviour
 
     }
 
-    IEnumerator WaitingToDie()
+    public IEnumerator WaitingToDie()
     {
         yield return new WaitForSeconds(3f);
         FindObjectOfType<LevelsManager>().LoadScene("Game Over");
@@ -207,6 +172,4 @@ public class Health : MonoBehaviour
     public float GetHealth() { return this.health; }
     public float GetHealthPercentage() { return health / maxHealth; }
 
-    public bool GetIsHurt() { return isHurt; }
-    public void SetIsHurt(bool status) { isHurt = status; }
 }

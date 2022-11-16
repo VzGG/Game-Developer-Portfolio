@@ -58,7 +58,8 @@ public class Boulder : MonoBehaviour
         // Works
         if (collision.gameObject.tag == "Player" && collision.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            collision.gameObject.GetComponent<Health>().TakeDamage(trapDamage);
+            //collision.gameObject.GetComponent<Health>().TakeDamage(trapDamage);
+            collision.gameObject.GetComponent<PlayerController>().PlayerTakeDamage(trapDamage);
         }
 
         // Explosion then reset transform
@@ -81,7 +82,8 @@ public class Boulder : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player" && collision.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            collision.gameObject.GetComponent<Health>().TakeDamage(trapDamageStay);
+            //collision.gameObject.GetComponent<Health>().TakeDamage(trapDamageStay);
+            collision.gameObject.GetComponent<PlayerController>().PlayerTakeDamage(trapDamageStay);
         }
     }
 

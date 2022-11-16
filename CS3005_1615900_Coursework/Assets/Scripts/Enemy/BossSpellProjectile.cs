@@ -40,7 +40,8 @@ public class BossSpellProjectile : MonoBehaviour
         if (spellHitBox.IsTouching(targetBody))
         {
             // Take spell damage
-            characterHealth.TakeDamage(spellDamage);
+            //characterHealth.TakeDamage(spellDamage);
+            characterHealth.gameObject.GetComponent<PlayerController>().PlayerTakeDamage(spellDamage);
             // Debug.Log("SPELL HIT CHARACTER");
         }
 

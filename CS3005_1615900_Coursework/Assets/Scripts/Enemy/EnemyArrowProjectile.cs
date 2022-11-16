@@ -7,7 +7,7 @@ public class EnemyArrowProjectile : MonoBehaviour
     [SerializeField] Rigidbody2D projectileRB2D;
     [SerializeField] float projectileSpeed = 5f;
     [SerializeField] float damage = 15f;
-    [SerializeField] EvilWizardController evilWizardController;
+    //[SerializeField] EvilWizardController evilWizardController;
     [SerializeField] Vector3 scale;
     [Header("VFX Properties")]
     [SerializeField] GameObject arrowHitVFX;
@@ -15,7 +15,7 @@ public class EnemyArrowProjectile : MonoBehaviour
     public float GetDamage() { return damage; }
 
     public void SetScale(Vector3 scale) { this.scale = scale; }
-    public void SetEvilWizardController(EvilWizardController evilWizardController) { this.evilWizardController = evilWizardController; }
+    //public void SetEvilWizardController(EvilWizardController evilWizardController) { this.evilWizardController = evilWizardController; }
 
     // Start is called before the first frame update
     void Start()

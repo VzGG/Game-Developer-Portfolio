@@ -1,5 +1,62 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6328970407743561004
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2070293881701889184}
+  - component: {fileID: 1359682913172175672}
+  m_Layer: 20
+  m_Name: CharacterHitBox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2070293881701889184
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6328970407743561004}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 9057973526240010894}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &1359682913172175672
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6328970407743561004}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.15, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.3, y: 0.37}
+  m_EdgeRadius: 0
 --- !u!1 &9057973525826936322
 GameObject:
   m_ObjectHideFlags: 0
@@ -87,6 +144,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 9057973525826936321}
+  - {fileID: 2070293881701889184}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -332,23 +390,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 9057973526240010893}
-  isFacingRight: 1
-  myRB2D: {fileID: 9057973526240010892}
   runningThreshold: 0.01
   moveSpeed: 1.5
   jumpSpeed: 3.5
-  myCollider2D: {fileID: 9057973526240010891}
-  slideForce: {x: 1, y: 0}
   myEnergy: {fileID: 9057973526240010903}
   jumpEnergy: 10
   slideEnergy: 10
-  body: {fileID: 9057973525826936322}
-  myHealth: {fileID: 9057973526240010888}
-  timeManager: {fileID: 0}
-  spriteRenderer: {fileID: 9057973526240010895}
-  canDash: 1
-  isDashing: 0
   slideSpeed: 5
+  slideDuration: 0.2
+  slideCooldown: 1
+  canSlide: 1
+  isSliding: 0
 --- !u!114 &9057973526240010889
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -361,27 +413,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 012327aaa1618734d8cddc31043d79a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 9057973526240010893}
   attackCurrentCounter: 1
-  myEnergy: {fileID: 9057973526240010903}
   attackEnergy: 5
   myDamage: 5
+  myEnergy: {fileID: 9057973526240010903}
   myHealth: {fileID: 9057973526240010888}
-  myTarget: {fileID: 0}
+  myHitBox: {fileID: 1359682913172175672}
+  myTargets: []
   audioSource: {fileID: 9057973526240010901}
   audioClips:
   - {fileID: 8300000, guid: 01674f8834871cc4cb28cecc01823f49, type: 3}
   - {fileID: 8300000, guid: c825e3d59593b4748b204882bf673a4c, type: 3}
   - {fileID: 8300000, guid: 7846cdbeef6fef041b991207b14e4f63, type: 3}
-  timeManager: {fileID: 0}
   arrowProjectile: {fileID: 3064437174599912476, guid: 13b6a1228be18234491c3e1ed167c271, type: 3}
   hasBow: 0
   bowDamage: 0
   bowEnergy: 20
-  attackRate: 1
-  currentAttackRate: 0
-  jumpAttackCounter: 0
-  myHitBox: {fileID: 9057973526240010902}
 --- !u!114 &9057973526240010888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -470,8 +517,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeManager: {fileID: 0}
   myColl2D: {fileID: 9057973526240010891}
-  myBoxColl2D: {fileID: 9057973526240010902}
   rb2d: {fileID: 9057973526240010892}
   anim: {fileID: 9057973526240010893}
   jumpAnimController: {fileID: 9100000, guid: ed0ba4db53feaf04ba06153ec299af2f, type: 2}
   mainAnimController: {fileID: 9100000, guid: a3bc2370998ad6b4ca569280580cf327, type: 2}
+  deadAnimController: {fileID: 9100000, guid: f793f28c914091d4d9066ec0b01631bc, type: 2}

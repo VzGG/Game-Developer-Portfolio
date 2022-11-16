@@ -43590,6 +43590,10 @@ PrefabInstance:
       propertyPath: dialogueManager
       value: 
       objectReference: {fileID: 451353711}
+    - target: {fileID: 2875204129660541265, guid: f31553829344fdb42a7c78ff689e1630, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6237933760249786851, guid: f31553829344fdb42a7c78ff689e1630, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -43614,6 +43618,10 @@ PrefabInstance:
       propertyPath: timeManager
       value: 
       objectReference: {fileID: 519805111}
+    - target: {fileID: 9057973526240010893, guid: f31553829344fdb42a7c78ff689e1630, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: a3bc2370998ad6b4ca569280580cf327, type: 2}
     - target: {fileID: 9057973526240010894, guid: f31553829344fdb42a7c78ff689e1630, type: 3}
       propertyPath: m_RootOrder
       value: 1

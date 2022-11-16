@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] RuntimeAnimatorController jumpAnimController;      // Jump anim controller - also holds all the mid air attack animations.
     [SerializeField] RuntimeAnimatorController mainAnimController;      // Main anim controller - includes most of the animations like running, sliding, and grounded attacks.
-
+    [SerializeField] RuntimeAnimatorController deadAnimController;      // Dead anim controller - when the player dies, switch to the death animation forever.
     public void SetIsUsingActionAnim(bool status) { this.isUsingActionAnim = status; }
     public void SetTimeManager(TimeManager timeManager) { this.timeManager = timeManager; }     // Set this to the timeManager we have at each level, because this gets missing at the end of each level w/o it
 
@@ -154,9 +154,9 @@ public class PlayerController : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         // Adds 1 target for us to attack, used for when using any attack animation
-        if (collision.tag == "Enemy" && myAttack.GetMyHitBox().IsTouching(collision.gameObject.GetComponent<BoxCollider2D>()))
+        if (collision.tag == "Enemy" && myAttack.GetMyHitBox().IsTouching(collision.gameObject.GetComponent<CircleCollider2D>()))
         {
-            myAttack.SetMyTarget(collision.gameObject.GetComponent<Health>());
+            myAttack.AddToMyTargets(collision.gameObject.GetComponent<Health>());
         }
     }
 
@@ -167,9 +167,9 @@ public class PlayerController : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision)
     {
         // This removes our current target when our hitbox discovers that the enemy leaves our hitbox
-        if (collision.tag == "Enemy" && !myAttack.GetMyHitBox().IsTouching(collision.gameObject.GetComponent<BoxCollider2D>()))
+        if (collision.tag == "Enemy" && !myAttack.GetMyHitBox().IsTouching(collision.gameObject.GetComponent<CircleCollider2D>()))
         {
-            myAttack.SetMyTarget(null);
+            myAttack.RemoveToMyTargets(collision.gameObject.GetComponent<Health>());
         }
     }
 
@@ -177,13 +177,45 @@ public class PlayerController : MonoBehaviour
 
 
     #region Collision Detection Logic - Enemy Projectile Hitting The Player
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("EnemyProjectile") && collision.gameObject.tag == "EnemyProjectile")
         {
-            Debug.Log("being hit");
             EnemyArrowProjectile enemyArrowProjectile = collision.gameObject.GetComponent<EnemyArrowProjectile>();
-            myHealth.TakeDamage(enemyArrowProjectile.GetDamage());
+            PlayerTakeDamage(enemyArrowProjectile.GetDamage());
+        }
+    }
+
+    #endregion
+
+    #region Taking Damage Logic
+
+    /// <summary>
+    /// Player takes damage, display VFX, play hurt SFX and when dead, change to game over scene.
+    /// </summary>
+    /// <param name="damage"></param>
+    public void PlayerTakeDamage(float damage)
+    {
+        // Player takes damage and play its hurt SFX and VFX.
+        myHealth.TakeDamage(damage);
+        myHealth.PlayHurtSFX();
+        StartCoroutine(myHealth.HurtVFX());
+
+        // When the player dies, appropriate actions are taken.
+        if (myHealth.GetHealth() <= 0f)
+        {
+            // Change to dead anim controller.
+            anim.runtimeAnimatorController = deadAnimController;
+
+            // Display blood effect on death.
+            myHealth.BloodEffectVFX();
+
+            // Destroy the player after 5 seconds.
+            Destroy(gameObject, 5f);
+
+            // Call LevelManager to the game it is over and switch to a different scene.
+            StartCoroutine(myHealth.WaitingToDie());
         }
     }
 

@@ -10,7 +10,8 @@ using UnityEngine;
 public abstract class EnemyController : MonoBehaviour
 {
 
-    [SerializeField] protected Animator animator;
+    [SerializeField] protected Animator anim;
+    [SerializeField] protected RuntimeAnimatorController deadAnimController;
     [SerializeField] protected Health health;
     [SerializeField] protected Rigidbody2D rb2D;
     [SerializeField] protected Collider2D coll2D;                   // This is the box collider2d of the enemy which is the enemy's actual body collider.
@@ -49,6 +50,7 @@ public abstract class EnemyController : MonoBehaviour
     /// It is "Protected" so that it is public only in itself and its children.
     /// </summary>
     protected abstract void EnemyAI();
+    public abstract void EnemyTakeDamage(float damage);
 
     /// <summary>
     /// Looks at the player when attacking
@@ -78,7 +80,7 @@ public abstract class EnemyController : MonoBehaviour
         // When we have no target and we are touching the ground, move left and right
         if (coll2D.IsTouchingLayers(LayerMask.GetMask("Ground")) && target == null && hasReachEdge == false)
         {
-            animator.SetBool(animatorParameterName, status);
+            anim.SetBool(animatorParameterName, status);
             if (isFacingRight)
             {
                 rb2D.velocity = new Vector2(moveX, rb2D.velocity.y);
@@ -97,7 +99,7 @@ public abstract class EnemyController : MonoBehaviour
     /// <param name="status"></param>
     protected void Idle(string animatorParameterName, bool status)
     {
-        animator.SetBool(animatorParameterName, status);
+        anim.SetBool(animatorParameterName, status);
     }
 
     /// <summary>
@@ -145,10 +147,9 @@ public abstract class EnemyController : MonoBehaviour
         // At the frame which the enemy does the attack animation AND it is touching the character, the character takes damage
         if (touchingCharacter)
         {
-            characterHealth.TakeDamage(attackDamage);
+            //characterHealth.TakeDamage(attackDamage);
+            characterHealth.gameObject.GetComponent<PlayerController>().PlayerTakeDamage(attackDamage);
         }
-
-
     }
 
     protected void SetRB2DMass(float mass)

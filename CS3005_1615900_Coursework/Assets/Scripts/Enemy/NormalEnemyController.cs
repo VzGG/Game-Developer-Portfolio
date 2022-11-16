@@ -9,12 +9,22 @@ using UnityEngine;
 /// </summary>
 public class NormalEnemyController : EnemyController
 {
+    protected enum AttackPattern
+    {
+        Melee_Attacks,
+        Range_Attacks,
+        Mixed
+    }
+
+    [SerializeField] AttackPattern attackPattern;
+
     /// <summary>
     /// Should have the physics related here. This is the loop method that can run more than once per frame.
     /// </summary>
     private void FixedUpdate()
     {
         this.EnemyAI();
+
     }
 
     /// <summary>
@@ -24,8 +34,9 @@ public class NormalEnemyController : EnemyController
     {
         if (this.health.GetHealth() <= 0)
         {
-            this.enabled = false;
-            this.SetRB2DMass(1f);
+            //this.enabled = false;
+            //this.SetRB2DMass(1f);
+            //EnemyTakeDamage(100000);
             return;
         }
 
@@ -36,7 +47,18 @@ public class NormalEnemyController : EnemyController
         }
         else
         {
-            AttackPlayer();
+            switch (attackPattern)
+            {
+                case AttackPattern.Melee_Attacks:
+                    MeleeAttackPlayer();
+                    break;
+                case AttackPattern.Range_Attacks:
+                    RangeAttackPlayer();
+                    break;
+                case AttackPattern.Mixed:
+                    MixedAttackPlayer();
+                    break;
+            }
         }
     }
 
@@ -57,11 +79,13 @@ public class NormalEnemyController : EnemyController
         }
     }
 
+    #region Attack Modes - Melee, Range, Mixed
+
     /// <summary>
     /// The enemy starts moving towards the player and at every intervals it attacks the player when at the attacking distance. 
     /// The enemy can fully commit attacks even if the player moves away the distance or the target is lost somehow.
     /// </summary>
-    private void AttackPlayer()
+    private void MeleeAttackPlayer()
     {
         StopCoroutine(Wait());
 
@@ -74,7 +98,7 @@ public class NormalEnemyController : EnemyController
             // Don't move when cannot attack.
             if (isAttacking) { return; }
 
-            animator.SetBool("isRunning", true);
+            anim.SetBool("isRunning", true);
             // If player is on the left, move towards the left direction.
             if (this.transform.position.x > this.target.transform.position.x)
             {
@@ -94,7 +118,7 @@ public class NormalEnemyController : EnemyController
         else
         {
             // Go idle state first.
-            animator.SetBool("isRunning", false);
+            anim.SetBool("isRunning", false);
 
             // Then if we can now attack at the given time interval, then attack
             if (currentAttackTime >= attackRate && !isAttacking)
@@ -102,13 +126,26 @@ public class NormalEnemyController : EnemyController
                 isAttacking = true;
                 LookAtPlayer(this.xScale);
                 // Then attack
-                animator.SetTrigger("isAttacking");
+                anim.SetTrigger("isAttacking");
 
                 // Reset time to create an "attack rate"
                 currentAttackTime = 0f;
             }
         }
     }
+
+    private void RangeAttackPlayer()
+    {
+        // Always try to attack at a range.
+        // If the player gets near the enemy, attempt to go further away from player.
+    }
+
+    private void MixedAttackPlayer()
+    {
+        // Mixed attacks - can go melee or range.
+    }
+
+    #endregion
 
     /// <summary>
     /// This method is called the moment this script/gameobject attached to has its collider2D stops overlapping with the platform of the level. This results in this enemy reaching the edge of a platform.
@@ -131,9 +168,58 @@ public class NormalEnemyController : EnemyController
         if (collision.gameObject.layer == LayerMask.NameToLayer("Projectile") && collision.gameObject.tag == "Player")
         {
             ArrowProjectile arrowProjectile = collision.gameObject.GetComponent<ArrowProjectile>();
-            health.TakeDamage(arrowProjectile.GetBowDamage());
+            //health.TakeDamage(arrowProjectile.GetBowDamage());
+            
+            
+            this.EnemyTakeDamage(arrowProjectile.GetBowDamage());
         }
     }
 
+    #region Taking Damage Logic
+    public override void EnemyTakeDamage(float damage)
+    {
+        Debug.Log("Taking Damage!");
+        health.TakeDamage(damage);
+        health.PlayHurtSFX();
 
+        // When attacking, cannot be changing to hurt animation
+        if (this.isAttacking)
+        {
+
+        }
+        else
+        {
+            // Play Hurt Animation
+            anim.SetTrigger("isHurt");
+        }
+
+
+
+        if (health.GetHealth() <= 0f)
+        {
+            Debug.Log("enemy is dead");
+
+            // Change to dead anim controller
+            this.anim.runtimeAnimatorController = deadAnimController;
+
+            health.BloodEffectVFX();
+            // Play Dead SFX
+            health.PlayDeadSFX();
+
+            // Tell progress manager to delete this gameobject in the list
+            FindObjectOfType<ProgressManager>().DeleteEnemy(this.gameObject);
+
+            // Destroy gameObj
+            Destroy(gameObject, 5f);
+
+            this.enabled = false;
+            this.SetRB2DMass(1f);
+
+        }
+
+
+
+    }
+
+    #endregion
 }

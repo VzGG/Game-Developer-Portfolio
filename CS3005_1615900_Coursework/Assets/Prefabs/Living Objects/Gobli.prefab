@@ -339,7 +339,7 @@ GameObject:
   - component: {fileID: 8997636781220968117}
   - component: {fileID: 8997636781220968119}
   - component: {fileID: 8997636781220968118}
-  - component: {fileID: 8997636781220968122}
+  - component: {fileID: 7502826922224501980}
   - component: {fileID: 8997636781220968125}
   - component: {fileID: 5358320873335480532}
   - component: {fileID: 8997636781220968123}
@@ -461,8 +461,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!61 &8997636781220968122
-BoxCollider2D:
+--- !u!58 &7502826922224501980
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -474,19 +474,9 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.08}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.5, y: 1.5}
-    newSize: {x: 1.5, y: 1.5}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
+  m_Offset: {x: 0, y: -0.12}
   serializedVersion: 2
-  m_Size: {x: 0.32, y: 0.4}
-  m_EdgeRadius: 0
+  m_Radius: 0.15
 --- !u!70 &8997636781220968125
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -631,8 +621,6 @@ MonoBehaviour:
   isEvilWizard: 0
   isBoss: 0
   isHitDuringEnrage: 0
-  gobliController: {fileID: 0}
-  skeletonController: {fileID: 0}
   enemyController: {fileID: 5659770827051711640}
   accumulatedDamage: 0
   accumulatedDamageThreshold: 0
@@ -666,10 +654,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b745b87a26be1b488273b401d9db2f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 8997636781220968119}
+  anim: {fileID: 8997636781220968119}
+  deadAnimController: {fileID: 9100000, guid: 7a0ecd4cb0a79204ca76142ce4946b48, type: 2}
   health: {fileID: 8997636781220968123}
   rb2D: {fileID: 8997636781220968118}
-  coll2D: {fileID: 8997636781220968122}
+  coll2D: {fileID: 7502826922224501980}
   moveX: 0.75
   isFacingRight: 1
   waitTime: 3
@@ -767,7 +756,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: faa710c48eecb5c46bd1d762cd7b15ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gobliController: {fileID: 0}
   normalEnemyController: {fileID: 5659770827051711640}
 --- !u!1 &8997636782644587421
 GameObject:
@@ -813,7 +801,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.32818496, y: -0.057352662}
+  m_Offset: {x: 0.23142852, y: -0.057352662}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -824,5 +812,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.30539513, y: 0.4519632}
+  m_Size: {x: 0.498908, y: 0.4519632}
   m_EdgeRadius: 0

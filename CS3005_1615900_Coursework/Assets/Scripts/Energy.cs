@@ -15,29 +15,16 @@ public class Energy : MonoBehaviour
     [SerializeField] float regenWaitTime = 3f;
     public bool GetIsEnergyBeingUsed() { return isEnergyBeingUsed; }
     public void SetIsEnergyBeingUsed(bool status) { isEnergyBeingUsed = status; }
-
+    public float GetEnergy() { return this.energy; }
+    public float GetEnergyPercentage() { return energy / maxEnergy; }
+    public void SetEnergy(float energy) { this.energy = energy; }
     public void UseEnergy(float energy) 
     {
         isEnergyBeingUsed = true;
 
-        this.energy = Mathf.Max(this.energy - energy, 0f);
-        // this.energy -= energy; 
-    }
-    public float GetEnergy() { return this.energy; }
-    public float GetEnergyPercentage() { return energy / maxEnergy; }
-
-    public bool CanUseEnergy(float energyToUse) 
-    {
-        if (energy - energyToUse < 0)
-            return false;
-        else
-            return true;
+        this.energy = Mathf.Max(this.energy - energy, 0f); 
     }
 
-
-    public void SetEnergy(float energy) { this.energy = energy; }
-
-    float time2En = 0f;
     // Called over and over per frame in the update method
     public void EnergyRegen()
     {
@@ -48,7 +35,7 @@ public class Energy : MonoBehaviour
         }
 
         // When energy is spent up, wait a few seconds and then start regenerating energy
-        if (isEnergyBeingUsed == true && energy <= 1)
+        if (isEnergyBeingUsed == true || energy <= 1)
         {
             time += Time.deltaTime;
             if (time > regenWaitTime)

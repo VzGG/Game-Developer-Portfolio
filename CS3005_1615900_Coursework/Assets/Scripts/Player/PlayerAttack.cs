@@ -21,12 +21,14 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] float myDamage = 5f;                                                   // How much damage can the player deal to the target.
     private const float midAirAttackInterval = 0.35f;                                       // The attack rate while mid air.
     private const int attackStartingCounter = 1;
+    private const float attackInterval = 0.25f;
     [SerializeField] Energy myEnergy;
     [SerializeField] Health myHealth;
     [SerializeField] BoxCollider2D myHitBox;                                                // The player's hitbox which is a box collider. The first enemy gameobject within it gets registered as the target.
     [Space]
     [Header("My Target")]
-    [SerializeField] Health myTarget;
+    //[SerializeField] Health myTarget;
+    [SerializeField] List<Health> myTargets = new List<Health>();
     [Space]
     [Header("Sound")]
     [SerializeField] AudioSource audioSource;                                               // The audio player.
@@ -46,10 +48,36 @@ public class PlayerAttack : MonoBehaviour
     public void SetMyDamage(float damage) { this.myDamage = damage; }
     public float GetMyDamage() { return myDamage; }
     public void SetHasBow(bool status) { this.hasBow = status; }
-    public void SetMyTarget(Health target) { this.myTarget = target; }
     public BoxCollider2D GetMyHitBox() { return this.myHitBox; }
 
     #endregion
+
+    /// <summary>
+    /// Add a target to the list that which can be damaged. There should be no copies of the same target.
+    /// </summary>
+    /// <param name="health"></param>
+    public void AddToMyTargets(Health health)
+    {
+        if (health.GetHealth() <= 0f) { return; }
+
+        foreach (Health target in myTargets)
+            if (target.gameObject.name.Equals(health.gameObject.name))
+                return;
+
+        myTargets.Add(health);
+    }
+
+    /// <summary>
+    /// Remove a target from the list. Used for removing targets when enemies are outside the player's targer range
+    /// or when the target dies.
+    /// </summary>
+    /// <param name="health"></param>
+    public void RemoveToMyTargets(Health health)
+    {
+        for (int i = 0; i < myTargets.Count; i++)
+            if (myTargets[i].gameObject.name.Equals(health.gameObject.name))
+                myTargets.RemoveAt(i);
+    }
 
     /// <summary>
     /// Change the player's current animation to Bow attack animation which launches an arrow projectile and decreases the player's energy.
@@ -142,20 +170,38 @@ public class PlayerAttack : MonoBehaviour
         myEnergy.UseEnergy(bowEnergy);
     }
 
-    // Called in the animation tab - from Character's animation.
-    private void AnimationEventAttack()
+    // Called in the animation tab - from Character's animation. Multiplier is set in the animation tab also.
+    private void AnimationEventAttack(float multiplier)
     {
-        // When we press the attack button, the animation event activates this method
-        // At this point we should have an enemy/target that is in our hitbox
-        // If so, then attack
-        if (myTarget == null) { Debug.Log("Attacking the air...");  return; }
+        if (myTargets == null) { Debug.Log("Attacking the air..."); return; }
 
-        if (myTarget.GetHealth() <= 0)
+        // Anyone in the hitbox (they should all be in the list of targets) should get damaged.
+        for (int i = 0; i < myTargets.Count; i++)
         {
-            myTarget = null;
-            return;
+            Debug.Log("Targets: " + (i + 1) + " received damage");
+
+            myTargets[i].gameObject.GetComponent<EnemyController>().EnemyTakeDamage(myDamage * multiplier);
+
+            if (myTargets[i].GetHealth() <= 0)
+                myTargets.RemoveAt(i);
         }
-        myTarget.TakeDamage(myDamage);
+        
+    }
+
+    // Called in the animation tab - from Character's landed animation attack.
+    private void ResizeToLargeHitBox()
+    {
+        myHitBox.offset = Vector2.zero;
+        myHitBox.size = new Vector2(0.5f, myHitBox.size.y);
+    }
+
+    // Called in the animation tab - from Character's landed animation attack.
+    private void ResizeToSmallHitBox()
+    {
+        const float offsetX = 0.1804348f;
+        const float sizeX = 0.2337848f;
+        myHitBox.offset = new Vector2(offsetX, myHitBox.offset.y);
+        myHitBox.size = new Vector2(sizeX, myHitBox.size.y);
     }
 
     #endregion

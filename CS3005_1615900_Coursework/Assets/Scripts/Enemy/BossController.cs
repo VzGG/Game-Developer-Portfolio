@@ -10,7 +10,7 @@ using UnityEngine;
  */
 
 
-public class BossController : MonoBehaviour
+public class BossController : EnemyController
 {
     [Header("Components")]
     private Animator animator;
@@ -21,10 +21,12 @@ public class BossController : MonoBehaviour
     private ProgressManager progressManager;
     private DialogueManager dialogueManager;
     
+
+
     [Space]
     [Header("Movement")]
-    public float moveX = 2.5f;
-    public float distanceToAttack = 0.5f;
+    //public float moveX = 2.5f;
+    //public float distanceToAttack = 0.5f;
     private float scaleX = 2f;
 
     [Space]
@@ -38,7 +40,7 @@ public class BossController : MonoBehaviour
     public BoxCollider2D weaponSlashHitBox;     // Set this box collider game object's layer to enemy HITBOX to only touch the player layer
 
     // target components
-    private PlayerMovement target;
+    //private PlayerMovement target;
     public CapsuleCollider2D characterBody;
     private Health characterHealth;
 
@@ -78,11 +80,26 @@ public class BossController : MonoBehaviour
     void ChangeToDeathAnimatorController() { this.animator.runtimeAnimatorController = deathAnimatorController; }
     #endregion
 
-    
+        // Spell Casting Phase
+    public bool isTeleporting = false;
+    [Space]
+    [Header("Spell properties")]
+    private float spellTime = 0f;
+    private float spellTimeToAttack = 1f;
+    private int numberOfSpellsToCast = 0;
+    private int currentSpellsCasted = 0;
+    [SerializeField] private GameObject spellProjectile;
+    int counter = 0;
+    // For enrage phase - spawn platforms
+    public GameObject enragePhasePlatform;
+    public GameObject enragePhasePlatformInvisible;
+
+    public GameObject actualEPP;
+    public GameObject actualEPPI;
 
     private void Awake()
     {
-        this.target = FindObjectOfType<PlayerMovement>();   // Sets boss' target
+        //this.target = FindObjectOfType<PlayerMovement>();   // Sets boss' target
         animator = GetComponent<Animator>();                // Get the components
         bossRB2D = GetComponent<Rigidbody2D>();             // Get the rigidbody2d
         bossHealth = GetComponent<Health>();                // Get boss' health component
@@ -127,22 +144,18 @@ public class BossController : MonoBehaviour
 
     }
 
-    // Spell Casting Phase
-    public bool isTeleporting = false;
-    [Space]
-    [Header("Spell properties")]
-    private float spellTime = 0f;
-    private float spellTimeToAttack = 1f;
-    private int numberOfSpellsToCast = 0;
-    private int currentSpellsCasted = 0;
-    [SerializeField] private GameObject spellProjectile;
-    int counter = 0;
-    // For enrage phase - spawn platforms
-    public GameObject enragePhasePlatform;
-    public GameObject enragePhasePlatformInvisible;
+    protected override void EnemyAI()
+    {
+        throw new System.NotImplementedException();
+    }
 
-    public GameObject actualEPP;
-    public GameObject actualEPPI;
+    public override void EnemyTakeDamage(float damage)
+    {
+        throw new System.NotImplementedException();
+    }
+
+
+
 
     private void Update()
     {
@@ -310,15 +323,15 @@ public class BossController : MonoBehaviour
     #region Called by Animation Event in the Animation Tab within Unity Editor
 
     // Called in BringerOfDeath_Attack animation
-    public void SetReadyToAttackTrue()
-    {
-        readyToAttack = true;
-    }
+    //public void SetReadyToAttackTrue()
+    //{
+    //    readyToAttack = true;
+    //}
     // Called in BringerOfDeath_Attack animation
-    public void SetReadyToAttackFalse()
-    {
-        readyToAttack = false;
-    }
+    //public void SetReadyToAttackFalse()
+    //{
+    //    readyToAttack = false;
+    //}
 
     // Called in BringerOfDeath_Attack animation in one of the frames
     private void AnimationEventAttack()
@@ -332,7 +345,8 @@ public class BossController : MonoBehaviour
          */
         if (weaponSlashHitBox.IsTouching(characterBody))
         {
-            characterHealth.TakeDamage(weaponDamage);
+            //characterHealth.TakeDamage(weaponDamage);
+            characterHealth.gameObject.GetComponent<PlayerController>().PlayerTakeDamage(weaponDamage);
         }
 
     }
@@ -437,6 +451,7 @@ public class BossController : MonoBehaviour
             this.bossHealth.TakeDamage(arrowProjectile.GetBowDamage());
         }
     }
+
 
     #endregion
 
