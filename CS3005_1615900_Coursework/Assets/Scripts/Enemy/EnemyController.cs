@@ -13,10 +13,11 @@ public abstract class EnemyController : MonoBehaviour
     [SerializeField] protected Animator anim;
     [SerializeField] protected RuntimeAnimatorController deadAnimController;
     [SerializeField] protected Health health;
+    [SerializeField] protected Break _break;
     [SerializeField] protected Rigidbody2D rb2D;
     [SerializeField] protected Collider2D coll2D;                   // This is the box collider2d of the enemy which is the enemy's actual body collider.
     [Space]
-    [Header("Movement properties")]
+    [Header("Movement Properties")]
     [SerializeField] protected float moveX = 5f;
     [SerializeField] protected bool isFacingRight = true;
     [SerializeField] protected float waitTime = 3f;
@@ -26,6 +27,8 @@ public abstract class EnemyController : MonoBehaviour
     [SerializeField] protected PlayerController target;             // The target that is needed to be attacked.
     [SerializeField] protected BoxCollider2D hitBox;                // The hitbox collider used to check when there is a target during an attack animation.
     [SerializeField] protected float distanceToAttack = 2f;         // It is the distance needed before it starts to attack.
+    [SerializeField] protected float distanceToAttackMin = 1f;
+    [SerializeField] protected float distanceToAttackMax = 2f;
     [SerializeField] protected float attackDamage = 10f;            // How strong they damage the player.
     [SerializeField] protected float attackRate = 1.5f;             // How fast the enemy attacks.
     [SerializeField] protected float currentAttackTime = 0f;        // Attack time counter used to as a timer for attacking at every intervals.
@@ -50,7 +53,7 @@ public abstract class EnemyController : MonoBehaviour
     /// It is "Protected" so that it is public only in itself and its children.
     /// </summary>
     protected abstract void EnemyAI();
-    public abstract void EnemyTakeDamage(float damage);
+    public abstract void EnemyTakeDamage(float damage, string gameObjectTag);
 
     /// <summary>
     /// Looks at the player when attacking
@@ -152,8 +155,4 @@ public abstract class EnemyController : MonoBehaviour
         }
     }
 
-    protected void SetRB2DMass(float mass)
-    {
-        this.rb2D.mass = mass;
-    }
 }

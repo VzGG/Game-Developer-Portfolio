@@ -129,8 +129,6 @@ public class Health : MonoBehaviour
     public void BloodEffectVFX()
     {
         Instantiate(BloodVFX, transform.position, transform.rotation);
-
-        Debug.Log("INSTANTIATING BLOOD VFX");
     }
 
     public void PlayHurtSFX()

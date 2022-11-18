@@ -149,7 +149,7 @@ public class BossController : EnemyController
         throw new System.NotImplementedException();
     }
 
-    public override void EnemyTakeDamage(float damage)
+    public override void EnemyTakeDamage(float damage, string gameObjectTag)
     {
         throw new System.NotImplementedException();
     }

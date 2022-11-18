@@ -55,7 +55,6 @@ public class Trap : MonoBehaviour
         {
             if (collision.gameObject.tag == "Player")
             {
-                //collision.gameObject.GetComponent<Health>().TakeDamage(trapDamage);
                 collision.gameObject.GetComponent<PlayerController>().PlayerTakeDamage(trapDamage);
             }
         }
@@ -64,8 +63,7 @@ public class Trap : MonoBehaviour
         {
             if (collision.gameObject.tag == "Enemy")
             {
-                //collision.gameObject.GetComponent<Health>().TakeDamage(trapDamage);
-                collision.gameObject.GetComponent<EnemyController>().EnemyTakeDamage(trapDamage);
+                collision.gameObject.GetComponent<EnemyController>().EnemyTakeDamage(trapDamage, gameObject.tag);
             }
         }
 

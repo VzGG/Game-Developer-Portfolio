@@ -19,6 +19,7 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private int attackCurrentCounter = attackStartingCounter;
     [SerializeField] float attackEnergy = 5f;                                               // How much the attack cost.
     [SerializeField] float myDamage = 5f;                                                   // How much damage can the player deal to the target.
+    private float jumpAttackLandedBonus = 0f;                                               // After landing with the sword air attack 3, increase the total damage by this. This bonus is increased the longer the player is in mid air and while in sword air attack 3.
     private const float midAirAttackInterval = 0.35f;                                       // The attack rate while mid air.
     private const int attackStartingCounter = 1;
     private const float attackInterval = 0.25f;
@@ -178,14 +179,26 @@ public class PlayerAttack : MonoBehaviour
         // Anyone in the hitbox (they should all be in the list of targets) should get damaged.
         for (int i = 0; i < myTargets.Count; i++)
         {
-            Debug.Log("Targets: " + (i + 1) + " received damage");
-
-            myTargets[i].gameObject.GetComponent<EnemyController>().EnemyTakeDamage(myDamage * multiplier);
+            //Debug.Log("Targets: " + (i + 1) + " received damage");
+            Debug.Log("Gameobject Tag: " + gameObject.tag);
+            myTargets[i].gameObject.GetComponent<EnemyController>().EnemyTakeDamage( (myDamage * multiplier) + jumpAttackLandedBonus, gameObject.tag);
 
             if (myTargets[i].GetHealth() <= 0)
                 myTargets.RemoveAt(i);
         }
         
+    }
+    // Called in the animation tab - the player's sword air attack 3.
+    private void IncreaseJump3LandAttackValue()
+    {
+        jumpAttackLandedBonus += 0.5f;
+        Debug.Log("added bonus to jump attack: " + jumpAttackLandedBonus);
+    }
+
+    // Called in the animation tab - the player's sword air attack 3 landed.
+    private void ResetJump3LandAttackValue()
+    {
+        jumpAttackLandedBonus = 0f;
     }
 
     // Called in the animation tab - from Character's landed animation attack.

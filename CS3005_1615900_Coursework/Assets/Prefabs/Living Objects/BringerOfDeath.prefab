@@ -392,10 +392,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa2da599518b3ea409f90871b62723eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim: {fileID: 0}
+  deadAnimController: {fileID: 0}
+  health: {fileID: 0}
+  rb2D: {fileID: 0}
+  coll2D: {fileID: 0}
+  moveX: 0.5
+  isFacingRight: 1
+  waitTime: 3
+  hasReachEdge: 0
+  target: {fileID: 0}
+  hitBox: {fileID: 0}
+  distanceToAttack: 1
+  distanceToAttackMin: 0.25
+  distanceToAttackMax: 1
+  attackDamage: 10
+  attackRate: 1.5
+  currentAttackTime: 0
+  isAttacking: 0
+  xScale: 0
+  breakPointThreshold: 0
+  currentBreakPoint: 0
+  isBreak: 0
+  canBeBroken: 1
+  breakDuration: 5
+  breakCooldown: 7
   mainAnimatorController: {fileID: 9100000, guid: 2bf847626ab6bec469cfe6283036f0c2, type: 2}
   deathAnimatorController: {fileID: 9100000, guid: 06ee2e2c561850247ad5f89097778d8e, type: 2}
-  moveX: 0.5
-  distanceToAttack: 1
   timeToAttack: 1.5
   readyToAttack: 0
   weaponDamage: 30
@@ -448,6 +471,7 @@ MonoBehaviour:
   isEvilWizard: 0
   isBoss: 1
   isHitDuringEnrage: 0
+  enemyController: {fileID: 0}
   accumulatedDamage: 0
   accumulatedDamageThreshold: 0
   isNormalPhase: 1
