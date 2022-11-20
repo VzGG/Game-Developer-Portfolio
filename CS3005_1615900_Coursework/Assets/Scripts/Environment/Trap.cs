@@ -63,7 +63,7 @@ public class Trap : MonoBehaviour
         {
             if (collision.gameObject.tag == "Enemy")
             {
-                collision.gameObject.GetComponent<EnemyController>().EnemyTakeDamage(trapDamage, gameObject.tag);
+                collision.gameObject.GetComponent<EnemyController>().EnemyTakeDamage(trapDamage, gameObject, Vector2.zero);
             }
         }
 

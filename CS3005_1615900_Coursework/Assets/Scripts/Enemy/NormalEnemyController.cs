@@ -186,19 +186,18 @@ public class NormalEnemyController : EnemyController
         if (collision.gameObject.layer == LayerMask.NameToLayer("Projectile") && collision.gameObject.tag == "Player")
         {
             ArrowProjectile arrowProjectile = collision.gameObject.GetComponent<ArrowProjectile>();
-            Debug.Log("Gameobject Tag: " + arrowProjectile.gameObject.tag);
-            this.EnemyTakeDamage(arrowProjectile.GetBowDamage(), arrowProjectile.gameObject.tag);
+            Debug.Log("Gameobject Tag HELLO: " + arrowProjectile.gameObject.tag);
+            //this.EnemyTakeDamage(arrowProjectile.GetBowDamage(), arrowProjectile.gameObject, Vector2.zero);
         }
     }
 
     #region Taking Damage Logic
-    public override void EnemyTakeDamage(float damage, string gameObjectTag)
+    public override void EnemyTakeDamage(float damage, GameObject attacker, Vector2 pushback)
     {
-        Debug.Log("Taking Damage!: " + damage);
         health.TakeDamage(damage);
         health.PlayHurtSFX();
 
-        if (gameObjectTag.Equals("Player"))
+        if (attacker.tag.Equals("Player"))
         {
             // Take breakpoint damage
             TakeBreakDamage(damage);
@@ -221,9 +220,9 @@ public class NormalEnemyController : EnemyController
         }
 
         // Break/Juggle System - when broken, send them in the air and only allowing hurt/idle animations.
-        if (this._break.GetIsBreak() && gameObjectTag.Equals("Player"))
+        if (this._break.GetIsBreak() && attacker.tag.Equals("Player"))
         {
-            StartCoroutine(Juggle());
+            StartCoroutine(Juggle(attacker, pushback));
         }
         
 
@@ -240,6 +239,9 @@ public class NormalEnemyController : EnemyController
             // Tell progress manager to delete this gameobject in the list.
             FindObjectOfType<ProgressManager>().DeleteEnemy(this.gameObject.transform.parent.gameObject);
 
+            // Hide the health/break bar of the enemy
+            this.enemyUI.GetEnemyCanvas().gameObject.SetActive(false);
+
             // Destroy its parent, itself and other children from the parent gameobject.
             Destroy(gameObject.transform.parent.gameObject, 5f);
 
@@ -254,15 +256,16 @@ public class NormalEnemyController : EnemyController
     /// Should only juggle when broken. The juggle ensures that enemies are pushbacked at every damage taken.
     /// </summary>
     /// <returns></returns>
-    IEnumerator Juggle()
+    IEnumerator Juggle(GameObject attacker, Vector2 pushback)
     {
         float airborneDuration = 0.5f;
         this.rb2D.gravityScale = 1f;
         float pushbackX = 0.5f;
         float pushbackY = 3.5f;
         this.rb2D.velocity = Vector2.zero;
-        float pushDirection = CheckPlayerDistance();
-        this.rb2D.velocity = new Vector2(pushbackX * pushDirection, pushbackY);
+        float pushDirection = CheckAttackerDirection(attacker);
+        //this.rb2D.velocity = new Vector2(pushbackX * pushDirection, pushbackY);
+        this.rb2D.velocity = new Vector2(pushback.x * pushDirection, pushback.y);
 
         // After the airborne duration, remove any pushback effects.
         yield return new WaitForSeconds(airborneDuration);
@@ -270,20 +273,23 @@ public class NormalEnemyController : EnemyController
         this.rb2D.gravityScale = 1f;
     }
 
+    float pushbackX = 0f;
     /// <summary>
     /// Gets whether to apply a pushback on positive x axis or negative x axis depending on who damaged the enemy.
     /// </summary>
     /// <returns></returns>
-    private float CheckPlayerDistance()
+    private float CheckAttackerDirection(GameObject attacker)
     {
-        float pushbackX = 1f;
+        //float pushbackX = 0f;
+
+        Debug.Log("attacker: " + attacker);
         if (target == null) { return pushbackX; }
-        // This enemy is at the left of the target
-        if (this.transform.position.x < target.transform.position.x)
+
+        if (this.transform.position.x < attacker.transform.position.x)
         {
             pushbackX = -1f;
         }
-        else if (this.transform.position.x > target.transform.position.x)
+        else if (this.transform.position.x > attacker.transform.position.x)
         {
             // The enemy is at the right of the target
             pushbackX = 1f;

@@ -11,12 +11,14 @@ public class PlayerUI : MonoBehaviour
     [Header("Health Components")]
     [SerializeField] private Health myHealth;
     [SerializeField] private Image healthImageBar;
-    [SerializeField] private TMP_Text healthText;
+    [SerializeField] private Text healthText;
+    [SerializeField] private Image healthImageBackgroundBar;
     [Space]
     [Header("Energy Components")]
     [SerializeField] private Energy myEnergy;
     [SerializeField] private Image energyImageBar;
-    [SerializeField] private TMP_Text energyText;
+    [SerializeField] private Text energyText;
+    [SerializeField] private Image energyImageBackgroundBar;
 
     // Set by the PlayerArriveLocation - for changing levels
     public void SetMyHealth(Health health) { this.myHealth = health; }
@@ -38,8 +40,6 @@ public class PlayerUI : MonoBehaviour
     {
         if (myHealth == null || myEnergy == null) { return; }
 
-
-
         // Update my image's fill amount by my player's health and energy percentages
         float currentHealth = myHealth.GetHealthPercentage();
         float currentEnergy = myEnergy.GetEnergyPercentage();
@@ -48,6 +48,9 @@ public class PlayerUI : MonoBehaviour
         // Same as above but applies on the number text instead and are rounded to nearest int
         healthText.text = Mathf.RoundToInt(myHealth.GetHealth()).ToString();
         energyText.text = Mathf.RoundToInt(myEnergy.GetEnergy()).ToString();
+
+        healthImageBackgroundBar.fillAmount = currentHealth + 0.05f;
+        energyImageBackgroundBar.fillAmount = currentEnergy + 0.05f;
 
         // Stop null reference error
         if (bossPanelObj == null) { return; }
@@ -66,6 +69,7 @@ public class PlayerUI : MonoBehaviour
             if (bossHealth == null) { SetBossPanelUI(false); }
         }
     }
+
 
     public void SetBossPanelUI(bool status)
     {

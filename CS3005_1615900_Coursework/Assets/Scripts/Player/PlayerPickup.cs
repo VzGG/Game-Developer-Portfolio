@@ -72,11 +72,13 @@ public class PlayerPickup : MonoBehaviour
             else if (pickedUpItem.GetItemName() == "Healing Potion")
             {
                 myHealth.SetHealth(myHealth.GetHealth() + pickedUpItem.GetItemValue());
+                myHealth.SetMaxHealth(myHealth.GetMaxHealth() + pickedUpItem.GetItemValue());   // Also update the max health
                 collision.gameObject.SetActive(false);
             }
             else if (pickedUpItem.GetItemName() == "Energy Potion")
             {
                 myEnergy.SetEnergy(myEnergy.GetEnergy() + pickedUpItem.GetItemValue());
+                myEnergy.SetMaxEnergy(myEnergy.GetMaxEnergy() + pickedUpItem.GetItemValue());   // Also update the max energy
                 collision.gameObject.SetActive(false);
             }
             else if (pickedUpItem.GetItemName() == "Quarter Key")

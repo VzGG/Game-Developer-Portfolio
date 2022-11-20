@@ -4,10 +4,12 @@ using System.Collections.Generic;
 // Unity Package (N/A) ‘TextMeshPro’. [Scripting API]. https://docs.unity3d.com/Manual/com.unity.textmeshpro.html
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TimeManager : MonoBehaviour
 {
-    [SerializeField] TMP_Text tmp_timeText;
+    //[SerializeField] TMP_Text tmp_timeText;
+    [SerializeField] Text tmp_timeText;
     [SerializeField] float currentTime = 0f;
 
 

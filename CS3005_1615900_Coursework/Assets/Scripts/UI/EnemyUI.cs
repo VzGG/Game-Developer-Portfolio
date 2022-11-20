@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// An enemy's UI displays the enemies health and is positioned next to an enemy.
+/// An enemy's UI displays the enemies health, break point, and is positioned next to an enemy.
 /// </summary>
 public class EnemyUI : MonoBehaviour
 {
@@ -12,11 +12,6 @@ public class EnemyUI : MonoBehaviour
     [SerializeField] Image enemyHealthBar;
     [SerializeField] Image enemyBreakBar;
     [SerializeField] Vector3 offsetPosition;
-
-    public void SetEnemyCanvasActive(bool status) 
-    { 
-        enemyCanvas.gameObject.SetActive(status); 
-    }
 
     public GameObject GetEnemyCanvas() { return this.enemyCanvas.gameObject; }
 

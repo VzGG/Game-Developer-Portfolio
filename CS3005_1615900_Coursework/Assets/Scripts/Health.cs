@@ -166,8 +166,11 @@ public class Health : MonoBehaviour
 
     public void SetHealth(float health) { this.health = health; }
 
+    public void SetMaxHealth(float maxHealth) { this.maxHealth = maxHealth; }
+
     // Getter
     public float GetHealth() { return this.health; }
+    public float GetMaxHealth() { return this.maxHealth; }
     public float GetHealthPercentage() { return health / maxHealth; }
 
 }

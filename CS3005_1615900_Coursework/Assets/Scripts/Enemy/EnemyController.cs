@@ -53,7 +53,7 @@ public abstract class EnemyController : MonoBehaviour
     /// It is "Protected" so that it is public only in itself and its children.
     /// </summary>
     protected abstract void EnemyAI();
-    public abstract void EnemyTakeDamage(float damage, string gameObjectTag);
+    public abstract void EnemyTakeDamage(float damage, GameObject attacker, Vector2 pushback);
 
     /// <summary>
     /// Looks at the player when attacking

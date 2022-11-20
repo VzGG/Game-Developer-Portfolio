@@ -3,7 +3,7 @@ using System.Collections.Generic;
 // Unity Package (N/A) ‘TextMeshPro’. [Scripting API]. https://docs.unity3d.com/Manual/com.unity.textmeshpro.html 
 using TMPro;
 using UnityEngine;
-
+using UnityEngine.UI;
 
 /// <summary>
 /// Dialogue is attached to a gameObject, when a dialogue is instantiated, they should play the dialogue (in console or on the screen)
@@ -18,12 +18,12 @@ public class Dialogue : MonoBehaviour
     [Space]
     [Header("UI Dialogue Properties")]
     [SerializeField] GameObject dialoguePanel;
-    [SerializeField] TMP_Text dialogueSpeakerTextObj;
-    [SerializeField] TMP_Text dialogueTextObj;
+    [SerializeField] Text dialogueSpeakerTextObj;
+    [SerializeField] Text dialogueTextObj;
 
     public void SetDialoguePanel(GameObject dialoguePanel) { this.dialoguePanel = dialoguePanel; }
-    public void SetDialogueSpeakerTextObj(TMP_Text speakerObj) { this.dialogueSpeakerTextObj = speakerObj; }
-    public void SetSetDialogueTextObj(TMP_Text textObj) { this.dialogueTextObj = textObj; }
+    public void SetDialogueSpeakerTextObj(Text speakerObj) { this.dialogueSpeakerTextObj = speakerObj; }
+    public void SetSetDialogueTextObj(Text textObj) { this.dialogueTextObj = textObj; }
 
 
     public void SetTimeManager(TimeManager timeManager) { this.timeManager = timeManager; }

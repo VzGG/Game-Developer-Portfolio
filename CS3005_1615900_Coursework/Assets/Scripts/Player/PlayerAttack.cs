@@ -61,8 +61,9 @@ public class PlayerAttack : MonoBehaviour
     {
         if (health.GetHealth() <= 0f) { return; }
 
-        foreach (Health target in myTargets)
-            if (target.gameObject.name.Equals(health.gameObject.name))
+        // Cannot add duplicate targets, only unique ones.
+        for (int i = 0; i < myTargets.Count; i++)
+            if (myTargets[i].gameObject.GetInstanceID() == health.gameObject.GetInstanceID())
                 return;
 
         myTargets.Add(health);
@@ -75,23 +76,51 @@ public class PlayerAttack : MonoBehaviour
     /// <param name="health"></param>
     public void RemoveToMyTargets(Health health)
     {
+        // Remove the unique enemy from the given index.
         for (int i = 0; i < myTargets.Count; i++)
-            if (myTargets[i].gameObject.name.Equals(health.gameObject.name))
+            if (myTargets[i].gameObject.GetInstanceID() == health.gameObject.GetInstanceID())
                 myTargets.RemoveAt(i);
     }
+
 
     /// <summary>
     /// Change the player's current animation to Bow attack animation which launches an arrow projectile and decreases the player's energy.
     /// </summary>
     /// <param name="animator"></param>
     /// <param name="myEnergy"></param>
-    public void BowAttack(Animator animator, Energy myEnergy)
+    public void BowAttack(Animator animator, Energy myEnergy, bool isMidAir, Rigidbody2D myRB2D, PlayerController playerController, bool isNextAttackBow)
     {
         // Only able to do so when player pick up has a bow picked up.
         if (!hasBow) { return; }
 
-        // Display the bow attack animation and in that also decreases the user's energy.
-        animator.SetTrigger("isBowAttacking");
+        if (isMidAir)
+        {
+            if (isNextAttackBow)
+            {
+                StartCoroutine(MidAirBowAttack(animator, myRB2D, playerController));
+            }
+        }
+        else
+        {
+            animator.SetTrigger("isBowAttacking");
+        }
+    }
+
+    IEnumerator MidAirBowAttack(Animator anim, Rigidbody2D myRB2D, PlayerController playerController)
+    {
+        Debug.Log("I am attacking bow mid air attack");
+        // Display bow attack animation.
+        anim.SetTrigger("isBowAttacking");
+        // Add a jump effect.
+        myRB2D.velocity = new Vector2(0f, 3f);
+
+
+        // Do we still need this IEnumerator?
+        // YES - to get the mid air attack interval - need to have cooldown attacks/attack rate
+
+        yield return new WaitForSeconds(midAirAttackInterval);
+
+        //playerController.SetIsUsingActionAnim(false);
     }
 
     /// <summary>
@@ -103,12 +132,16 @@ public class PlayerAttack : MonoBehaviour
     /// <param name="myEnergy"></param>
     /// <param name="isMidAir"></param>
     /// <param name="playerController"></param>
-    public void Attack(Rigidbody2D myRB2D, Animator animator, Energy myEnergy, bool isMidAir, PlayerController playerController)
+    public void SwordAttack(Rigidbody2D myRB2D, Animator animator, Energy myEnergy, bool isMidAir, PlayerController playerController, bool isNextAttackSword)
     {
         // Display attack animation for mid air attacks.
         if (isMidAir)
         {
-            StartCoroutine(MidAirAttack(myRB2D, animator, myEnergy, playerController));
+            if (isNextAttackSword)
+            {
+                StartCoroutine(MidAirAttack(myRB2D, animator, myEnergy, playerController));
+            }
+                
         }
         // Display grounded attack animations.
         else
@@ -130,7 +163,7 @@ public class PlayerAttack : MonoBehaviour
 
         myRB2D.gravityScale = 1f;
         // At the end of 1 second set isUsingActionAnim to false.
-        playerController.SetIsUsingActionAnim(false);
+        //playerController.SetIsUsingActionAnim(false);
     }
 
     private void GroundedAttack(Animator animator, Energy myEnergy)
@@ -164,6 +197,7 @@ public class PlayerAttack : MonoBehaviour
         ArrowProjectile  aP = newArrowProjectile.GetComponent<ArrowProjectile>();                               // Refactoring to optimize frame rate - https://learn.unity.com/tutorial/fixing-performance-problems?courseId=5c87de35edbc2a091bdae346&uv=5.x#5c7f8528edbc2a002053b594
         aP.SetBowDamage(bowDamage);
         aP.SetPlayerScale(this.transform.localScale);
+        aP.SetPlayerController(this.GetComponent<PlayerController>());
 
         // Add an SFX for releasing the arrow
         audioSource.PlayOneShot(audioClips[2]);
@@ -179,9 +213,7 @@ public class PlayerAttack : MonoBehaviour
         // Anyone in the hitbox (they should all be in the list of targets) should get damaged.
         for (int i = 0; i < myTargets.Count; i++)
         {
-            //Debug.Log("Targets: " + (i + 1) + " received damage");
-            Debug.Log("Gameobject Tag: " + gameObject.tag);
-            myTargets[i].gameObject.GetComponent<EnemyController>().EnemyTakeDamage( (myDamage * multiplier) + jumpAttackLandedBonus, gameObject.tag);
+            myTargets[i].gameObject.GetComponent<EnemyController>().EnemyTakeDamage( (myDamage * multiplier) + jumpAttackLandedBonus, gameObject, new Vector2(0.5f, 3.5f));
 
             if (myTargets[i].GetHealth() <= 0)
                 myTargets.RemoveAt(i);
@@ -192,7 +224,6 @@ public class PlayerAttack : MonoBehaviour
     private void IncreaseJump3LandAttackValue()
     {
         jumpAttackLandedBonus += 0.5f;
-        Debug.Log("added bonus to jump attack: " + jumpAttackLandedBonus);
     }
 
     // Called in the animation tab - the player's sword air attack 3 landed.

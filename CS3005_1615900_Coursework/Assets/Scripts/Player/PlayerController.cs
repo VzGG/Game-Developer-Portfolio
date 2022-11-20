@@ -22,6 +22,12 @@ public class PlayerController : MonoBehaviour
     bool isMidAir = false;                                              // Used to determine whether the player changes animation jump animation or idle animation.
     bool isJumpAttack3 = false;                                         // Used to determine whether the player uses the final jump attack and lands on the ground.
 
+    bool isNextAttackBow = false;                                       // Determine whether the player, mid air, can attack with bow next.
+    bool isNextAttackSword = false;                                     // Determine whether the player, mid air, can attack with sword next.
+
+    public void SetIsNextAttackBow(bool status) { this.isNextAttackBow = status; }
+    public void SetIsNextAttackSword(bool status) { this.isNextAttackSword = status; }
+
     [SerializeField] RuntimeAnimatorController jumpAnimController;      // Jump anim controller - also holds all the mid air attack animations.
     [SerializeField] RuntimeAnimatorController mainAnimController;      // Main anim controller - includes most of the animations like running, sliding, and grounded attacks.
     [SerializeField] RuntimeAnimatorController deadAnimController;      // Dead anim controller - when the player dies, switch to the death animation forever.
@@ -56,6 +62,8 @@ public class PlayerController : MonoBehaviour
         myHealth = GetComponent<Health>();
         myEnergy = GetComponent<Energy>();
 
+        myEnergy.SetEnergy(myEnergy.GetMaxEnergy());    // Initialize my energy at the start of this player creation.
+        PlayerNextAnim.SetPlayerController(this);       // Set the player controller in the other class to start passing booleans needed to do mid air attacks.
     }
 
     /// <summary>
@@ -120,12 +128,14 @@ public class PlayerController : MonoBehaviour
         else if (Input.GetMouseButtonDown(0))
         {
             // When we left click, proceeed to attack.
-            myAttack.Attack(rb2d, anim, myEnergy, isMidAir, this);
+            myAttack.SwordAttack(rb2d, anim, myEnergy, isMidAir, this, isNextAttackSword);
         }
         else if (Input.GetMouseButtonDown(1))
         {
+            Debug.Log("Attempt to bow attack");
             // When we right click, proceed to use special attack - bow
-            myAttack.BowAttack(anim, myEnergy);
+            myAttack.BowAttack(anim, myEnergy, isMidAir, rb2d, this, isNextAttackBow);
+
         }
     }
 
@@ -140,6 +150,13 @@ public class PlayerController : MonoBehaviour
     public void IsJumpAttack3True() { this.isJumpAttack3 = true; }
     // Called in Animation Event.
     public void IsJumpAttack3False() { this.isJumpAttack3 = false; }
+
+
+
+
+    public void IsNextAttackBowTrue() { this.isNextAttackBow = true; }
+    public void IsNextAttackBowFalse() { this.isNextAttackBow = false; }
+
 
     #endregion
 

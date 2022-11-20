@@ -137,11 +137,11 @@ CapsuleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.15232913, y: -0.016379422}
-  m_Size: {x: 0.22534391, y: 0.18276}
+  m_Offset: {x: 0.09, y: -0.02063485}
+  m_Size: {x: 0.34, y: 0.2480112}
   m_Direction: 1
 --- !u!114 &3064437174599912472
 MonoBehaviour:
@@ -160,6 +160,7 @@ MonoBehaviour:
   bowDamage: 0
   playerScale: {x: 0, y: 0, z: 0}
   arrowHitVFX: {fileID: 1121346647999876810, guid: a4edf8f302b7ab447abfa6d7ba8eb3e1, type: 3}
+  playerController: {fileID: 0}
 --- !u!114 &5992590101924583242
 MonoBehaviour:
   m_ObjectHideFlags: 0
