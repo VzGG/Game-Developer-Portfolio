@@ -20,27 +20,31 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] float attackEnergy = 5f;                                               // How much the attack cost.
     [SerializeField] float myDamage = 5f;                                                   // How much damage can the player deal to the target.
     private float jumpAttackLandedBonus = 0f;                                               // After landing with the sword air attack 3, increase the total damage by this. This bonus is increased the longer the player is in mid air and while in sword air attack 3.
+    [SerializeField] private float jumpAttackLandedBonusIncreaser = 0.5f;                   // Define in the inspector how much the bonus is given when sword air attack 3 lands.
+    [SerializeField] private float largeHitBoxX = 0.5f;                                     // Define in the inspector how large the landed sword air 3 attack is.
+    [SerializeField] private float smallHitBoxX = 0.2337848f;                               // Define in the inspector how small the hitbox after sword air 3 attack has landed and finished animation.
+    [SerializeField] private float smallHitBoxXOffsetX = 0.1804348f;                        // Define in the inspector the offset X of the large hitbox.
+    [SerializeField] private Vector2 swordAttackPushback = new Vector2(0.5f, 3.5f);         // Define in the inspector how much the enemy is push-backed after getting hit.
     private const float midAirAttackInterval = 0.35f;                                       // The attack rate while mid air.
     private const int attackStartingCounter = 1;
     private const float attackInterval = 0.25f;
     [SerializeField] Energy myEnergy;
     [SerializeField] Health myHealth;
     [SerializeField] BoxCollider2D myHitBox;                                                // The player's hitbox which is a box collider. The first enemy gameobject within it gets registered as the target.
-    [Space]
+    
     [Header("My Target")]
-    //[SerializeField] Health myTarget;
     [SerializeField] List<Health> myTargets = new List<Health>();
-    [Space]
+    
     [Header("Sound")]
     [SerializeField] AudioSource audioSource;                                               // The audio player.
     [SerializeField] AudioClip[] audioClips;                                                // Define this in the Editor.
-    [Space]
+    
     [Header("My special attack")]
     [SerializeField] GameObject arrowProjectile;
     [SerializeField] private bool hasBow = false;
     [SerializeField] private float bowDamage = 0f;
     [SerializeField] private float bowEnergy = 20f;
-
+    [SerializeField] public ArrowProjectile.OnHitEffect localOnHit;
 
     #region Getter and Setters
 
@@ -114,7 +118,6 @@ public class PlayerAttack : MonoBehaviour
         // Add a jump effect.
         myRB2D.velocity = new Vector2(0f, 3f);
 
-
         // Do we still need this IEnumerator?
         // YES - to get the mid air attack interval - need to have cooldown attacks/attack rate
 
@@ -187,17 +190,19 @@ public class PlayerAttack : MonoBehaviour
         attackCurrentCounter++;
     }
 
+
     #region Called in the Animator's Animation Event - specifically the sword attack and bow attack animations
 
     // Called in the animation tab - from Character's animation.
     private void AnimationEventAttack_Bow()
     {
-        // Spawn the projectile
         GameObject newArrowProjectile = Instantiate(arrowProjectile, transform.position, Quaternion.identity);
-        ArrowProjectile  aP = newArrowProjectile.GetComponent<ArrowProjectile>();                               // Refactoring to optimize frame rate - https://learn.unity.com/tutorial/fixing-performance-problems?courseId=5c87de35edbc2a091bdae346&uv=5.x#5c7f8528edbc2a002053b594
+        ArrowProjectile aP = newArrowProjectile.GetComponent<ArrowProjectile>();
         aP.SetBowDamage(bowDamage);
         aP.SetPlayerScale(this.transform.localScale);
         aP.SetPlayerController(this.GetComponent<PlayerController>());
+        // Determine the hit effect when spawning projectile. The value is changed by the PlayerNextAnim class.
+        aP.SetOnHitEffect(localOnHit);
 
         // Add an SFX for releasing the arrow
         audioSource.PlayOneShot(audioClips[2]);
@@ -206,14 +211,15 @@ public class PlayerAttack : MonoBehaviour
     }
 
     // Called in the animation tab - from Character's animation. Multiplier is set in the animation tab also.
-    private void AnimationEventAttack(float multiplier)
+    private void AnimationEventAttack_Sword(float multiplier)
     {
         if (myTargets == null) { Debug.Log("Attacking the air..."); return; }
 
         // Anyone in the hitbox (they should all be in the list of targets) should get damaged.
+        // Also add pushback to the enemy.
         for (int i = 0; i < myTargets.Count; i++)
         {
-            myTargets[i].gameObject.GetComponent<EnemyController>().EnemyTakeDamage( (myDamage * multiplier) + jumpAttackLandedBonus, gameObject, new Vector2(0.5f, 3.5f));
+            myTargets[i].gameObject.GetComponent<EnemyController>().EnemyTakeDamage((myDamage * multiplier) + jumpAttackLandedBonus, gameObject, swordAttackPushback);
 
             if (myTargets[i].GetHealth() <= 0)
                 myTargets.RemoveAt(i);
@@ -223,7 +229,7 @@ public class PlayerAttack : MonoBehaviour
     // Called in the animation tab - the player's sword air attack 3.
     private void IncreaseJump3LandAttackValue()
     {
-        jumpAttackLandedBonus += 0.5f;
+        jumpAttackLandedBonus += jumpAttackLandedBonusIncreaser;
     }
 
     // Called in the animation tab - the player's sword air attack 3 landed.
@@ -235,17 +241,17 @@ public class PlayerAttack : MonoBehaviour
     // Called in the animation tab - from Character's landed animation attack.
     private void ResizeToLargeHitBox()
     {
+        // Increase the size of the hitbox.
         myHitBox.offset = Vector2.zero;
-        myHitBox.size = new Vector2(0.5f, myHitBox.size.y);
+        myHitBox.size = new Vector2(largeHitBoxX, myHitBox.size.y);
     }
 
     // Called in the animation tab - from Character's landed animation attack.
     private void ResizeToSmallHitBox()
     {
-        const float offsetX = 0.1804348f;
-        const float sizeX = 0.2337848f;
-        myHitBox.offset = new Vector2(offsetX, myHitBox.offset.y);
-        myHitBox.size = new Vector2(sizeX, myHitBox.size.y);
+        // Decrease the size and offset of the hitbox.
+        myHitBox.offset = new Vector2(smallHitBoxXOffsetX, myHitBox.offset.y);
+        myHitBox.size = new Vector2(smallHitBoxX, myHitBox.size.y);
     }
 
     #endregion

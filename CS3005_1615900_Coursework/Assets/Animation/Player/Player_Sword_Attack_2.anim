@@ -89,7 +89,7 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 0.25
-    functionName: AnimationEventAttack
+    functionName: AnimationEventAttack_Sword
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 1.15

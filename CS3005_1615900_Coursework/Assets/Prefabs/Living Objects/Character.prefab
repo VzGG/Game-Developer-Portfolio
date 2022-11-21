@@ -396,7 +396,7 @@ MonoBehaviour:
   myEnergy: {fileID: 9057973526240010903}
   jumpEnergy: 10
   slideEnergy: 10
-  slideSpeed: 5
+  slideSpeed: 3.5
   slideDuration: 0.2
   slideCooldown: 1
   canSlide: 1
@@ -429,6 +429,7 @@ MonoBehaviour:
   hasBow: 0
   bowDamage: 0
   bowEnergy: 20
+  localOnHit: 0
 --- !u!114 &9057973526240010888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -477,11 +478,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1da3b0d5b0feb934691df724af96c067, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxEnergy: 100
   energy: 100
   energyRegeneration: 20
   isEnergyBeingUsed: 0
   time: 0
   regenWaitTime: 1.5
+  isStartWait: 0
 --- !u!114 &1660483836904585233
 MonoBehaviour:
   m_ObjectHideFlags: 0

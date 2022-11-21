@@ -120,7 +120,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isNextAttackBow: 0
   isNextAttackSword: 1
-  isEndOfCombo: 0
+  isCurrentAttackEnder: 0
+  isBowAttack: 0
 --- !u!1101 &-8258496220328188679
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -262,7 +263,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isNextAttackBow: 1
   isNextAttackSword: 1
-  isEndOfCombo: 0
+  isCurrentAttackEnder: 0
+  isBowAttack: 0
 --- !u!1101 &-7321646337606090381
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -330,7 +332,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isNextAttackBow: 0
   isNextAttackSword: 0
-  isEndOfCombo: 0
+  isCurrentAttackEnder: 0
+  isBowAttack: 0
 --- !u!1101 &-7052383730060469936
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -445,7 +448,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isNextAttackBow: 1
   isNextAttackSword: 1
-  isEndOfCombo: 0
+  isCurrentAttackEnder: 0
+  isBowAttack: 0
 --- !u!114 &-6030970979477125296
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -460,7 +464,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isNextAttackBow: 1
   isNextAttackSword: 1
-  isEndOfCombo: 0
+  isCurrentAttackEnder: 0
+  isBowAttack: 0
 --- !u!1101 &-5994380990353649215
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -558,7 +563,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isNextAttackBow: 1
   isNextAttackSword: 1
-  isEndOfCombo: 0
+  isCurrentAttackEnder: 0
+  isBowAttack: 0
 --- !u!1101 &-5322302077542675653
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -623,7 +629,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isNextAttackBow: 1
   isNextAttackSword: 1
-  isEndOfCombo: 0
+  isCurrentAttackEnder: 0
+  isBowAttack: 1
 --- !u!1101 &-5057386896797268175
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -796,7 +803,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isNextAttackBow: 1
   isNextAttackSword: 1
-  isEndOfCombo: 0
+  isCurrentAttackEnder: 0
+  isBowAttack: 0
 --- !u!1101 &-3912187087398083303
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -836,7 +844,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isNextAttackBow: 1
   isNextAttackSword: 1
-  isEndOfCombo: 0
+  isCurrentAttackEnder: 0
+  isBowAttack: 0
 --- !u!1101 &-3695900949112252634
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -933,7 +942,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isNextAttackBow: 1
   isNextAttackSword: 1
-  isEndOfCombo: 0
+  isCurrentAttackEnder: 0
+  isBowAttack: 0
 --- !u!114 &-3508684641452523460
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -948,7 +958,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isNextAttackBow: 0
   isNextAttackSword: 0
-  isEndOfCombo: 0
+  isCurrentAttackEnder: 1
+  isBowAttack: 1
 --- !u!1101 &-3503684208258072475
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -1114,7 +1125,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isNextAttackBow: 0
   isNextAttackSword: 1
-  isEndOfCombo: 0
+  isCurrentAttackEnder: 0
+  isBowAttack: 0
 --- !u!1102 &-2720325722376221292
 AnimatorState:
   serializedVersion: 6
@@ -1182,7 +1194,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isNextAttackBow: 0
   isNextAttackSword: 1
-  isEndOfCombo: 0
+  isCurrentAttackEnder: 0
+  isBowAttack: 0
 --- !u!1101 &-2626628078410528145
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -1325,7 +1338,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isNextAttackBow: 0
   isNextAttackSword: 0
-  isEndOfCombo: 1
+  isCurrentAttackEnder: 1
+  isBowAttack: 1
 --- !u!114 &-1769313900622942545
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1340,7 +1354,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isNextAttackBow: 0
   isNextAttackSword: 1
-  isEndOfCombo: 0
+  isCurrentAttackEnder: 0
+  isBowAttack: 0
 --- !u!1101 &-1643111005265485008
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -1542,7 +1557,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isNextAttackBow: 1
   isNextAttackSword: 1
-  isEndOfCombo: 0
+  isCurrentAttackEnder: 0
+  isBowAttack: 0
 --- !u!1102 &-560127663197736649
 AnimatorState:
   serializedVersion: 6
@@ -1625,7 +1641,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: CharacterJump
+  m_Name: CharacterJump_SwordBowAirCombo_Level1
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: isAttack
@@ -1673,7 +1689,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isNextAttackBow: 1
   isNextAttackSword: 1
-  isEndOfCombo: 0
+  isCurrentAttackEnder: 0
+  isBowAttack: 0
 --- !u!1101 &394510759243831655
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -1738,7 +1755,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isNextAttackBow: 1
   isNextAttackSword: 1
-  isEndOfCombo: 0
+  isCurrentAttackEnder: 0
+  isBowAttack: 1
 --- !u!1101 &1132768113343459772
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -1985,7 +2003,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isNextAttackBow: 0
   isNextAttackSword: 1
-  isEndOfCombo: 0
+  isCurrentAttackEnder: 0
+  isBowAttack: 0
 --- !u!1102 &2596281100994335848
 AnimatorState:
   serializedVersion: 6
@@ -2041,7 +2060,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isNextAttackBow: 1
   isNextAttackSword: 0
-  isEndOfCombo: 0
+  isCurrentAttackEnder: 0
+  isBowAttack: 0
 --- !u!1101 &3147434819865636655
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -2132,7 +2152,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isNextAttackBow: 1
   isNextAttackSword: 0
-  isEndOfCombo: 0
+  isCurrentAttackEnder: 0
+  isBowAttack: 0
 --- !u!1101 &3349821162005982244
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -2322,7 +2343,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isNextAttackBow: 1
   isNextAttackSword: 1
-  isEndOfCombo: 0
+  isCurrentAttackEnder: 0
+  isBowAttack: 1
 --- !u!1101 &3879172826346958244
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -2416,7 +2438,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isNextAttackBow: 1
   isNextAttackSword: 1
-  isEndOfCombo: 0
+  isCurrentAttackEnder: 0
+  isBowAttack: 1
 --- !u!1102 &4329895498819444266
 AnimatorState:
   serializedVersion: 6
@@ -2632,7 +2655,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isNextAttackBow: 1
   isNextAttackSword: 1
-  isEndOfCombo: 0
+  isCurrentAttackEnder: 0
+  isBowAttack: 1
 --- !u!1101 &5928514716115835623
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -2851,7 +2875,7 @@ AnimatorStateMachine:
     m_Position: {x: 1200, y: -140, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 3422553090327548481}
-    m_Position: {x: 900, y: -40, z: 0}
+    m_Position: {x: 900, y: -50, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 5273130708571199099}
     m_Position: {x: 1200, y: 400, z: 0}
@@ -2948,7 +2972,7 @@ AnimatorStateMachine:
   m_EntryPosition: {x: 0, y: 70, z: 0}
   m_ExitPosition: {x: 2300, y: 60, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
-  m_DefaultState: {fileID: -2915433042461668392}
+  m_DefaultState: {fileID: 8983034250569970358}
 --- !u!1101 &7677376845713372825
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -3086,7 +3110,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isNextAttackBow: 1
   isNextAttackSword: 1
-  isEndOfCombo: 0
+  isCurrentAttackEnder: 0
+  isBowAttack: 0
 --- !u!1101 &8479459042634734201
 AnimatorStateTransition:
   m_ObjectHideFlags: 1

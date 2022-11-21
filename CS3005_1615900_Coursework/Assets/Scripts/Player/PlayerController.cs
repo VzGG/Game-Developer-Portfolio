@@ -21,18 +21,22 @@ public class PlayerController : MonoBehaviour
     private bool isUsingActionAnim = false;                             // The players main action status used to only have 1 action at a time and without any action buffers.
     bool isMidAir = false;                                              // Used to determine whether the player changes animation jump animation or idle animation.
     bool isJumpAttack3 = false;                                         // Used to determine whether the player uses the final jump attack and lands on the ground.
-
     bool isNextAttackBow = false;                                       // Determine whether the player, mid air, can attack with bow next.
     bool isNextAttackSword = false;                                     // Determine whether the player, mid air, can attack with sword next.
 
+    #region Set by the PlayerNextAnim class and called the moment an anim state starts.
+
     public void SetIsNextAttackBow(bool status) { this.isNextAttackBow = status; }
     public void SetIsNextAttackSword(bool status) { this.isNextAttackSword = status; }
+
+    #endregion
 
     [SerializeField] RuntimeAnimatorController jumpAnimController;      // Jump anim controller - also holds all the mid air attack animations.
     [SerializeField] RuntimeAnimatorController mainAnimController;      // Main anim controller - includes most of the animations like running, sliding, and grounded attacks.
     [SerializeField] RuntimeAnimatorController deadAnimController;      // Dead anim controller - when the player dies, switch to the death animation forever.
     public void SetIsUsingActionAnim(bool status) { this.isUsingActionAnim = status; }
     public void SetTimeManager(TimeManager timeManager) { this.timeManager = timeManager; }     // Set this to the timeManager we have at each level, because this gets missing at the end of each level w/o it
+    public PlayerAttack GetPlayerAttack() { return this.myAttack; }
 
     private void Awake()
     {

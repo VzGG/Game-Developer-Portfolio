@@ -12,7 +12,8 @@ public class PlayerNextAnim : StateMachineBehaviour
 {
     [SerializeField] bool isNextAttackBow = false;
     [SerializeField] bool isNextAttackSword = false;
-    [SerializeField] bool isEndOfCombo = false;
+    [SerializeField] bool isCurrentAttackEnder = false;
+    [SerializeField] bool isBowAttack = false;
 
     [SerializeField] public static PlayerController playerController;
 
@@ -21,24 +22,24 @@ public class PlayerNextAnim : StateMachineBehaviour
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        // Activate which attacks are allowed in the next state.
         playerController.SetIsNextAttackBow(isNextAttackBow);
         playerController.SetIsNextAttackSword(isNextAttackSword);
+
+        ChangeBowAttackOnHitEffect(playerController);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     //override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     //{
-    //    
+    //    // As comment above, this equal to the Monobehaviour's Update method.
     //}
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
-    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
-        if (isEndOfCombo)
-        {
-            // Unsure for now
-        }
-    }
+    //override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    //{
+    //    // Implement code that processes and affects root motion
+    //}
 
     // OnStateMove is called right after Animator.OnAnimatorMove()
     //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -51,4 +52,18 @@ public class PlayerNextAnim : StateMachineBehaviour
     //{
     //    // Implement code that sets up animation IK (inverse kinematics)
     //}
+
+    private void ChangeBowAttackOnHitEffect(PlayerController playerController)
+    {
+        PlayerAttack playerAttack = playerController.GetPlayerAttack();
+        if (isBowAttack)
+        {
+            if (isCurrentAttackEnder)
+            {
+                playerAttack.localOnHit = ArrowProjectile.OnHitEffect.Pierce;
+            }
+            else
+                playerAttack.localOnHit = ArrowProjectile.OnHitEffect.NoPierce;
+        }
+    }
 }

@@ -155,12 +155,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8b9813a48cc2e244bcf4abd4a806bc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myBody2D: {fileID: 3064437174599912474}
   projectileRB2D: {fileID: 3064437174599912473}
   projectileSpeed: 5
   bowDamage: 0
   playerScale: {x: 0, y: 0, z: 0}
+  firstHitPushback: {x: 2, y: 0.25}
+  stayHitPushback: {x: 3, y: 0.25}
   arrowHitVFX: {fileID: 1121346647999876810, guid: a4edf8f302b7ab447abfa6d7ba8eb3e1, type: 3}
   playerController: {fileID: 0}
+  onHitEffect: 0
 --- !u!114 &5992590101924583242
 MonoBehaviour:
   m_ObjectHideFlags: 0
