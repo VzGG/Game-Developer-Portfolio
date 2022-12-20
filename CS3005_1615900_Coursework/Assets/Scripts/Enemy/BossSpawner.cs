@@ -1,27 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Oswald.Manager;
 
-public class BossSpawner : MonoBehaviour
+namespace Oswald.Enemy
 {
-    [SerializeField] DialogueManager dialogueManager;
-    [SerializeField] GameObject bossGameObject;
-    [SerializeField] Vector3 bossSpawnLocation;
-
-    private void OnTriggerEnter2D(Collider2D collision)
+    public class BossSpawner : MonoBehaviour
     {
+        [SerializeField] DialogueManager dialogueManager;
+        [SerializeField] GameObject bossGameObject;
+        [SerializeField] Vector3 bossSpawnLocation;
 
-        // this.gameObject.GetComponent<BoxCollider2D>().enabled = false; // Turn off the box collider to stop it from running any collisions again
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
 
-        int dialogueNumber = 18;
-        // Play dialogue
-        Instantiate(dialogueManager.InstantiateDialogue(dialogueNumber));
+            // this.gameObject.GetComponent<BoxCollider2D>().enabled = false; // Turn off the box collider to stop it from running any collisions again
 
-        // Then spawn the boss
-        Instantiate(bossGameObject, bossSpawnLocation, Quaternion.identity);
+            int dialogueNumber = 18;
+            // Play dialogue
+            Instantiate(dialogueManager.InstantiateDialogue(dialogueNumber));
+
+            // Then spawn the boss
+            Instantiate(bossGameObject, bossSpawnLocation, Quaternion.identity);
 
 
-        // Turn off this gameObject
-        this.gameObject.SetActive(false);
+            // Turn off this gameObject
+            this.gameObject.SetActive(false);
+        }
     }
 }
+

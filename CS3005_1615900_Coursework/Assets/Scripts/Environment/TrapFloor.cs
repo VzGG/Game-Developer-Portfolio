@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Oswald.Manager;
 
 /* Concept of IEnumerator and inspired by:
  * 
@@ -9,43 +9,49 @@ using UnityEngine;
  * Available at: https://www.udemy.com/course/unitycourse/ 
  */
 
-public class TrapFloor : MonoBehaviour
+namespace Oswald.Environment
 {
-    [SerializeField] float timeToShowVFX = 3f;
-    [SerializeField] Vector2 spawnPosition;
-    [SerializeField] GameObject explosionVFX;
-
-
-    [Space]
-    [Header("Dialogue Properties")]
-    [SerializeField] DialogueManager dialogueManager;
-    [SerializeField] int dialogueIndex;                         // Specified in the editor for more customisation
-
-
-    [SerializeField] float destroyFloorTimer = 2f;
-    private int counter = 0;
-
-    private void OnCollisionEnter2D(Collision2D collision)
+    public class TrapFloor : MonoBehaviour
     {
-        if (collision.gameObject.tag == "Player")
+        [SerializeField] float timeToShowVFX = 3f;
+        [SerializeField] Vector2 spawnPosition;
+        [SerializeField] GameObject explosionVFX;
+
+
+        [Space]
+        [Header("Dialogue Properties")]
+        [SerializeField] DialogueManager dialogueManager;
+        [SerializeField] int dialogueIndex;                         // Specified in the editor for more customisation
+
+
+        [SerializeField] float destroyFloorTimer = 2f;
+        private int counter = 0;
+
+        private void OnCollisionEnter2D(Collision2D collision)
         {
-            counter++;
-            if (counter == 1)
+            if (collision.gameObject.tag == "Player")
             {
-                StartCoroutine(DestroyFloor());
+                counter++;
+                if (counter == 1)
+                {
+                    StartCoroutine(DestroyFloor());
+                }
             }
         }
-    }
 
-    IEnumerator DestroyFloor()
-    {
-        yield return new WaitForSeconds(destroyFloorTimer);
+        IEnumerator DestroyFloor()
+        {
+            yield return new WaitForSeconds(destroyFloorTimer);
 
-        // Spawn explosion VFX at the given position
-        Instantiate(explosionVFX, spawnPosition, Quaternion.identity);
+            // Spawn explosion VFX at the given position
+            Instantiate(explosionVFX, spawnPosition, Quaternion.identity);
 
-        Instantiate(dialogueManager.InstantiateDialogue(dialogueIndex));
+            Instantiate(dialogueManager.InstantiateDialogue(dialogueIndex));
 
-        gameObject.SetActive(false);
+            gameObject.SetActive(false);
+        }
     }
 }
+
+
+

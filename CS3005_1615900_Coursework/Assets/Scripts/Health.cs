@@ -1,86 +1,49 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Oswald.Enemy;
+using Oswald.Manager;
+using System;
 
 /// <summary>
 /// Reused by all living objects i.e., player, enemies,etc.
-/// 
-/// Not used by Boss
 /// </summary>
 public class Health : MonoBehaviour
 {
     [Header("Health Properties")]
     [SerializeField] private float maxHealth = 100f;
     [SerializeField] private float health = 100f;
-    [Header("Animator Properties")]
-    [SerializeField] Animator animator;
-    [SerializeField] private string animationParameterName;
-    [SerializeField] bool isHurt = false;
-    [SerializeField] string animationParameterName2;            // This should be isRunning for both Player and Gobli or any enemies
-    [SerializeField] float isHurtDuration = 0.5f;
-    [SerializeField] bool hasFlinch = false;                    // Player does not have flinch animation, but all have flinch
-    [SerializeField] RuntimeAnimatorController animatorController;
+
+    [Header("VFX Properties")]
     [SerializeField] GameObject BloodVFX;
-    [Space]
+
     [Header("Sound Properties")]
     [SerializeField] AudioClip hurtSFX;
     [SerializeField] AudioSource audioSource;
     [SerializeField] AudioClip deathSFX;
-    [Space]
+
     [Header("Player-VFX-ONLY")]
-    [SerializeField] SpriteRenderer playerSpriteRenderer;
     [SerializeField] Color originalColor;
     [SerializeField] Color hurtColor;
     [SerializeField] float hurtDuration = 0.5f;
-    [Space]
-    [Header("EVIL WIZARD ONLY")]
-    [SerializeField] bool isEvilWizard = false;
 
-    [Space]
-    [Header("BOSS ONLY")]
-    [SerializeField] bool isBoss = false;
-
-    public bool isHitDuringEnrage = false;
-
-    [Space]
-    [SerializeField] EnemyController enemyController;           // Set in the editor
-
+    public void SetHealth(float health) { this.health = health; }
+    public void SetMaxHealth(float maxHealth) { this.maxHealth = maxHealth; }
+    public float GetHealth() { return this.health; }
+    public float GetMaxHealth() { return this.maxHealth; }
+    public float GetHealthPercentage() { return health / maxHealth; }
 
     public void TakeDamage(float damage)
     {
         this.health = Mathf.Max(this.health - damage, 0f);
     }
 
-
-
-    // This is called only once whenever it takes damage, not like it is called in an update
-    //public void TakeDamage(float damage) 
-    //{ 
-
-    //    // Boss hurt vfx
-    //    if (this.gameObject.tag == "Enemy" && isBoss)
-    //    {
-    //        StartCoroutine(HurtVFX());
-    //    }
-
-
-    //    // This means the take damage method is called when the boss is hit during ENRAGED - OUR CONDITION to stop casting the spell of the boss
-    //    // If its the boss and is not in normal phase - normal phase = true is default
-    //    if (isBoss && !isNormalPhase)
-    //    {
-    //        // Debug.Log("BOSS IS HIT DURING ENRAGED - RETURN TO normal phase");
-    //        isHitDuringEnrage = true;
-
-    //    }
-
-    //    // Put it below to stop calling this when health is zero or less - should only be called if its a boss
-    //    BossPhase(damage);
-
- 
-
-    //}
-
     #region Boss phase starter
+
+    [Space]
+    [Header("BOSS ONLY")]
+    [SerializeField] bool isBoss = false;
+    public bool isHitDuringEnrage = false;
 
     [Space]
     [Header("BOSS Phase ONLY")]
@@ -141,19 +104,14 @@ public class Health : MonoBehaviour
         audioSource.PlayOneShot(deathSFX);
     }
 
-
-    public IEnumerator HurtVFX()
+    public IEnumerator HurtVFX(SpriteRenderer spriteRenderer)
     {
-        
         // Change colour to hurt colour
-        playerSpriteRenderer.color = hurtColor;
+        spriteRenderer.color = hurtColor;
         // Wait n seconds
         yield return new WaitForSeconds(hurtDuration);
         // Change colour back to original colour
-        playerSpriteRenderer.color = originalColor;
-
-        //Debug.Log("IS HURT: " + this.gameObject.name);
-
+        spriteRenderer.color = originalColor;
     }
 
     public IEnumerator WaitingToDie()
@@ -162,15 +120,4 @@ public class Health : MonoBehaviour
         FindObjectOfType<LevelsManager>().LoadScene("Game Over");
         Destroy(gameObject);
     }
-
-
-    public void SetHealth(float health) { this.health = health; }
-
-    public void SetMaxHealth(float maxHealth) { this.maxHealth = maxHealth; }
-
-    // Getter
-    public float GetHealth() { return this.health; }
-    public float GetMaxHealth() { return this.maxHealth; }
-    public float GetHealthPercentage() { return health / maxHealth; }
-
 }

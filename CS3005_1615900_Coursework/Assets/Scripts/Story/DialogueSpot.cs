@@ -1,29 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Oswald.Manager;
 
-public class DialogueSpot : MonoBehaviour
+namespace Oswald.Story
 {
-    [SerializeField] int dialogueIndex;
-    [SerializeField] DialogueManager dialogueManager;
-    [SerializeField] Collider2D thisCollider2d;
-    // Start is called before the first frame update
-    private void Awake()
+    public class DialogueSpot : MonoBehaviour
     {
-        dialogueManager = FindObjectOfType<DialogueManager>();
-        thisCollider2d = GetComponent<Collider2D>();
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (this.thisCollider2d.IsTouching(collision.gameObject.GetComponent<CapsuleCollider2D>()))
+        [SerializeField] int dialogueIndex;
+        [SerializeField] DialogueManager dialogueManager;
+        [SerializeField] Collider2D thisCollider2d;
+        // Start is called before the first frame update
+        private void Awake()
         {
-            // Create the dialogie
-            Instantiate(dialogueManager.InstantiateDialogue(dialogueIndex));
-            gameObject.SetActive(false);                                        // Prevents this script from occuring again
+            dialogueManager = FindObjectOfType<DialogueManager>();
+            thisCollider2d = GetComponent<Collider2D>();
         }
 
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (this.thisCollider2d.IsTouching(collision.gameObject.GetComponent<CapsuleCollider2D>()))
+            {
+                // Create the dialogie
+                Instantiate(dialogueManager.InstantiateDialogue(dialogueIndex));
+                gameObject.SetActive(false);                                        // Prevents this script from occuring again
+            }
+
+
+        }
 
     }
-
 }

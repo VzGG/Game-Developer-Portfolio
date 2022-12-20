@@ -148,6 +148,7 @@ GameObject:
   - component: {fileID: 8346373125583530607}
   - component: {fileID: 1465247016355209986}
   - component: {fileID: 99071122742476411}
+  - component: {fileID: 1838202642585348184}
   m_Layer: 11
   m_Name: GobliEnemy
   m_TagString: Enemy
@@ -438,11 +439,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1da3b0d5b0feb934691df724af96c067, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxEnergy: 100
   energy: 100
   energyRegeneration: 5
   isEnergyBeingUsed: 0
   time: 0
   regenWaitTime: 3
+  isStartWait: 0
 --- !u!114 &8346373125583530607
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -475,6 +478,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   anim: {fileID: 2738213906570717485}
   deadAnimController: {fileID: 9100000, guid: 7a0ecd4cb0a79204ca76142ce4946b48, type: 2}
+  animatorController: {fileID: 0}
   health: {fileID: 2738213906570717473}
   _break: {fileID: 8346373125583530607}
   rb2D: {fileID: 2738213906570717484}
@@ -495,6 +499,7 @@ MonoBehaviour:
   xScale: 0.6
   attackPattern: 0
   enemyUI: {fileID: 99071122742476411}
+  damageText: {fileID: 0}
 --- !u!114 &99071122742476411
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -511,6 +516,22 @@ MonoBehaviour:
   enemyHealthBar: {fileID: 6599892272266619655}
   enemyBreakBar: {fileID: 3301755035266251812}
   offsetPosition: {x: 0, y: -0.175, z: 0}
+--- !u!114 &1838202642585348184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2738213906570717480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0299f0b0d21ae474ea36d32f37654539, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 2738213906570717485}
+  animControllers:
+  - {fileID: 9100000, guid: 691cd81b502e94a4a9708b17735ccacb, type: 2}
+  - {fileID: 9100000, guid: 7a0ecd4cb0a79204ca76142ce4946b48, type: 2}
 --- !u!1 &6547690636934634416
 GameObject:
   m_ObjectHideFlags: 0

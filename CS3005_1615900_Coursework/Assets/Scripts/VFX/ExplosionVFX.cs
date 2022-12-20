@@ -2,14 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ExplosionVFX : MonoBehaviour
+namespace Oswald.VFX
 {
-    [SerializeField] AudioSource audioSource;
-    [SerializeField] AudioClip explosionSFX;
-    // Start is called before the first frame update
-    void Start()
+    public class ExplosionVFX : MonoBehaviour
     {
-        audioSource.PlayOneShot(explosionSFX);
+        [SerializeField] AudioSource audioSource;
+        [SerializeField] AudioClip explosionSFX;
+        // Start is called before the first frame update
+        void Start()
+        {
+            audioSource.PlayOneShot(explosionSFX);
+        }
     }
-
 }

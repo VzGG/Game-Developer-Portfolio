@@ -89,6 +89,20 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
+  - time: 0
+    functionName: PlaySFX
+    data: 
+    objectReferenceParameter: {fileID: 8300000, guid: 667b8e888d3dd70418bcd741a14a853d, type: 3}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0
+    functionName: ResizeToLargeTargetHitbox
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 0.016666668
     functionName: AnimationEventAttack_Sword
     data: 
@@ -103,8 +117,8 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.06666667
-    functionName: IsUsingActionAnimFalse
+  - time: 0.05
+    functionName: MakeThisEnable
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
@@ -119,6 +133,20 @@ AnimationClip:
     messageOptions: 0
   - time: 0.06666667
     functionName: ResizeToSmallHitBox
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.06666667
+    functionName: IsUsingActionAnimFalse
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.06666667
+    functionName: ResizeToOriginalTargetHitbox
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

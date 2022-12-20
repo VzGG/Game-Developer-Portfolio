@@ -1,44 +1,46 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Oswald.Manager;
+using Oswald.Player;
 
-public class GateKey : MonoBehaviour
+namespace Oswald.Environment
 {
-    [SerializeField] private DialogueManager dialogueManager;
-
-    private void OnTriggerEnter2D(Collider2D collision)
+    public class GateKey : MonoBehaviour
     {
-        if (collision.gameObject.tag == "Player")
+        [SerializeField] private DialogueManager dialogueManager;
+
+        private void OnTriggerEnter2D(Collider2D collision)
         {
-            int numberOfKeys = collision.gameObject.GetComponent<PlayerPickup>().GetNumberOfKeys();
-
-            int dialogueNumber = 0;
-            if (numberOfKeys == 0)
-                dialogueNumber = 13;
-            else if (numberOfKeys == 1)
-                dialogueNumber = 14;
-            else if (numberOfKeys == 2)
-                dialogueNumber = 15;
-            else if (numberOfKeys == 3)
-                dialogueNumber = 16;
-            else if (numberOfKeys == 4)
+            if (collision.gameObject.tag == "Player")
             {
-                dialogueNumber = 17;
-                // Then open the gate
-                gameObject.transform.parent.gameObject.SetActive(false);
+                int numberOfKeys = collision.gameObject.GetComponent<PlayerPickup>().GetNumberOfKeys();
 
-                //gameObject.SetActive(false);
+                int dialogueNumber = 0;
+                if (numberOfKeys == 0)
+                    dialogueNumber = 13;
+                else if (numberOfKeys == 1)
+                    dialogueNumber = 14;
+                else if (numberOfKeys == 2)
+                    dialogueNumber = 15;
+                else if (numberOfKeys == 3)
+                    dialogueNumber = 16;
+                else if (numberOfKeys == 4)
+                {
+                    dialogueNumber = 17;
+                    // Then open the gate
+                    gameObject.transform.parent.gameObject.SetActive(false);
+
+                    //gameObject.SetActive(false);
+                }
+
+
+                Instantiate(dialogueManager.InstantiateDialogue(dialogueNumber));
+
+
             }
-
-
-            Instantiate(dialogueManager.InstantiateDialogue(dialogueNumber));
-
-
-
-
-
-
-
         }
     }
 }
+
+

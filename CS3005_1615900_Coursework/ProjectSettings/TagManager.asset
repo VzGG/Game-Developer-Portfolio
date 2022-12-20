@@ -30,8 +30,8 @@ TagManager:
   - Elevator
   - EnemyProjectile
   - PlayerHitBox
-  - 
-  - 
+  - PlayerSearch
+  - EnemyWalkEdge
   - 
   - 
   - 

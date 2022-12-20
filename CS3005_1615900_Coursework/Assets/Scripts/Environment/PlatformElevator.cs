@@ -2,38 +2,43 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlatformElevator : MonoBehaviour
+
+namespace Oswald.Environment
 {
-    [SerializeField] Vector2 yLimitUp;
-    [SerializeField] Vector2 yLimitDown;
-    [SerializeField] float moveY = 5f;
-    [SerializeField] float moveSpeed = 0.5f;
-    [SerializeField] Rigidbody2D rb2d;
-
-    [SerializeField] bool movingUp = true;
-    [SerializeField] float time = 0f;
-
-    private void FixedUpdate()
+    public class PlatformElevator : MonoBehaviour
     {
-        if (movingUp)
-        {
-            rb2d.velocity = new Vector2(rb2d.velocity.x, moveY * moveSpeed);
-        }
-        else if (!movingUp)
-        {
-            rb2d.velocity = new Vector2(rb2d.velocity.x, -moveY * moveSpeed);
-        }
+        [SerializeField] Vector2 yLimitUp;
+        [SerializeField] Vector2 yLimitDown;
+        [SerializeField] float moveY = 5f;
+        [SerializeField] float moveSpeed = 0.5f;
+        [SerializeField] Rigidbody2D rb2d;
 
-        if (rb2d.position.y > yLimitUp.y)
+        [SerializeField] bool movingUp = true;
+        [SerializeField] float time = 0f;
+
+        private void FixedUpdate()
         {
-            movingUp = false;
+            if (movingUp)
+            {
+                rb2d.velocity = new Vector2(rb2d.velocity.x, moveY * moveSpeed);
+            }
+            else if (!movingUp)
+            {
+                rb2d.velocity = new Vector2(rb2d.velocity.x, -moveY * moveSpeed);
+            }
+
+            if (rb2d.position.y > yLimitUp.y)
+            {
+                movingUp = false;
+            }
+            else if (rb2d.position.y < yLimitDown.y)
+            {
+
+                movingUp = true;
+            }
+
+
         }
-        else if (rb2d.position.y < yLimitDown.y)
-        {
-
-            movingUp = true;
-        }
-
-
     }
 }
+

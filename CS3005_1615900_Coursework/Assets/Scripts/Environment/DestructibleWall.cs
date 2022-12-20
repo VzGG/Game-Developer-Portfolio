@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Oswald.Manager;
+using Oswald.Story;
 
 /*
  * Concept of IEnumerator and inspired by:
@@ -9,43 +11,49 @@ using UnityEngine;
  * Available at: https://www.udemy.com/course/unitycourse/ 
  */
 
-public class DestructibleWall : MonoBehaviour
+namespace Oswald.Environment
 {
-    [SerializeField] float timeToShowVFX = 3f;
-    [SerializeField] Vector2 spawnPosition;
-    [SerializeField] GameObject explosionVFX;
-
-
-    [Space]
-    [Header("Dialogue Properties")]
-    [SerializeField] DialogueManager dialogueManager;
-    [SerializeField] int dialogueIndex;                         // Specified in the editor for more customisation
-
-    [SerializeField] Dialogue dialogue;
-    // Start is called before the first frame update
-    void Start()
+    public class DestructibleWall : MonoBehaviour
     {
-        // Debug.Log("I am running1");
-        StartCoroutine(ShowVFX());       // When loading the scene Level 1 from Story Intro scene, this coroutine doesn't run
-        // Debug.Log("I am running2");
-    }
+        [SerializeField] float timeToShowVFX = 3f;
+        [SerializeField] Vector2 spawnPosition;
+        [SerializeField] GameObject explosionVFX;
 
 
-    IEnumerator ShowVFX()
-    {
-        yield return new WaitForSeconds(timeToShowVFX);
-        // Debug.Log("EXPLOSION");
-        // Show VFX
-        Instantiate(explosionVFX, spawnPosition, transform.rotation);
+        [Space]
+        [Header("Dialogue Properties")]
+        [SerializeField] DialogueManager dialogueManager;
+        [SerializeField] int dialogueIndex;                         // Specified in the editor for more customisation
 
-        // Works
-        /*        dialogue.SetTimeManager(this.timeManager);
-                Instantiate(dialogue.gameObject);*/
-        Instantiate(dialogueManager.InstantiateDialogue(dialogueIndex));
+        [SerializeField] Dialogue dialogue;
+        // Start is called before the first frame update
+        void Start()
+        {
+            // Debug.Log("I am running1");
+            StartCoroutine(ShowVFX());       // When loading the scene Level 1 from Story Intro scene, this coroutine doesn't run
+                                             // Debug.Log("I am running2");
+        }
 
 
-        gameObject.SetActive(false);                                    // Fix problem of above by not destroying the gameobject but setting it inactive instead
+        IEnumerator ShowVFX()
+        {
+            yield return new WaitForSeconds(timeToShowVFX);
+            // Debug.Log("EXPLOSION");
+            // Show VFX
+            Instantiate(explosionVFX, spawnPosition, transform.rotation);
 
-        // dialogueManager.DialoguePlay(dialogueIndex);                    // Plays the dialogue
+            // Works
+            /*        dialogue.SetTimeManager(this.timeManager);
+                    Instantiate(dialogue.gameObject);*/
+            Instantiate(dialogueManager.InstantiateDialogue(dialogueIndex));
+
+
+            gameObject.SetActive(false);                                    // Fix problem of above by not destroying the gameobject but setting it inactive instead
+
+            // dialogueManager.DialoguePlay(dialogueIndex);                    // Plays the dialogue
+        }
     }
 }
+
+
+

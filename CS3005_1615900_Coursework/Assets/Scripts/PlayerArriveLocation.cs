@@ -2,6 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using Oswald.Camera;
+using Oswald.UI;
+using Oswald.Manager;
+using Oswald.Player;
+
 public class PlayerArriveLocation : MonoBehaviour
 {
     [SerializeField] Vector3 playerArriveLocationPoint;

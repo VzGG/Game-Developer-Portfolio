@@ -159,9 +159,11 @@ MonoBehaviour:
   projectileRB2D: {fileID: 3064437174599912473}
   projectileSpeed: 5
   bowDamage: 0
+  noPierceMultiplier: 3
+  pierceMultiplier: 0.75
   playerScale: {x: 0, y: 0, z: 0}
-  firstHitPushback: {x: 2, y: 0.25}
-  stayHitPushback: {x: 3, y: 0.25}
+  firstHitPushback: {x: 0.5, y: 0.5}
+  stayHitPushback: {x: 0.5, y: 0.25}
   arrowHitVFX: {fileID: 1121346647999876810, guid: a4edf8f302b7ab447abfa6d7ba8eb3e1, type: 3}
   playerController: {fileID: 0}
   onHitEffect: 0
