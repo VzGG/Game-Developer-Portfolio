@@ -31,6 +31,9 @@ namespace Oswald.UI
         [SerializeField] private Image _skillImage2;
         [SerializeField] private Image _skillImage2Cooldown;
 
+        [Header("Combo Components")]
+        [SerializeField] private Text _comboList;
+        [SerializeField] private Text _comboParentName;
 
 
         // Set by the PlayerArriveLocation - for changing levels

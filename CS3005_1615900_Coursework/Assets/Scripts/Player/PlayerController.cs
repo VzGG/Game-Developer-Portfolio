@@ -145,12 +145,14 @@ namespace Oswald.Player
             if (Input.GetMouseButtonDown(0) && myEnergy.GetEnergy() > 0)
             {
                 // When we left click, proceeed to attack.
-                myAttack.SwordAttack(rb2d, animatorController, isMidAir, isNextAttackSword);
+                //myAttack.SwordAttack(rb2d, animatorController, isMidAir, isNextAttackSword);
+                myAttack.SwordAttack(rb2d, isMidAir, isNextAttackSword);
             }
             else if (Input.GetMouseButtonDown(1) && myEnergy.GetEnergy() > 0)
             {
                 // When we right click, proceed to use special attack - bow
-                myAttack.BowAttack(rb2d, animatorController, isMidAir, isNextAttackBow);
+                //myAttack.BowAttack(rb2d, animatorController, isMidAir, isNextAttackBow);
+                myAttack.BowAttack(rb2d, isMidAir, isNextAttackBow);
             }
 
             // If there is an animation going on, cannot do any pressing

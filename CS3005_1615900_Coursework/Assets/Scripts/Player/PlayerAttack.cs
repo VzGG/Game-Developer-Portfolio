@@ -17,6 +17,8 @@ namespace Oswald.Player
     /// </summary>
     public class PlayerAttack : MonoBehaviour
     {
+        [SerializeField] Weapon myWeapon;
+
         [Header("My normal attack")]
         [SerializeField] float attackEnergy = 5f;                                               // How much the attack cost.
         [SerializeField] float myDamage = 5f;                                                   // How much damage can the player deal to the target.
@@ -62,6 +64,34 @@ namespace Oswald.Player
         #region Sword Attack
 
         /// <summary>
+        /// The updated attack based from the weapon class
+        /// </summary>
+        /// <param name="myRB2D"></param>
+        /// <param name="isMidAir"></param>
+        /// <param name="isNextAttackSword"></param>
+        public void SwordAttack(Rigidbody2D myRB2D, bool isMidAir, bool isNextAttackSword)
+        {
+            Animator animator = GetComponent<Animator>();
+            if (isMidAir)
+            {
+                // Change the anim controller to the anim controller specialised for air attacks.
+                animator.runtimeAnimatorController = myWeapon.AirComboAnimController;
+                animator.SetTrigger("isAttacking");
+
+                if (isNextAttackSword)
+                {
+                    myRB2D.velocity = new Vector2(0f, 3f);
+                }
+            }
+            else
+            {
+                animator.runtimeAnimatorController = myWeapon.GroundedComboAnimController;
+                animator.SetTrigger("isAttacking");
+            }
+        }
+
+
+        /// <summary>
         /// Change the player's current animation to an attack animation, which uses energy. If the player is mid air while attacking, it changes to mid air attack animations. 
         /// Otherwise, grounded attack animations are shown.
         /// </summary>
@@ -84,6 +114,27 @@ namespace Oswald.Player
         #endregion Sword Attack
 
         #region Bow Attack
+
+        // Probably need to rename this method to secondary attack
+        public void BowAttack(Rigidbody2D myRB2D, bool isMidAir, bool isNextAttackBow)
+        {
+            if (myWeapon.SecondaryWeapon == null) { return; }
+            Animator animator = GetComponent<Animator>();
+            if (isMidAir)
+            {
+                animator.runtimeAnimatorController = myWeapon.AirComboAnimController;
+                animator.SetTrigger("isBowAttacking");
+                if (isNextAttackBow)
+                {
+                    myRB2D.velocity = new Vector2(0f, 3f);
+                }
+            }
+            else
+            {
+                animator.runtimeAnimatorController = myWeapon.GroundedComboAnimController;
+                animator.SetTrigger("isBowAttacking");
+            }
+        }
 
         /// <summary>
         /// Change the player's current animation to Bow attack animation which launches an arrow projectile and decreases the player's energy.
