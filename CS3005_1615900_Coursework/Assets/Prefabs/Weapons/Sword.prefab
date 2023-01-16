@@ -45,17 +45,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AirComboAnimController: {fileID: 9100000, guid: ed0ba4db53feaf04ba06153ec299af2f, type: 2}
   GroundedComboAnimController: {fileID: 9100000, guid: a3bc2370998ad6b4ca569280580cf327, type: 2}
-  _airComboList: 'Sword Air Combo 1: Space > LMB > LMB > LMB
+  AirComboList: 'Sword Air Combo 1: SPACE > LMB > LMB > LMB
 
-    Sword Air Bow Combo
-    1: Space > LMB > LMB > RMB
+    Sword Bow Air Combo
+    1: SPACE > LMB > LMB > RMB
 
-    Sword Bow Air Combo Infinite: Space > LMB > LMB
-    > RMB > LMB > LMB > RMB'
-  _groundedComboList: 'Sword Grounded Attack: LMB (Can chain)
+    Sword Bow Air Infinite: SPACE > LMB > LMB > RMB
+    > LMB >  LMB > RMB > ...'
+  GroundedComboList: 'Sword Attack: LMB (Can chain)
 
-    Bow Grounded Attack:
-    RMB (Can chain)'
+    Bow Attack: RMB (Can chain)'
   _weaponDamage: 5
   _weaponEnergy: 5
   SecondaryWeapon: {fileID: 0}

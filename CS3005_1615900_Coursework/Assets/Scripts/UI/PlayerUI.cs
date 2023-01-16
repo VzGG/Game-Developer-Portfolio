@@ -5,6 +5,7 @@ using UnityEngine.UI;
 // Unity Package (N/A) 'TextMeshPro' [Scripting API]. Available at: https://docs.unity3d.com/Packages/com.unity.textmeshpro@3.0/manual/index.html
 using TMPro;            // To use the text mesh pro class - 
 using Oswald.Player;
+using Oswald.Manager;
 
 namespace Oswald.UI
 {
@@ -32,8 +33,11 @@ namespace Oswald.UI
         [SerializeField] private Image _skillImage2Cooldown;
 
         [Header("Combo Components")]
+        [SerializeField] private TimeManager timeManager;
         [SerializeField] private Text _comboList;
         [SerializeField] private Text _comboParentName;
+        [SerializeField] private GameObject _comboPanel;
+        private bool _isActive = false;
 
 
         // Set by the PlayerArriveLocation - for changing levels
@@ -54,6 +58,8 @@ namespace Oswald.UI
 
         private void Update()
         {
+            if (timeManager.GetIsTimeStopped()) { return; }
+
             if (myHealth == null || myEnergy == null) { return; }
 
             // Update my image's fill amount by my player's health and energy percentages
@@ -75,6 +81,18 @@ namespace Oswald.UI
             _skillImage2.sprite = playerAttack.skills[1].GetSkillIcon();
             _skillImage2Cooldown.fillAmount = (playerAttack.skills[1].GetTimer() / playerAttack.skills[1].GetCooldown() );
 
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                // Display the player's currently equipped text.
+                PlayerAttack playerAttack = myHealth.GetComponent<PlayerAttack>();
+                string airCombo = playerAttack.MyWeapon.AirComboList;
+                string groundedCombo = playerAttack.MyWeapon.GroundedComboList;
+                _comboList.text = airCombo + "\n\n" + groundedCombo;
+                // Show combo UI - use this "!" for the bool display.
+                // Initial value is false - so reverse it means it will be true.
+                _isActive = !_isActive;     
+                _comboPanel.SetActive(_isActive);
+            }
 
 
             // Stop null reference error

@@ -7,9 +7,9 @@ public class Weapon : MonoBehaviour
     [SerializeField] public RuntimeAnimatorController AirComboAnimController;
     [SerializeField] public RuntimeAnimatorController GroundedComboAnimController;
     [TextArea(1, 20)]
-    [SerializeField] private string _airComboList;
+    [SerializeField] public string AirComboList;
     [TextArea(1, 20)]
-    [SerializeField] private string _groundedComboList;
+    [SerializeField] public string GroundedComboList;
 
     [SerializeField] private float _weaponDamage;
     [SerializeField] private float _weaponEnergy;

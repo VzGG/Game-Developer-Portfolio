@@ -17,7 +17,7 @@ namespace Oswald.Player
     /// </summary>
     public class PlayerAttack : MonoBehaviour
     {
-        [SerializeField] Weapon myWeapon;
+        [SerializeField] public Weapon MyWeapon;
 
         [Header("My normal attack")]
         [SerializeField] float attackEnergy = 5f;                                               // How much the attack cost.
@@ -75,7 +75,7 @@ namespace Oswald.Player
             if (isMidAir)
             {
                 // Change the anim controller to the anim controller specialised for air attacks.
-                animator.runtimeAnimatorController = myWeapon.AirComboAnimController;
+                animator.runtimeAnimatorController = MyWeapon.AirComboAnimController;
                 animator.SetTrigger("isAttacking");
 
                 if (isNextAttackSword)
@@ -85,7 +85,7 @@ namespace Oswald.Player
             }
             else
             {
-                animator.runtimeAnimatorController = myWeapon.GroundedComboAnimController;
+                animator.runtimeAnimatorController = MyWeapon.GroundedComboAnimController;
                 animator.SetTrigger("isAttacking");
             }
         }
@@ -118,11 +118,11 @@ namespace Oswald.Player
         // Probably need to rename this method to secondary attack
         public void BowAttack(Rigidbody2D myRB2D, bool isMidAir, bool isNextAttackBow)
         {
-            if (myWeapon.SecondaryWeapon == null) { return; }
+            if (MyWeapon.SecondaryWeapon == null) { return; }
             Animator animator = GetComponent<Animator>();
             if (isMidAir)
             {
-                animator.runtimeAnimatorController = myWeapon.AirComboAnimController;
+                animator.runtimeAnimatorController = MyWeapon.AirComboAnimController;
                 animator.SetTrigger("isBowAttacking");
                 if (isNextAttackBow)
                 {
@@ -131,7 +131,7 @@ namespace Oswald.Player
             }
             else
             {
-                animator.runtimeAnimatorController = myWeapon.GroundedComboAnimController;
+                animator.runtimeAnimatorController = MyWeapon.GroundedComboAnimController;
                 animator.SetTrigger("isBowAttacking");
             }
         }

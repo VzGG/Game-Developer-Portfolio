@@ -3048,6 +3048,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 648970856}
     - target: {fileID: 9057973526240010889, guid: f31553829344fdb42a7c78ff689e1630, type: 3}
+      propertyPath: MyWeapon
+      value: 
+      objectReference: {fileID: 1721606621}
+    - target: {fileID: 9057973526240010889, guid: f31553829344fdb42a7c78ff689e1630, type: 3}
       propertyPath: bowSkill
       value: 
       objectReference: {fileID: 0}
@@ -3444,9 +3448,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2084233789}
     - target: {fileID: 3015372250456233335, guid: 934a9512fb3f4c34893e58e3b3f52c0c, type: 3}
+      propertyPath: _comboPanel
+      value: 
+      objectReference: {fileID: 1423276926}
+    - target: {fileID: 3015372250456233335, guid: 934a9512fb3f4c34893e58e3b3f52c0c, type: 3}
       propertyPath: _skillImage
       value: 
       objectReference: {fileID: 1423276925}
+    - target: {fileID: 3015372250456233335, guid: 934a9512fb3f4c34893e58e3b3f52c0c, type: 3}
+      propertyPath: timeManager
+      value: 
+      objectReference: {fileID: 1497891921}
     - target: {fileID: 3015372250456233335, guid: 934a9512fb3f4c34893e58e3b3f52c0c, type: 3}
       propertyPath: _skillImage1
       value: 
@@ -13234,6 +13246,10 @@ PrefabInstance:
         Sword Bow Air Combo Infinite: Space >
         LMB > LMB > RMB > LMB > LMB > RMB > ...'
       objectReference: {fileID: 0}
+    - target: {fileID: 1590613535120048249, guid: 68d6d81d3737fad41b9c9da875a3a3db, type: 3}
+      propertyPath: m_FontData.m_BestFit
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7024971678129318405, guid: 68d6d81d3737fad41b9c9da875a3a3db, type: 3}
       propertyPath: m_Text
       value: Level 1 Air Combo
@@ -13326,6 +13342,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerUICanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 9100193283618706254, guid: 68d6d81d3737fad41b9c9da875a3a3db, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 68d6d81d3737fad41b9c9da875a3a3db, type: 3}
 --- !u!114 &1423276919 stripped
@@ -13405,6 +13425,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1423276926 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9100193283618706254, guid: 68d6d81d3737fad41b9c9da875a3a3db, type: 3}
+  m_PrefabInstance: {fileID: 1423276918}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1423287035 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2477244563795348161, guid: 1beecad5cc425d3409d43734b322e8b1, type: 3}
