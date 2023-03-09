@@ -38844,6 +38844,52 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1834513928502582197, guid: 774ad5c80f5f7c7438eaf1cb0122aa59, type: 3}
   m_PrefabInstance: {fileID: 2101459168}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2103928039
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2103928040}
+  - component: {fileID: 2103928041}
+  m_Layer: 0
+  m_Name: EquipmentRandomzier
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2103928040
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2103928039}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 14
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2103928041
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2103928039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a0dd461c05dcc945922404797ca28fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _presetSprites: []
+  spawnedEquipment: []
+  prefabEquipment: {fileID: 9030490782143457951, guid: 8a0f6b5fece50c642a52166a8da6b05b, type: 3}
 --- !u!114 &2108617221 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1898920319140000857, guid: 14992ac970aa83b4d8ae8fb72e5993d8, type: 3}
