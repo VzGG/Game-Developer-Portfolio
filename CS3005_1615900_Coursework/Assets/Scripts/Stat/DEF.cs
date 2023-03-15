@@ -8,8 +8,6 @@ public class DEF : Stat
         this.Name = "DEF";
         this.RatingPerStat = 7f;
         this.Description = "The character's defense, it is how much a character receives less damage";
-
-        this.Value = Random.Range(DEFUtility.defRanges[0], DEFUtility.defRanges[1]);
     }
     public DEF(float givenDEF)
     {
@@ -18,9 +16,24 @@ public class DEF : Stat
         this.RatingPerStat = 7f;
         this.Description = "The character's defense, it is how much a character receives less damage";
     }
+
+    public override void RandomStatFlat()
+    {
+        this.Value = Random.Range(DEFUtility.defRanges[0], DEFUtility.defRanges[1]);
+    }
+
+    public override void RandomStatPercent()
+    {
+        this.Value = Random.Range(DEFUtility.defRanges[2], DEFUtility.defRanges[3]);
+        this._ratingerPerStatBonus = 0.45f;
+    }
 }
 
 public static class DEFUtility
 {
-    public static readonly int[] defRanges = new int[] { 1, 25 };
+    public static readonly int[] defRanges = new int[] 
+    { 
+        1, 25,
+        5, 35
+    };
 }

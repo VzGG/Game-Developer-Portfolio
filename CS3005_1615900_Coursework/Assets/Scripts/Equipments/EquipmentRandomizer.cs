@@ -41,10 +41,12 @@ public class EquipmentRandomizer : MonoBehaviour
             for (int j = 0; j < (int)equipment.rarity; j++)
             {
                 //Stat randomStat = RandomStat();
-                Stat randomStat = StatUtility.RandomStat(equipment.rarity);
+                Stat randomStat = StatUtility.RandomStat(j);
                 equipment.stats.Add(randomStat);
                 // Determine equipment rating
-                equipment.rating += (randomStat.Value * randomStat.GetRatingPerStat());
+                randomStat.GetRatingPerStatBonus();
+                equipment.rating += randomStat.Value * randomStat.GetRatingPerStat() * (1f + randomStat.GetRatingPerStatBonus());
+
             }
 
             // Determine equipment weight - weight is between n and n-max
