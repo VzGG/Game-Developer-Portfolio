@@ -153,7 +153,7 @@ namespace Oswald.Enemy
             throw new System.NotImplementedException();
         }
 
-        public override void EnemyTakeDamage(float damage, GameObject attacker, Vector2 pushback)
+        public override void EnemyTakeDamage(float damage, GameObject attacker, Vector2 pushback, bool criticalDamage)
         {
             throw new System.NotImplementedException();
         }

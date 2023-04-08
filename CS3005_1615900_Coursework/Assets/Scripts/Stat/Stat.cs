@@ -14,10 +14,9 @@ public abstract class Stat
     public float GetRatingPerStat() { return this.RatingPerStat; }
     public string GetDescription() { return this.Description; }
     public float GetRatingPerStatBonus() { return this._ratingerPerStatBonus; }
-
-    //public void SetValue(float givenValue) { this.Value = givenValue; }
     public abstract void RandomStatFlat();
     public abstract void RandomStatPercent();
+    public virtual void SpecialEffect(System.Object obj) { }
 }
 
 public static class StatUtility
@@ -33,10 +32,15 @@ public static class StatUtility
         // Generate a random stat class either: HP, EN, ATK, DEF, ENRGN, ATKSPD
         Stat stat = (Stat)Activator.CreateInstance(statTypes[randomClass]);
 
-        if (index == (int)Rarity.Epic || index == (int)Rarity.Legendary)
+        if (index == (int)Rarity.Epic)
         {
             stat.RandomStatPercent();
         }
+        //else if (index == (int)Rarity.Legendary)
+        //{
+        //    // Implement legendary stats
+        //    // Add something to the value - surely all legendary special effects have stats to it
+        //}
         else
         {
             stat.RandomStatFlat();

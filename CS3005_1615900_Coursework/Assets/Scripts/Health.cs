@@ -27,15 +27,49 @@ public class Health : MonoBehaviour
     [SerializeField] Color hurtColor;
     [SerializeField] float hurtDuration = 0.5f;
 
+    public bool canRegen { private get; set; } = false;
+    public float healthRegen { private get; set; } = 0f;
+
+    // For evasion
+    public bool canEvadeDamage { private get; set; } = false;
+    public float evasionRate { private get; set; } = 0f;
+    public bool isEvading { get; private set; } = false;
+    public Color evadeColor;
+    public float evadeDuration = 0.1f;
+
     public void SetHealth(float health) { this.health = health; }
     public void SetMaxHealth(float maxHealth) { this.maxHealth = maxHealth; }
     public float GetHealth() { return this.health; }
     public float GetMaxHealth() { return this.maxHealth; }
     public float GetHealthPercentage() { return health / maxHealth; }
 
+    public void CanEvadeDamage()
+    {
+        if (!canEvadeDamage) { return; }
+
+        int chanceToEvade = UnityEngine.Random.Range(0, 100);
+        if (chanceToEvade < evasionRate)
+        {
+            // Do nothing because we evade
+            isEvading = true;
+        }
+    }
+
+    public void ResetEvade()
+    {
+        isEvading = false;
+    }
+
     public void TakeDamage(float damage)
     {
         this.health = Mathf.Max(this.health - damage, 0f);
+    }
+
+    public void HealthRegen()
+    {
+        if (!canRegen) { return; }
+
+        health = Mathf.Clamp(health + healthRegen, 0f, maxHealth);
     }
 
     #region Boss phase starter
@@ -89,6 +123,8 @@ public class Health : MonoBehaviour
 
     #endregion
 
+    #region VFX and SFX
+
     public void BloodEffectVFX()
     {
         Instantiate(BloodVFX, transform.position, transform.rotation);
@@ -113,6 +149,17 @@ public class Health : MonoBehaviour
         // Change colour back to original colour
         spriteRenderer.color = originalColor;
     }
+
+    public IEnumerator EvadeVFX(SpriteRenderer spriteRenderer)
+    {
+        spriteRenderer.color = evadeColor;
+
+        yield return new WaitForSeconds(evadeDuration);
+
+        spriteRenderer.color = originalColor;
+    }
+
+    #endregion
 
     public IEnumerator WaitingToDie()
     {

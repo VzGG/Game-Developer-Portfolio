@@ -19,6 +19,7 @@ public class Energy : MonoBehaviour
     public float GetMaxEnergy() { return this.maxEnergy; }
     public void SetEnergy(float energy) { this.energy = energy; }
     public void SetMaxEnergy(float maxEnergy) { this.maxEnergy = maxEnergy; }
+    public void SetEnergyRegen(float energyRegen) { this.energyRegeneration = energyRegen; }
     public void UseEnergy(float energy) 
     {
         isEnergyBeingUsed = true;

@@ -22,6 +22,8 @@ namespace Oswald.Player
 
         [SerializeField] PlayerController playerController;
 
+        public bool isCritical { private get; set; } = false;
+
         public enum OnHitEffect
         {
             Pierce,
@@ -87,7 +89,7 @@ namespace Oswald.Player
             {
                 if (collision.gameObject.tag.Equals("Enemy"))
                 {
-                    collision.gameObject.GetComponent<EnemyController>().EnemyTakeDamage(bowDamage, this.playerController.gameObject, firstHitPushback);
+                    collision.gameObject.GetComponent<EnemyController>().EnemyTakeDamage(bowDamage, this.playerController.gameObject, firstHitPushback, isCritical);
                 }
             }
 
@@ -107,7 +109,7 @@ namespace Oswald.Player
             {
                 if (collision.gameObject.tag.Equals("Enemy"))
                 {
-                    collision.gameObject.GetComponent<EnemyController>().EnemyTakeDamage(bowDamage, this.playerController.gameObject, firstHitPushback);
+                    collision.gameObject.GetComponent<EnemyController>().EnemyTakeDamage(bowDamage, this.playerController.gameObject, firstHitPushback, isCritical);
                 }
             }
         }
@@ -118,7 +120,7 @@ namespace Oswald.Player
             {
                 if (collision.gameObject.tag.Equals("Enemy"))
                 {
-                    collision.gameObject.GetComponent<EnemyController>().EnemyTakeDamage(bowDamage, this.playerController.gameObject, stayHitPushback);
+                    collision.gameObject.GetComponent<EnemyController>().EnemyTakeDamage(bowDamage, this.playerController.gameObject, stayHitPushback, false);
                 }
             }
         }

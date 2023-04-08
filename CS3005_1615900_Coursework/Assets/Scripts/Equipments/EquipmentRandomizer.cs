@@ -7,26 +7,75 @@ using UnityEngine;
 public class EquipmentRandomizer : MonoBehaviour
 {
     [SerializeField] private Sprite[] _presetSprites;
-    //[SerializeField] private Equipment[] _spawnedEquipment;
+    [SerializeField] private Equipment[] _spawnedEquipment;
     [SerializeField] private GameObject _prefabEquipment;
+
+    [SerializeField] bool isThereLegendary = false;
+    [SerializeField] GameObject legendaryEquipmentObj;
 
     private void Start()
     {
-        LoadSprites();
-        GenerateEquipment();
+        //LoadSprites();
+        //GenerateEquipment();
+        //AddEquipmentToPlayer();
+
+
+    }
+    public void AddEquipmentToPlayer()
+    {
+        
+
+        for (int i = 0; i < 5; i++)
+        {
+            int randomEquipmentIndex = UnityEngine.Random.Range(0, _spawnedEquipment.Length);
+            FindObjectOfType<MyEquipment>().myEquipment.Add(_spawnedEquipment[randomEquipmentIndex]);
+        }
+
+        
     }
 
-    private void LoadSprites()
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Backspace))
+        {
+            if (isThereLegendary)
+            {
+                // Add this inside the PlayerController;
+                //FindObjectOfType<Oswald.Player.PlayerController>().characterEquipment = legendaryEquipmentObj;
+
+                isThereLegendary = false;
+            }
+        }
+
+    }
+
+    public void AddLegendaryEquipment(MyEquipment equipment)
+    {
+        if (!isThereLegendary) { return; }
+        equipment.myEquipment[4] = legendaryEquipmentObj.GetComponent<Equipment>();
+    }
+
+    public void LoadSprites()
     {
         Sprite[] loadedSprites = Resources.LoadAll<Sprite>("Sprites/Items");
         _presetSprites = new Sprite[loadedSprites.Length];
         _presetSprites = loadedSprites;
     }
-    void GenerateEquipment()
+    public void GenerateEquipment()
     {
+        // These are the legendary types, use reflection to create an instance of each type.
+        Type[] legendaryTypes = new Type[] 
+        {
+            typeof(SPECIAL_HELMET_01),
+            typeof(SPECIAL_GLOVE_01),
+            typeof(SPECIAL_BOOTS_01),
+            typeof(SPECIAL_PLATE_01)
+        };
+        
 
         int randomEquipmentSpawned = UnityEngine.Random.Range(10, 100);
 
+        _spawnedEquipment = new Equipment[randomEquipmentSpawned];
 
         for (int i = 0; i < randomEquipmentSpawned; i++)
         {
@@ -40,14 +89,32 @@ public class EquipmentRandomizer : MonoBehaviour
             // Add random n random stats
             for (int j = 0; j < (int)equipment.rarity; j++)
             {
-                //Stat randomStat = RandomStat();
-                Stat randomStat = StatUtility.RandomStat(j);
-                equipment.stats.Add(randomStat);
-                // Determine equipment rating
-                randomStat.GetRatingPerStatBonus();
-                equipment.rating += randomStat.Value * randomStat.GetRatingPerStat() * (1f + randomStat.GetRatingPerStatBonus());
+                if (j == ((int)Rarity.Legendary-1))
+                {
+                    int randomClassIndex = UnityEngine.Random.Range(0, legendaryTypes.Length);
+                    Stat legendaryStat = (Stat)Activator.CreateInstance(legendaryTypes[randomClassIndex]);
+                    equipment.stats.Add(legendaryStat);
+                    equipment.rating += legendaryStat.Value * legendaryStat.GetRatingPerStat() * (1f + legendaryStat.GetRatingPerStatBonus());
+
+                    // DELETE BELOW LATER -> this is only used to attach a legendary to the player.
+                    isThereLegendary = true;
+                    legendaryEquipmentObj = gameObject;
+                    //return;
+                }
+                else
+                {
+                    //Stat randomStat = RandomStat();
+                    Stat randomStat = StatUtility.RandomStat(j);
+                    equipment.stats.Add(randomStat);
+                    // Determine equipment rating
+                    equipment.rating += randomStat.Value * randomStat.GetRatingPerStat() * (1f + randomStat.GetRatingPerStatBonus());
+                }
+
+
 
             }
+
+            _spawnedEquipment[i] = equipment;
 
             // Determine equipment weight - weight is between n and n-max
 
@@ -56,6 +123,7 @@ public class EquipmentRandomizer : MonoBehaviour
 
 
     }
+
 
     // Uncomment if RarityUtility.RandomRarity is not a good random option
     //// Credit to: https://www.youtube.com/watch?v=Nu-HEbb_z54 for the inspiration

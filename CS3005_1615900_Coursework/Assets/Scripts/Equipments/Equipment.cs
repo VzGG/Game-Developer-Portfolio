@@ -17,6 +17,17 @@ public class Equipment : MonoBehaviour
     // How to make paragraphs shown in the editor: https://answers.unity.com/questions/424874/showing-a-textarea-field-for-a-string-variable-in.html
 /*    [TextArea(1, 30)]
     public string description;*/
+
+    // special eff is method // need to set method or get teh special effects method instead 
+}
+
+public enum EquipmentCategory
+{
+    Helmet,
+    Plate,
+    Gloves,
+    Boots,
+    Accessory
 }
 
 public enum Rarity

@@ -229,9 +229,13 @@ namespace Oswald.Enemy
         
 
         #region Taking Damage Logic
-        public override void EnemyTakeDamage(float damage, GameObject attacker, Vector2 pushback)
+        public override void EnemyTakeDamage(float damage, GameObject attacker, Vector2 pushback, bool criticalDamage)
         {
             if (health.GetHealth() <= 0f) { return; }
+            if (damage > health.GetHealth())
+            {
+                damage = health.GetHealth();
+            }
             health.TakeDamage(damage);
             health.PlayHurtSFX();
 
@@ -242,9 +246,16 @@ namespace Oswald.Enemy
 
 
             // Creates the UI for taking damage.
-            GameObject d_text = Instantiate(damageText, damageNumberCanvas.transform, true);
-            d_text.transform.position = this.transform.position;
-            d_text.GetComponent<Text>().text = Mathf.RoundToInt(damage).ToString();
+            GameObject d_textGameObj = Instantiate(damageText, damageNumberCanvas.transform, true);
+            d_textGameObj.transform.position = this.transform.position;
+            Text d_text = d_textGameObj.GetComponent<Text>();
+            d_text.text = Mathf.RoundToInt(damage).ToString();
+            //d_textGameObj.GetComponent<Text>().text = Mathf.RoundToInt(damage).ToString();
+            if (criticalDamage)
+            {
+                d_text.text += "!";
+                d_text.color = Color.yellow;
+            }
 
             if (attacker.tag.Equals("Player"))
             {

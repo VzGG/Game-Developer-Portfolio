@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Oswald.Enemy;
 using Oswald.Manager;
-using UnityEditor.Animations;
+//using UnityEditor.Animations;
 
 namespace Oswald.Player
 {
@@ -12,12 +12,15 @@ namespace Oswald.Player
     /// </summary>
     public class PlayerController : MonoBehaviour
     {
+        [SerializeField] MyStat characterStat;
+        MyEquipment characterEquipment;
 
         // Reference
         PlayerAttack myAttack;
         PlayerMovement myMovement;
         Health myHealth;
         Energy myEnergy;
+        Armour myArmour;
         Target myTarget;
         [SerializeField] AnimatorController animatorController;             // The animator controller handler. Pass this around other components to change animation/controller.
         [SerializeField] TimeManager timeManager;                           // Set this value in the editor for each level.
@@ -73,15 +76,68 @@ namespace Oswald.Player
         }
         private void SetReferences()
         {
+            // Delete LATER!
+            FindObjectOfType<EquipmentRandomizer>().LoadSprites();
+            FindObjectOfType<EquipmentRandomizer>().GenerateEquipment();
+            FindObjectOfType<EquipmentRandomizer>().AddEquipmentToPlayer();
+
+            // Setup base stats
+            // Get equipment stats
+            // Apply stats
+
+            characterStat = new MyStat();
+            characterEquipment = GetComponent<MyEquipment>();
+
+            FindObjectOfType<EquipmentRandomizer>().AddLegendaryEquipment(characterEquipment);
+
+            // REMOVE THIS LATER -> get all the stats in the equipment and apply to character stat
+            GetComponent<MyEquipment>().ApplyStat(characterStat);
+
+
             myAttack = GetComponent<PlayerAttack>();
             myMovement = GetComponent<PlayerMovement>();
             myHealth = GetComponent<Health>();
             myEnergy = GetComponent<Energy>();
+            myArmour = GetComponent<Armour>();
             spriteRenderer = GetComponent<SpriteRenderer>();
             rb2d = GetComponent<Rigidbody2D>();
             myTarget = GetComponent<Target>();
 
+
+            myHealth.SetMaxHealth(characterStat.HP);
+            myHealth.SetHealth(myHealth.GetMaxHealth());
+
+            myEnergy.SetMaxEnergy(characterStat.EN);
             myEnergy.SetEnergy(myEnergy.GetMaxEnergy());    // Initialize my energy at the start of this player creation.
+
+            myEnergy.SetEnergyRegen(characterStat.ENRGN);
+
+            myArmour.SetMaxArmour(characterStat.DEF);
+            myArmour.SetArmour(myArmour.GetMaxArmour());
+
+            myAttack.SetMyDamage(characterStat.ATK);
+            myAttack.SetBowDamage(characterStat.ATK);
+
+            // Activate legendaries - to DO REMOVE THIS WHEN FINISHED -> should only add these method when we have one, or call it when slotting in a legendary
+            characterEquipment.ActivateLegendaryEffect(typeof(SPECIAL_GLOVE_01), myAttack);
+            characterEquipment.ActivateLegendaryEffect(typeof(SPECIAL_HELMET_01), myHealth);
+            characterEquipment.ActivateLegendaryEffect(typeof(SPECIAL_BOOTS_01), myHealth);
+            characterEquipment.ActivateLegendaryEffect(typeof(SPECIAL_PLATE_01), myArmour);
+
+            //foreach (Equipment equipment in characterEquipment.myEquipment)
+            //{
+            //    if (equipment.rarity == Rarity.Legendary)
+            //    {
+            //        if (equipment.stats[4].GetType() == typeof(SPECIAL_GLOVE_01))
+            //        {
+            //            // Or do it like at work? has a class of CEquipmentWeapon and it does not have anything.
+
+            //            equipment.stats[4].SpecialEffect(myAttack);
+            //            break;
+            //        }
+            //    }
+            //}
+
             PlayerNextAnim.SetPlayerController(this);       // Set the player controller in the other class to start passing booleans needed to do mid air attacks.
         }
 
@@ -92,7 +148,7 @@ namespace Oswald.Player
 
 
 
-
+        //[SerializeField] public GameObject myEquipment;
 
         #region Player Controls and Behaviour
         /// <summary>
@@ -107,6 +163,28 @@ namespace Oswald.Player
 
             myEnergy.EnergyRegen();                             // Always regenerate my energy
             myAttack.MyTargets = myTarget.GetTargets();         // Update your player attack's local target.
+
+
+            myHealth.HealthRegen();                             // Does not regen if you don't have the legendary helmet
+
+            // TO DO: just call each equipment in for loop
+
+            // ToDO: make this be called in myequipment instead
+            // in the health component make a method to allow regen, and only activate when we have a regen on
+
+            //foreach (Equipment equipment in characterEquipment.myEquipment)
+            //{
+            //    if (equipment.rarity == Rarity.Legendary)
+            //    {
+            //        // TODO - check if its special and helmet
+
+            //        if (equipment.stats[4].GetType() == typeof(SPECIAL_HELMET_01))
+            //        {
+            //            equipment.stats[4].SpecialEffect(myHealth);
+            //            break;
+            //        }
+            //    }
+            //}
 
 
             if (myAttack.skills[0].GetActivateSkill() == true || myAttack.skills[1].GetActivateSkill() == true)
@@ -144,6 +222,7 @@ namespace Oswald.Player
 
             if (Input.GetMouseButtonDown(0) && myEnergy.GetEnergy() > 0)
             {
+                
                 // When we left click, proceeed to attack.
                 //myAttack.SwordAttack(rb2d, animatorController, isMidAir, isNextAttackSword);
                 myAttack.SwordAttack(rb2d, isMidAir, isNextAttackSword);
@@ -250,6 +329,36 @@ namespace Oswald.Player
         public void PlayerTakeDamage(float damage)
         {
             if (myHealth.GetHealth() <= 0f) { return; }
+            
+            // Don't take any damage when we are evading 
+            myHealth.CanEvadeDamage();
+            if (myHealth.isEvading) 
+            { 
+                Debug.Log("Evading!"); 
+                myHealth.ResetEvade();
+                StartCoroutine(myHealth.EvadeVFX(this.spriteRenderer));
+                return; 
+            }
+
+            if (myArmour.canDamageReduction)
+            {
+                // Reduce the damage when we have a legendary armour
+                myArmour.ReduceDamage(ref damage);
+            }
+
+            if (myArmour.GetArmour() > 0)
+            {
+                // Take damage
+                myArmour.TakeArmourDamage(damage);
+
+                myHealth.PlayHurtSFX();
+                StartCoroutine(myHealth.HurtVFX(this.spriteRenderer));
+                return;
+            }
+
+
+
+
             // Player takes damage and play its hurt SFX and VFX.
             myHealth.TakeDamage(damage);
             myHealth.PlayHurtSFX();

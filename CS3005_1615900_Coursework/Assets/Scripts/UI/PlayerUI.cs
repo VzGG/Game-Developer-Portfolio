@@ -25,6 +25,12 @@ namespace Oswald.UI
         [SerializeField] private Text energyText;
         [SerializeField] private Image energyImageBackgroundBar;
 
+        [Header("Armour Components")]
+        [SerializeField] private Armour _armour;
+        [SerializeField] private Image _armourImageBar;
+        [SerializeField] private Text _armourText;
+        [SerializeField] private Image _armourImageBackgroundBar;
+
         [Header("Skill Components")]
         [SerializeField] private Image _skillImage1;
         [SerializeField] private Image _skillImage1Cooldown;
@@ -39,6 +45,7 @@ namespace Oswald.UI
         [SerializeField] private GameObject _comboPanel;
         private bool _isActive = false;
 
+        private float barOffset = 0.05f;
 
         // Set by the PlayerArriveLocation - for changing levels
         public void SetMyHealth(Health health) { this.myHealth = health; }
@@ -65,14 +72,20 @@ namespace Oswald.UI
             // Update my image's fill amount by my player's health and energy percentages
             float currentHealth = myHealth.GetHealthPercentage();
             float currentEnergy = myEnergy.GetEnergyPercentage();
+            float currentArmour = _armour.GetArmourPercentage();
+
             healthImageBar.fillAmount = currentHealth;
             energyImageBar.fillAmount = currentEnergy;
+            _armourImageBar.fillAmount = currentArmour;
+
             // Same as above but applies on the number text instead and are rounded to nearest int
             healthText.text = Mathf.RoundToInt(myHealth.GetHealth()).ToString();
             energyText.text = Mathf.RoundToInt(myEnergy.GetEnergy()).ToString();
+            _armourText.text = Mathf.RoundToInt(_armour.GetArmour()).ToString();
 
-            healthImageBackgroundBar.fillAmount = currentHealth + 0.05f;
-            energyImageBackgroundBar.fillAmount = currentEnergy + 0.05f;
+            healthImageBackgroundBar.fillAmount = currentHealth + barOffset;
+            energyImageBackgroundBar.fillAmount = currentEnergy + barOffset;
+            _armourImageBackgroundBar.fillAmount = currentArmour + barOffset;
 
             // Show skill 1's cooldown when on use.
             _skillImage1.sprite = playerAttack.skills[0].GetSkillIcon();

@@ -38,7 +38,7 @@ namespace Oswald.Environment
 
             if (touchingEnemy)
                 if (collision.gameObject.CompareTag("Enemy"))
-                    collision.gameObject.GetComponent<EnemyController>().EnemyTakeDamage(_trapDamage, gameObject, Vector2.zero);
+                    collision.gameObject.GetComponent<EnemyController>().EnemyTakeDamage(_trapDamage, gameObject, Vector2.zero, false);
 
             if (touchingFeet)
                 if (collision.gameObject.CompareTag("Player"))

@@ -62,7 +62,7 @@ namespace Oswald.Enemy
         /// It is "Protected" so that it is public only in itself and its children.
         /// </summary>
         protected abstract void EnemyAI();
-        public abstract void EnemyTakeDamage(float damage, GameObject attacker, Vector2 pushback);
+        public abstract void EnemyTakeDamage(float damage, GameObject attacker, Vector2 pushback, bool criticalDamage);
 
         /// <summary>
         /// Looks at the player when attacking
