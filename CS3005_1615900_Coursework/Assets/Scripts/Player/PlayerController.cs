@@ -167,25 +167,6 @@ namespace Oswald.Player
 
             myHealth.HealthRegen();                             // Does not regen if you don't have the legendary helmet
 
-            // TO DO: just call each equipment in for loop
-
-            // ToDO: make this be called in myequipment instead
-            // in the health component make a method to allow regen, and only activate when we have a regen on
-
-            //foreach (Equipment equipment in characterEquipment.myEquipment)
-            //{
-            //    if (equipment.rarity == Rarity.Legendary)
-            //    {
-            //        // TODO - check if its special and helmet
-
-            //        if (equipment.stats[4].GetType() == typeof(SPECIAL_HELMET_01))
-            //        {
-            //            equipment.stats[4].SpecialEffect(myHealth);
-            //            break;
-            //        }
-            //    }
-            //}
-
 
             if (myAttack.skills[0].GetActivateSkill() == true || myAttack.skills[1].GetActivateSkill() == true)
             {
@@ -334,7 +315,7 @@ namespace Oswald.Player
             myHealth.CanEvadeDamage();
             if (myHealth.isEvading) 
             { 
-                Debug.Log("Evading!"); 
+                Debug.Log("Evading!");
                 myHealth.ResetEvade();
                 StartCoroutine(myHealth.EvadeVFX(this.spriteRenderer));
                 return; 

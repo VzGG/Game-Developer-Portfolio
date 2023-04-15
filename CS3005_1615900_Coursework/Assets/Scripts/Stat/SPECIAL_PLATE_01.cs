@@ -23,4 +23,16 @@ public class SPECIAL_PLATE_01 : SPECIAL
         armour.canDamageReduction = true;
         armour.damageReduction = this.Value;
     }
+
+    public override void RemoveSpecialEffect(object obj)
+    {
+        base.RemoveSpecialEffect(obj);
+
+        Armour armour = (Armour)obj;
+
+        armour.damageReduction -= this.Value;
+        if (armour.damageReduction <= 0f)
+            armour.canDamageReduction = false;
+
+    }
 }

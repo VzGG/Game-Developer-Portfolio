@@ -28,11 +28,11 @@ public class Health : MonoBehaviour
     [SerializeField] float hurtDuration = 0.5f;
 
     public bool canRegen { private get; set; } = false;
-    public float healthRegen { private get; set; } = 0f;
+    public float healthRegen { get; set; } = 0f;
 
     // For evasion
     public bool canEvadeDamage { private get; set; } = false;
-    public float evasionRate { private get; set; } = 0f;
+    public float evasionRate { get; set; } = 0f;
     public bool isEvading { get; private set; } = false;
     public Color evadeColor;
     public float evadeDuration = 0.1f;

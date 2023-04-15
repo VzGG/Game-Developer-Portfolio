@@ -5,13 +5,13 @@ using UnityEngine;
 
 public class SPECIAL_GLOVE_01 : SPECIAL
 {
-    private float criticalMultiplier = 2.5f;
+    private float _criticalMultiplierBonus = 1.5f;
 
     public SPECIAL_GLOVE_01()
     {
         this.Value = 25f;
         this.Description = "SPECIAL: LEGENDARY GLOVES";
-        this.RatingPerStat = 15;
+        this.RatingPerStat = 1.75f;
         this._ratingerPerStatBonus = 0;
     }
 
@@ -23,7 +23,18 @@ public class SPECIAL_GLOVE_01 : SPECIAL
         // Critical hits deal 250% damage
         PlayerAttack playerAttack = (PlayerAttack)obj;
         playerAttack.canCritical = true;
-        playerAttack.criticalChance = this.Value;
-        //playerAttack.criticalMultiplier = this.criticalMultiplier;
+        playerAttack.criticalChance += this.Value;
+        playerAttack.criticalDamageMultiplier += this._criticalMultiplierBonus;
+    }
+
+    public override void RemoveSpecialEffect(object obj)
+    {
+        base.RemoveSpecialEffect(obj);
+
+        PlayerAttack playerAttack = (PlayerAttack)obj;
+        playerAttack.criticalChance -= this.Value;
+        playerAttack.criticalDamageMultiplier -= 0f;
+        if (playerAttack.criticalChance <= 0f || playerAttack.criticalDamageMultiplier <= 1f)
+            playerAttack.canCritical = false;
     }
 }

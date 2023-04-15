@@ -17,6 +17,7 @@ public abstract class Stat
     public abstract void RandomStatFlat();
     public abstract void RandomStatPercent();
     public virtual void SpecialEffect(System.Object obj) { }
+    public virtual void RemoveSpecialEffect(System.Object obj) { }
 }
 
 public static class StatUtility

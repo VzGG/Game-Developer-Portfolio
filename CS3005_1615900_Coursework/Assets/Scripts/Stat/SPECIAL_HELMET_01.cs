@@ -19,12 +19,16 @@ public class SPECIAL_HELMET_01 : SPECIAL
         // Apply hp regen by +50
         Health health = (Health)obj;
         health.canRegen = true;
-        health.healthRegen = this.Value;
-       
-        //health.SetHealth(health.GetHealth() + this.Value * Time.deltaTime);
-        //if (health.GetHealth() > health.GetMaxHealth())
-        //{
-        //    health.SetHealth(health.GetMaxHealth());
-        //}
+        health.healthRegen += this.Value;
+    }
+
+    public override void RemoveSpecialEffect(object obj)
+    {
+        base.RemoveSpecialEffect(obj);
+
+        Health health = (Health)obj;
+        health.healthRegen -= this.Value;
+        if (health.healthRegen <= 0f)
+            health.canRegen = false;
     }
 }

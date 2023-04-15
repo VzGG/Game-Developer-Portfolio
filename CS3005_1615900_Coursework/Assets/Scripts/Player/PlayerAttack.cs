@@ -50,8 +50,8 @@ namespace Oswald.Player
         public float SkillEnergy { private get; set; } = 0f;
 
         public bool canCritical {  private get; set; } = false;
-        public float criticalDamageMultiplier { private get; set; } = 1f;
-        public float criticalChance { private get; set; } = 0f;
+        public float criticalDamageMultiplier { get; set; } = 1f;
+        public float criticalChance { get; set; } = 0f;
         private bool isCritical = false;
 
         #region Getter and Setters
