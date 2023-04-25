@@ -25,12 +25,14 @@ public class Armour : MonoBehaviour
 
     public void TakeArmourDamage(float damage) 
     {
-        this._armour -= damage;        
+        //this._armour -= damage;
+        _armour = Mathf.Max(_armour - damage, 0f);
     }
 
     // Change the given damage and don't make a copy via "Ref" keyword
-    public void ReduceDamage(ref float damage)
+    public float ReduceDamage(float damage)
     {
-        damage = damage * (1f - ( damageReduction / 100f) );
+        float reducedDamage = damage * (1f - (damageReduction / 100f));
+        return reducedDamage;
     }
 }

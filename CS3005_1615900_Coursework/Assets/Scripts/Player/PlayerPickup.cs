@@ -105,6 +105,33 @@ namespace Oswald.Player
                 audioSource.PlayOneShot(itemPickupSFX);
 
             }
+
+            else if (collision.gameObject.layer == LayerMask.NameToLayer("Equipment"))
+            {
+                Debug.Log("Equipment picked up!");
+
+                Equipment equipment = collision.gameObject.GetComponent<Equipment>();
+                // After adding equipment, apply stat
+                MyEquipment myEquipmentComponent = GetComponent<MyEquipment>();
+                PlayerController playerController = GetComponent<PlayerController>();
+
+                //myEquipmentComponent.myEquipment.Add(equipment);
+                ////myEquipmentComponent.ApplyStat(playerController.GetMyStat());
+                //myEquipmentComponent.ApplyStat(playerController.GetMyStat(), equipment);
+                //myEquipmentComponent.UpdateStat(playerController.GetMyStat(),
+                //    GetComponent<Health>(),
+                //    GetComponent<Energy>(),
+                //    GetComponent<Armour>(),
+                //    GetComponent<PlayerAttack>());
+
+                //equipment.gameObject.SetActive(false);
+
+                myEquipmentComponent.AddEquipment(equipment, playerController);
+
+
+                // SFX
+                audioSource.PlayOneShot(itemPickupSFX);
+            }
         }
 
     }

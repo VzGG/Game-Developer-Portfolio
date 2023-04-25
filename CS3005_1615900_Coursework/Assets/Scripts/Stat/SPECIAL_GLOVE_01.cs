@@ -11,7 +11,7 @@ public class SPECIAL_GLOVE_01 : SPECIAL
     {
         this.Value = 25f;
         this.Description = "SPECIAL: LEGENDARY GLOVES";
-        this.RatingPerStat = 1.75f;
+        this.RatingPerStat = 12f;
         this._ratingerPerStatBonus = 0;
     }
 

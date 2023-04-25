@@ -45,6 +45,7 @@ public class Health : MonoBehaviour
 
     public void CanEvadeDamage()
     {
+        Debug.Log("Evading allowed?: " + canEvadeDamage + "\nEvasion rate: " + evasionRate);
         if (!canEvadeDamage) { return; }
 
         int chanceToEvade = UnityEngine.Random.Range(0, 100);
@@ -69,7 +70,7 @@ public class Health : MonoBehaviour
     {
         if (!canRegen) { return; }
 
-        health = Mathf.Clamp(health + healthRegen, 0f, maxHealth);
+        health = Mathf.Clamp(health + healthRegen * Time.deltaTime, 0f, maxHealth);
     }
 
     #region Boss phase starter

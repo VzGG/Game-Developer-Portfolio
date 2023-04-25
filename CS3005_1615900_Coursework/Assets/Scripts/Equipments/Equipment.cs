@@ -7,6 +7,7 @@ using UnityEngine;
 public class Equipment : MonoBehaviour
 {
     public Sprite sprite;
+    public EquipmentCategory category;
     public Rarity rarity;
     //public int weight;
 
@@ -15,10 +16,31 @@ public class Equipment : MonoBehaviour
 
     public float rating;
     // How to make paragraphs shown in the editor: https://answers.unity.com/questions/424874/showing-a-textarea-field-for-a-string-variable-in.html
-/*    [TextArea(1, 30)]
-    public string description;*/
+    /*    [TextArea(1, 30)]
+        public string description;*/
 
     // special eff is method // need to set method or get teh special effects method instead 
+
+    /// <summary>
+    /// Set the sprite of the equipment
+    /// </summary>
+    public void SetSpriteRendererSprite()
+    {
+        GetComponent<SpriteRenderer>().sprite = sprite;
+    }
+
+    public void RandomPosition()
+    {
+        float randX = UnityEngine.Random.Range(1.5f, 5f);
+        float randY = UnityEngine.Random.Range(1.5f, 5f);
+        transform.position = new Vector2(randX, randY);
+    }
+
+    public void SetPosition(Vector2 position)
+    {
+        transform.position = position;
+    }
+
 }
 
 public enum EquipmentCategory
@@ -29,6 +51,37 @@ public enum EquipmentCategory
     Boots,
     Accessory
 }
+
+public static class EquipmentCategoryUtility
+{
+    public static readonly EquipmentCategory[] equipmentCategories = (EquipmentCategory[])Enum.GetValues(typeof(EquipmentCategory));
+
+    public static EquipmentCategory RandomEquipmentCategory()
+    {
+        int randomIndex = UnityEngine.Random.Range(0, equipmentCategories.Length);
+
+        return equipmentCategories[randomIndex];
+    }
+
+    public static EquipmentCategory StatToCategory(Stat stat)
+    {
+        if (stat.GetType() == typeof(SPECIAL_HELMET_01))
+        {
+            return EquipmentCategory.Helmet;
+        }
+        else if (stat.GetType() == typeof(SPECIAL_PLATE_01))
+        {
+            return EquipmentCategory.Plate;
+        }
+        else if (stat.GetType() == typeof(SPECIAL_GLOVE_01))
+            return EquipmentCategory.Gloves;
+        else if (stat.GetType() == typeof(SPECIAL_BOOTS_01))
+            return EquipmentCategory.Boots;
+        else
+            return EquipmentCategory.Accessory;
+    }
+}
+
 
 public enum Rarity
 {

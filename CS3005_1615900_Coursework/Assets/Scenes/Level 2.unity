@@ -39021,6 +39021,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a0dd461c05dcc945922404797ca28fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  helmetSprites:
+  - {fileID: 3162567876823930883, guid: 2f0c3fced6b7bfc4fb85447f11039b25, type: 3}
+  - {fileID: 4591095995056961379, guid: 2f0c3fced6b7bfc4fb85447f11039b25, type: 3}
+  - {fileID: 1930365335857138742, guid: 2f0c3fced6b7bfc4fb85447f11039b25, type: 3}
+  - {fileID: 2036035021129622761, guid: 2f0c3fced6b7bfc4fb85447f11039b25, type: 3}
+  plateSprites:
+  - {fileID: -347525013461943914, guid: 2f0c3fced6b7bfc4fb85447f11039b25, type: 3}
+  - {fileID: -4994327948959105598, guid: 2f0c3fced6b7bfc4fb85447f11039b25, type: 3}
+  - {fileID: 8333120456735060383, guid: 2f0c3fced6b7bfc4fb85447f11039b25, type: 3}
+  - {fileID: -9177468656427087523, guid: 2f0c3fced6b7bfc4fb85447f11039b25, type: 3}
+  gloveSprites:
+  - {fileID: -6571062494500539849, guid: 2f0c3fced6b7bfc4fb85447f11039b25, type: 3}
+  - {fileID: 6138378969696141571, guid: 2f0c3fced6b7bfc4fb85447f11039b25, type: 3}
+  - {fileID: -4293383407698819790, guid: 2f0c3fced6b7bfc4fb85447f11039b25, type: 3}
+  - {fileID: 3350420768382118562, guid: 2f0c3fced6b7bfc4fb85447f11039b25, type: 3}
+  bootSprites:
+  - {fileID: 6884699132681556930, guid: 2f0c3fced6b7bfc4fb85447f11039b25, type: 3}
+  - {fileID: 7189775407310231179, guid: 2f0c3fced6b7bfc4fb85447f11039b25, type: 3}
+  - {fileID: 6482953682450307093, guid: 2f0c3fced6b7bfc4fb85447f11039b25, type: 3}
+  - {fileID: 1438219111659547533, guid: 2f0c3fced6b7bfc4fb85447f11039b25, type: 3}
+  accessorySprites:
+  - {fileID: -5391477449805069460, guid: 2f0c3fced6b7bfc4fb85447f11039b25, type: 3}
+  - {fileID: 1949526560958714085, guid: 2f0c3fced6b7bfc4fb85447f11039b25, type: 3}
+  - {fileID: 1537835575722628517, guid: 2f0c3fced6b7bfc4fb85447f11039b25, type: 3}
+  - {fileID: 7387516690597139808, guid: 2f0c3fced6b7bfc4fb85447f11039b25, type: 3}
   _presetSprites: []
   _spawnedEquipment: []
   _prefabEquipment: {fileID: 9030490782143457951, guid: 8a0f6b5fece50c642a52166a8da6b05b, type: 3}
