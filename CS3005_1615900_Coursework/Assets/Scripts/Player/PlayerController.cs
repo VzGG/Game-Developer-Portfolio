@@ -18,6 +18,8 @@ namespace Oswald.Player
 
         MyEquipment characterEquipment;
 
+        public IInteractableEnvironment interactableEnvironment;
+
         // Reference
         PlayerAttack myAttack;
         PlayerMovement myMovement;
@@ -121,6 +123,16 @@ namespace Oswald.Player
 
 
             myHealth.HealthRegen();                             // Does not regen if you don't have the legendary helmet
+
+
+            // For interactable environment
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                if (interactableEnvironment != null)
+                {
+                    interactableEnvironment.Interaction();
+                }
+            }
 
 
             if (myAttack.skills[0].GetActivateSkill() == true || myAttack.skills[1].GetActivateSkill() == true)

@@ -299,9 +299,6 @@ namespace Oswald.Enemy
                 // Tell progress manager to delete this gameobject in the list.
                 FindObjectOfType<ProgressManager>().DeleteEnemy(this.gameObject.transform.parent.gameObject);
 
-                // Spawn an item on the enemy's position when dead FOR NOW -> should be only be spawned when a chest is opened!
-                FindObjectOfType<EquipmentRandomizer>().GenerateEquipment(transform.position);
-
                 // Hide the health/break bar of the enemy
                 this.enemyUI.GetEnemyCanvas().gameObject.SetActive(false);
 

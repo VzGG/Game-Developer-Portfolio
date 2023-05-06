@@ -6,6 +6,8 @@ public class MyEquipment : MonoBehaviour
 {
     [SerializeField] public List<Equipment> myEquipment;
 
+    private const int _equipmentLimit = 5;
+
     // Use this class to handle the equipment
     public void ActivateLegendaryEffect(System.Type legendaryType, System.Object obj)
     {
@@ -38,8 +40,10 @@ public class MyEquipment : MonoBehaviour
         }
     }
 
-    public void AddEquipment(Equipment equipment, Oswald.Player.PlayerController playerController)
+    public bool AddEquipment(Equipment equipment, Oswald.Player.PlayerController playerController)
     {
+        if (myEquipment.Count > (_equipmentLimit - 1) ) { return false; }
+
         myEquipment.Add(equipment);
         ApplyStat(playerController.GetMyStat(), equipment);
         UpdateStat(playerController.GetMyStat(),
@@ -49,6 +53,8 @@ public class MyEquipment : MonoBehaviour
             playerController.gameObject.GetComponent<Oswald.Player.PlayerAttack>());
 
         equipment.gameObject.SetActive(false);
+
+        return true;
     }
 
     public void ApplyStat(MyStat myStat, Equipment equipment)

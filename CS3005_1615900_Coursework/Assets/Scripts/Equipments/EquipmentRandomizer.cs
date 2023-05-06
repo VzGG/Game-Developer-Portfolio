@@ -85,7 +85,7 @@ public class EquipmentRandomizer : MonoBehaviour
     /// Should be called when chest is opened but for now call it when an enemy is defeated.
     /// </summary>
     /// <param name="spawnPosition"></param>
-    public void GenerateEquipment(Vector2 spawnPosition)
+    public Equipment GenerateEquipment(Vector2 spawnPosition)
     {
         //int randomEquipmentSpawned = UnityEngine.Random.Range(10, 100);
 
@@ -151,8 +151,6 @@ public class EquipmentRandomizer : MonoBehaviour
 
             // Determine equipment weight - weight is between n and n-max
 
-            // If legendary, add a special stat
-
             // To do: make categories have their own common stats found often
                     // Example: Helmet category has more chance of landing HP, EN, DEF
                     // Example: Plate category has more chance of landing DEF
@@ -163,8 +161,11 @@ public class EquipmentRandomizer : MonoBehaviour
 
             // To-do: spawn them from a box or enemy!
                 // Make a item selector, and spawn that when we select that item
+
+                // Add UI to the chest
         }
 
+        return _spawnedEquipment[0];
 
     }
 }
