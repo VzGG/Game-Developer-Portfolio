@@ -8,38 +8,6 @@ public class MyEquipment : MonoBehaviour
 
     private const int _equipmentLimit = 5;
 
-    // Use this class to handle the equipment
-    public void ActivateLegendaryEffect(System.Type legendaryType, System.Object obj)
-    {
-        foreach (Equipment equipment in myEquipment)
-        {
-            if (equipment.rarity == Rarity.Legendary)
-            {
-                if (equipment.stats[4].GetType() == legendaryType)
-                {
-                    equipment.stats[4].SpecialEffect(obj);
-                    break;
-                }
-            }
-        }
-    }
-
-    public void ActivateLegendaryEffect(System.Type legendaryType, params System.Object[] obj)
-    {
-        foreach (Equipment equipment in myEquipment)
-        {
-            if (equipment.rarity == Rarity.Legendary)
-            {
-                if (equipment.stats[4].GetType() == legendaryType)
-                {
-                    Debug.Log("obj list count: " + obj.Length);
-                    equipment.stats[4].SpecialEffect(obj);
-                    break;
-                }
-            }
-        }
-    }
-
     public bool AddEquipment(Equipment equipment, Oswald.Player.PlayerController playerController)
     {
         if (myEquipment.Count > (_equipmentLimit - 1) ) { return false; }

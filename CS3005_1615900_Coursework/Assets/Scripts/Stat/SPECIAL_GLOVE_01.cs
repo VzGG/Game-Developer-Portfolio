@@ -10,7 +10,7 @@ public class SPECIAL_GLOVE_01 : SPECIAL
     public SPECIAL_GLOVE_01()
     {
         this.Value = 25f;
-        this.Description = "SPECIAL: LEGENDARY GLOVES";
+        this.Description = "Special: grant 25% chance to critical hits that deal 150% more damage.";
         this.RatingPerStat = 12f;
         this._ratingerPerStatBonus = 0;
     }

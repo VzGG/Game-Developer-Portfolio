@@ -4,7 +4,7 @@ using UnityEngine;
 
 public interface IInteractableEnvironment
 {
-    public void Interaction();
+    public void Interaction(Object obj);
     public void ShowInteractionUI();
     public void HideInteractionUI();
 }

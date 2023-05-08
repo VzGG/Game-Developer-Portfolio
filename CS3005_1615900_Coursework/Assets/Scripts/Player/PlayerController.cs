@@ -18,7 +18,7 @@ namespace Oswald.Player
 
         MyEquipment characterEquipment;
 
-        public IInteractableEnvironment interactableEnvironment;
+        [SerializeField][SerializeReference] public IInteractableEnvironment interactableEnvironment;
 
         // Reference
         PlayerAttack myAttack;
@@ -128,9 +128,11 @@ namespace Oswald.Player
             // For interactable environment
             if (Input.GetKeyDown(KeyCode.E))
             {
+                Debug.Log("interactable environment?: " + interactableEnvironment);
                 if (interactableEnvironment != null)
                 {
-                    interactableEnvironment.Interaction();
+                    
+                    interactableEnvironment.Interaction(this);
                 }
             }
 

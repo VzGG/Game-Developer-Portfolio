@@ -48,9 +48,7 @@ public class Chest : MonoBehaviour, IInteractableEnvironment
 
         yield return new WaitForSeconds(1.5f);
 
-        //equipmentGameObj.GetComponent<BoxCollider2D>().enabled = true;
         equipmentBody.enabled = true;
-
     }
 
     #endregion Unity Animator Event methods
@@ -85,7 +83,7 @@ public class Chest : MonoBehaviour, IInteractableEnvironment
 
     #region Interface methods
 
-    public void Interaction()
+    public void Interaction(Object obj)
     {
         Debug.Log("About to open chest!");
         OpenChestAnimation();

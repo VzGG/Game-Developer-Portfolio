@@ -13,7 +13,7 @@ public class SPECIAL_ACCESSORY_01 : SPECIAL
     public SPECIAL_ACCESSORY_01()
     {
         this.Value = 10f;                                   // +10 atk bonus
-        this.Description = "SPECIAL: LEGENDARY ACCESSORY";
+        this.Description = "Special effect: grant 20% damage reduction, 12.5% evasion, 8 health regen, 12.5% chance to critical to deal 75% more damage";
         this.RatingPerStat = 3f;
         this._ratingerPerStatBonus = 0;
     }

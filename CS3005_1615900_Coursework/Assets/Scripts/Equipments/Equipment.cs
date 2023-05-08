@@ -2,24 +2,63 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [System.Serializable]
-public class Equipment : MonoBehaviour
+public class Equipment : MonoBehaviour, IInteractableEnvironment
 {
     public Sprite sprite;
     public EquipmentCategory category;
     public Rarity rarity;
     //public int weight;
+    [SerializeField] private BoxCollider2D _boxCollider2DForUI;
+    [SerializeField] GameObject _promptUI;
+    [SerializeField] GameObject _equipmentDetailUI;
+    [SerializeField] Text _statMetaText;
+    [SerializeField] Text _statText;
+    [SerializeField] Text _nameText;
+    [SerializeField] Text _ratingText;
+    [SerializeField] Text _descriptionText;
+
+    private Color _nameTextColour
+    {
+        get
+        {
+            if (rarity == Rarity.Legendary)
+                return Color.yellow;
+            else if (rarity == Rarity.Epic)
+                return Color.red;
+            else if (rarity == Rarity.Rare)
+                return Color.blue;
+            else if (rarity == Rarity.Uncommon)
+                return Color.green;
+            else
+                return Color.white;
+        }
+    }
+
+    private string _description
+    { 
+        get
+        {
+            if (rarity == Rarity.Legendary)
+            {
+                return stats[4].GetDescription();
+            }
+            else
+                return "To-Do: ADD description for rarities that are not legendary";
+        }
+    }
+
+
 
     // Fix not showing non-monobehvaiour classes in the inspector: https://forum.unity.com/threads/abstract-class-in-list-only-shows-base-variables.999478/
     [SerializeField][SerializeReference] public List<Stat> stats = new List<Stat>();
 
     public float rating;
     // How to make paragraphs shown in the editor: https://answers.unity.com/questions/424874/showing-a-textarea-field-for-a-string-variable-in.html
-    /*    [TextArea(1, 30)]
-        public string description;*/
 
-    // special eff is method // need to set method or get teh special effects method instead 
+    // public float weight;
 
     /// <summary>
     /// Set the sprite of the equipment
@@ -41,6 +80,91 @@ public class Equipment : MonoBehaviour
         transform.position = position;
     }
 
+    private void AddThisEquipment(UnityEngine.Object obj)
+    {
+        // call what is in the player pick.cs in here?
+
+        // You can use var for typing less - type var instead of Oswald.Player.PlayerController type
+        var playerController = (Oswald.Player.PlayerController)obj;
+
+        MyEquipment playerEquipment = playerController.GetComponent<MyEquipment>();
+        playerEquipment.AddEquipment(this, playerController);
+
+        _boxCollider2DForUI.enabled = false;
+
+        // Play SFX
+    }
+
+    #region Collision Detection
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
+        {
+            ShowInteractionUI();
+
+            Debug.Log("player equipment!");
+
+            // Set player's reference to this IInteractable
+            Oswald.Player.PlayerController player = collision.gameObject.GetComponent<Oswald.Player.PlayerController>();
+            player.interactableEnvironment = this;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
+        {
+            HideInteractionUI();
+
+            Debug.Log("player now leaves player equipment!");
+
+            // Remove reference so we cannot use the interaction method
+            Oswald.Player.PlayerController player = collision.gameObject.GetComponent<Oswald.Player.PlayerController>();
+            player.interactableEnvironment = null;
+        }
+    }
+
+    #endregion Collision Detection
+
+    #region Interface methods
+
+    public void Interaction(UnityEngine.Object obj)
+    {
+        AddThisEquipment(obj);
+        HideInteractionUI();
+    }
+
+    public void ShowInteractionUI()
+    {
+        // Show the UI
+        _promptUI.SetActive(true);
+        _equipmentDetailUI.SetActive(true);
+
+        _statMetaText.text = "";
+        _statText.text = "";
+
+        foreach (Stat stat in this.stats)
+        {
+            _statMetaText.text += $"{stat.GetName()}\n";
+
+            _statText.text += $"{stat.Value}\n";
+        }
+
+        _nameText.text = $"{this.name}";
+        _nameText.color = _nameTextColour;
+        _ratingText.text = $"{this.rating}";
+
+        _descriptionText.text = _description;
+    }
+
+    public void HideInteractionUI()
+    {
+        _promptUI.SetActive(false);
+        _equipmentDetailUI.SetActive(false);
+    }
+
+    #endregion Interface methods
 }
 
 public enum EquipmentCategory

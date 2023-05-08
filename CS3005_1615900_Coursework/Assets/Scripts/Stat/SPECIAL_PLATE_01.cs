@@ -7,8 +7,7 @@ public class SPECIAL_PLATE_01 : SPECIAL
     public SPECIAL_PLATE_01()
     {
         this.Value = 60f;
-        this.Description = "SPECIAL: LEGENDARY PLATE BUILT FOR ALMOST TANKING EVERYTHING WITH LITTLE TO NONE SCRATCHES";
-        this.RatingPerStat = 4;
+        this.Description = "Special: grants 60% damage reduction to all attacks received.";
         this._ratingerPerStatBonus = 0;
     }
 
