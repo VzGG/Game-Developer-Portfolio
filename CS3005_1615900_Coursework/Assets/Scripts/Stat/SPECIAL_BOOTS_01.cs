@@ -13,26 +13,17 @@ public class SPECIAL_BOOTS_01 : SPECIAL
     }
 
     // Should only be called once
-    public override void SpecialEffect(object obj)
+    public override void SpecialEffect(MyStat myStat)
     {
-        base.SpecialEffect(obj);
+        base.SpecialEffect(myStat);
 
-        Health playerHealth = (Health)obj;
-        playerHealth.canEvadeDamage = true;
-        playerHealth.evasionRate += this.Value;
+        myStat.EvasionRate += this.Value;
     }
 
-    public override void RemoveSpecialEffect(object obj)
+    public override void RemoveSpecialEffect(MyStat myStat)
     {
-        base.RemoveSpecialEffect(obj);
+        base.RemoveSpecialEffect(myStat);
 
-        Health playerHealth = (Health)obj;
-
-        // What happens if there are legendaries overlapping each other?
-        // Use set function and add to current!
-
-        playerHealth.evasionRate -= this.Value;
-        if (playerHealth.evasionRate <= 0f)
-            playerHealth.canEvadeDamage = false;
+        myStat.EvasionRate -= this.Value;
     }
 }

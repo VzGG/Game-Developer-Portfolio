@@ -6,8 +6,8 @@ public class Chest : MonoBehaviour, IInteractableEnvironment
 {
     [SerializeField] private Animator _animator;
     [SerializeField] private BoxCollider2D _boxCollider2DForUI;
-    [SerializeField] private Vector2 _initialMovement;
     [SerializeField] private GameObject _promptUI;
+    private Vector2 _initialMovement = new Vector2(0f, 3.5f);
     private float _waitDuration = 0.5f;
 
     private void OpenChestAnimation()

@@ -28,11 +28,51 @@ public class Health : MonoBehaviour
     [SerializeField] float hurtDuration = 0.5f;
 
     public bool canRegen { private get; set; } = false;
-    public float healthRegen { get; set; } = 0f;
+
+    private float _healthRegen = 0f;
+    public float HealthRegen 
+    { 
+        get
+        {
+            return _healthRegen;
+        }
+        set
+        {
+            _healthRegen = value;
+
+            if (_healthRegen <= 0f)
+                canRegen = false;
+            else
+                canRegen = true;
+        }
+    }
 
     // For evasion
     public bool canEvadeDamage { private get; set; } = false;
-    public float evasionRate { get; set; } = 0f;
+
+    [SerializeField] private float _evasionRate = 0f;
+    public float EvasionRate { 
+        get
+        {
+            return _evasionRate;
+        }
+        set
+        {
+            _evasionRate = value;
+
+            if (_evasionRate > _evasionRateCap)
+            {
+                _evasionRate = _evasionRateCap;
+            }
+
+            if (_evasionRate <= 0f)
+                canEvadeDamage = false;
+            else
+                canEvadeDamage = true;
+        } 
+    }
+    private float _evasionRateCap = 90f;
+
     public bool isEvading { get; private set; } = false;
     public Color evadeColor;
     public float evadeDuration = 0.1f;
@@ -45,11 +85,11 @@ public class Health : MonoBehaviour
 
     public void CanEvadeDamage()
     {
-        Debug.Log("Evading allowed?: " + canEvadeDamage + "\nEvasion rate: " + evasionRate);
+        Debug.Log("Evading allowed?: " + canEvadeDamage + "\nEvasion rate: " + EvasionRate);
         if (!canEvadeDamage) { return; }
 
         int chanceToEvade = UnityEngine.Random.Range(0, 100);
-        if (chanceToEvade < evasionRate)
+        if (chanceToEvade < EvasionRate)
         {
             // Do nothing because we evade
             isEvading = true;
@@ -66,11 +106,11 @@ public class Health : MonoBehaviour
         this.health = Mathf.Max(this.health - damage, 0f);
     }
 
-    public void HealthRegen()
+    public void HealthRegeneration()
     {
         if (!canRegen) { return; }
 
-        health = Mathf.Clamp(health + healthRegen * Time.deltaTime, 0f, maxHealth);
+        health = Mathf.Clamp(health + HealthRegen * Time.deltaTime, 0f, maxHealth);
     }
 
     #region Boss phase starter

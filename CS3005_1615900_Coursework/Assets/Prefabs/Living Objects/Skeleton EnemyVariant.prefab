@@ -112,7 +112,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6085843719761487237, guid: 22760ec26ddf3df4ca551ec3f9141d95, type: 3}
       propertyPath: health
-      value: 8000
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 6085843719761487237, guid: 22760ec26ddf3df4ca551ec3f9141d95, type: 3}
       propertyPath: deathSFX
@@ -120,7 +120,7 @@ PrefabInstance:
       objectReference: {fileID: 8300000, guid: e93762cb987cb714c9d9895d592a2fc8, type: 3}
     - target: {fileID: 6085843719761487237, guid: 22760ec26ddf3df4ca551ec3f9141d95, type: 3}
       propertyPath: maxHealth
-      value: 8000
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 6085843719761487237, guid: 22760ec26ddf3df4ca551ec3f9141d95, type: 3}
       propertyPath: audioSource
@@ -130,6 +130,10 @@ PrefabInstance:
       propertyPath: attackRate
       value: 2.25
       objectReference: {fileID: 0}
+    - target: {fileID: 6523808059535637706, guid: 22760ec26ddf3df4ca551ec3f9141d95, type: 3}
+      propertyPath: damageNumbers
+      value: 
+      objectReference: {fileID: 6419485552706613156}
     - target: {fileID: 6523808059535637706, guid: 22760ec26ddf3df4ca551ec3f9141d95, type: 3}
       propertyPath: walkEdgeChecker
       value: 
@@ -147,3 +151,14 @@ AudioSource:
   m_CorrespondingSourceObject: {fileID: 7131397321563976682, guid: 22760ec26ddf3df4ca551ec3f9141d95, type: 3}
   m_PrefabInstance: {fileID: 1819243139652566302}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6419485552706613156 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4623411098804736698, guid: 22760ec26ddf3df4ca551ec3f9141d95, type: 3}
+  m_PrefabInstance: {fileID: 1819243139652566302}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f8da402c4f4abb4bb4c9ad5d2b8f207, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

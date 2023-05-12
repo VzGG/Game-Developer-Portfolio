@@ -15,6 +15,15 @@ public class MyStat
     public float ENRGN = 5f;
     public float ATKSPD = 1f;
 
+    public float HealthRegen = 0f;              // Helmet
+    public float DamageReduction = 0f;          // Plate
+    public float CriticalChance = 0f;           // Glove
+    public float CriticalDamage = 1f;           // Glove
+    public float EvasionRate = 0f;              // Boots
+
+    // Accessory is all of the special stat above
+
+
     public MyStat()
     {
 

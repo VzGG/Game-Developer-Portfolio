@@ -21,8 +21,8 @@ public class SPECIAL : Stat
         throw new System.NotImplementedException();
     }
 
-    public override void SpecialEffect(System.Object obj)
+    public override void SpecialEffect(MyStat myStat)
     {
-        base.SpecialEffect(obj);
+        base.SpecialEffect(myStat);
     }
 }

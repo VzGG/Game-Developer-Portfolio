@@ -44,6 +44,8 @@ namespace Oswald.Enemy
 
         [SerializeField] protected EnemyMovement EnemyMovement;
 
+        [SerializeField] protected DamageNumbers damageNumbers;
+
         //public bool GetIsAttacking() { return this.isAttacking; }
         //public void SetTarget(PlayerController target) { this.target = target; }
 

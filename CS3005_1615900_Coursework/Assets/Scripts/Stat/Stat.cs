@@ -16,10 +16,8 @@ public abstract class Stat
     public float GetRatingPerStatBonus() { return this._ratingerPerStatBonus; }
     public abstract void RandomStatFlat();
     public abstract void RandomStatPercent();
-    public virtual void SpecialEffect(System.Object obj) { }
-    public virtual void SpecialEffect(params System.Object[] obj) { }
-    public virtual void RemoveSpecialEffect(System.Object obj) { }
-    public virtual void RemoveSpecialEffect(params System.Object[] obj) { }
+    public virtual void SpecialEffect(MyStat myStat) { }
+    public virtual void RemoveSpecialEffect(MyStat myStat) { }
 }
 
 public static class StatUtility
@@ -39,11 +37,6 @@ public static class StatUtility
         {
             stat.RandomStatPercent();
         }
-        //else if (index == (int)Rarity.Legendary)
-        //{
-        //    // Implement legendary stats
-        //    // Add something to the value - surely all legendary special effects have stats to it
-        //}
         else
         {
             stat.RandomStatFlat();

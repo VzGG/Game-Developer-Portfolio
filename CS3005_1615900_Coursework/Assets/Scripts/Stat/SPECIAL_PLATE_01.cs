@@ -11,27 +11,17 @@ public class SPECIAL_PLATE_01 : SPECIAL
         this._ratingerPerStatBonus = 0;
     }
 
-    public override void SpecialEffect(System.Object obj)
+    public override void SpecialEffect(MyStat myStat)
     {
-        base.SpecialEffect(obj);
+        base.SpecialEffect(myStat);
 
-        // Apply 65% damage reduction
-        // DEF stat is just like a health bar.
-        Armour armour = (Armour)obj;
-
-        armour.canDamageReduction = true;
-        armour.damageReduction = this.Value;
+        myStat.DamageReduction += this.Value;
     }
 
-    public override void RemoveSpecialEffect(object obj)
+    public override void RemoveSpecialEffect(MyStat myStat)
     {
-        base.RemoveSpecialEffect(obj);
+        base.RemoveSpecialEffect(myStat);
 
-        Armour armour = (Armour)obj;
-
-        armour.damageReduction -= this.Value;
-        if (armour.damageReduction <= 0f)
-            armour.canDamageReduction = false;
-
+        myStat.DamageReduction -= this.Value;
     }
 }

@@ -11,6 +11,7 @@ namespace Oswald.UI
     public class EnemyUI : MonoBehaviour
     {
         [SerializeField] Canvas enemyCanvas;
+        [SerializeField] Image enemyHealthSupportBar;
         [SerializeField] Image enemyHealthBar;
         [SerializeField] Image enemyBreakBar;
         [SerializeField] Vector3 offsetPosition;
@@ -20,6 +21,7 @@ namespace Oswald.UI
         public void UpdateHealth(Health enemyHealth)
         {
             enemyHealthBar.fillAmount = enemyHealth.GetHealthPercentage();
+            enemyHealthSupportBar.fillAmount = enemyHealth.GetHealthPercentage() + 0.05f;
         }
 
         public void UpdateBreakPoint(Break enemyBreakPoint)

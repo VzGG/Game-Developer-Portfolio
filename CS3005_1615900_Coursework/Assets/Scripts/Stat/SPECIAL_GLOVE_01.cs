@@ -9,32 +9,25 @@ public class SPECIAL_GLOVE_01 : SPECIAL
 
     public SPECIAL_GLOVE_01()
     {
-        this.Value = 25f;
+        this.Value = 25f;               // 25% chance
         this.Description = "Special: grant 25% chance to critical hits that deal 150% more damage.";
         this.RatingPerStat = 12f;
         this._ratingerPerStatBonus = 0;
     }
 
-    public override void SpecialEffect(object obj)
+    public override void SpecialEffect(MyStat myStat)
     {
-        base.SpecialEffect(obj);
+        base.SpecialEffect(myStat);
 
-        // Let PlayerAttack know that critical is now on, and player can now attack with a chance of critical hits
-        // Critical hits deal 250% damage
-        PlayerAttack playerAttack = (PlayerAttack)obj;
-        playerAttack.canCritical = true;
-        playerAttack.criticalChance += this.Value;
-        playerAttack.criticalDamageMultiplier += this._criticalMultiplierBonus;
+        myStat.CriticalChance += this.Value;
+        myStat.CriticalDamage += this._criticalMultiplierBonus;
     }
 
-    public override void RemoveSpecialEffect(object obj)
+    public override void RemoveSpecialEffect(MyStat myStat)
     {
-        base.RemoveSpecialEffect(obj);
+        base.RemoveSpecialEffect(myStat);
 
-        PlayerAttack playerAttack = (PlayerAttack)obj;
-        playerAttack.criticalChance -= this.Value;
-        playerAttack.criticalDamageMultiplier -= 0f;
-        if (playerAttack.criticalChance <= 0f || playerAttack.criticalDamageMultiplier <= 1f)
-            playerAttack.canCritical = false;
+        myStat.CriticalChance -= this.Value;
+        myStat.CriticalDamage -= this._criticalMultiplierBonus;
     }
 }

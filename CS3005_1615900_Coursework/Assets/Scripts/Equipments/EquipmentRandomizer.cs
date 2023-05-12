@@ -100,16 +100,12 @@ public class EquipmentRandomizer : MonoBehaviour
             GameObject gameObject = Instantiate(_prefabEquipment);
             Equipment equipment = gameObject.GetComponent<Equipment>();
 
-   
             equipment.category = EquipmentCategoryUtility.RandomEquipmentCategory();
             equipment.rarity = RarityUtility.RandomRarity();
 
-
- 
             equipment.sprite = RandomSprite(equipment.category, equipment.rarity);
             equipment.SetSpriteRendererSprite();
-            //equipment.RandomPosition();
-            // Set the position on the enemy for now
+
             equipment.SetPosition(spawnPosition);
 
             // Add random n random stats - depending on rarity, Common = add 1 random stat, legendary = add 4 random stat + 1 legendary stat/effect
@@ -159,10 +155,13 @@ public class EquipmentRandomizer : MonoBehaviour
                     // Example: Accessory has more chance of landing EN, HP, ATK
                     // ATK stat is more landed on Gloves and accesory.
 
-            // To-do: spawn them from a box or enemy!
-                // Make a item selector, and spawn that when we select that item
+            // To do: consider what happens if we get the same legendary twice i.e., 2 legendary plate, what is the total damage reduction
+            // 2x 60% = 120% damage reduction? or diminish that
+            // 60% +        (DONE)
+                // what about removal? there should be a cap on removal?
 
-                // Add UI to the chest
+            // To-do: UI for removing items
+            // to-do: 
         }
 
         return _spawnedEquipment[0];

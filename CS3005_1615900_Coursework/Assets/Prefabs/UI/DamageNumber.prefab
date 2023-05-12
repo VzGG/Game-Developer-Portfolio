@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4254530827805094207}
   - component: {fileID: 4254530827805094202}
-  - component: {fileID: 4254530827805094203}
   - component: {fileID: 4254530827805094201}
   - component: {fileID: 4254530827805094200}
   m_Layer: 5
@@ -29,7 +28,7 @@ RectTransform:
   m_GameObject: {fileID: 4254530827805094206}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.0125, y: 0.0125, z: 1}
+  m_LocalScale: {x: 0.025, y: 0.025, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -47,27 +46,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4254530827805094206}
   m_CullTransparentMesh: 1
---- !u!50 &4254530827805094203
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4254530827805094206}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
 --- !u!114 &4254530827805094201
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -90,20 +68,18 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 7186d5f4aaa64af4a8ac69b2660301b9, type: 3}
-    m_FontSize: 10
+    m_FontSize: 15
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 300
-    m_Alignment: 4
+    m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: '1500
-
-'
+  m_Text: 
 --- !u!114 &4254530827805094200
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -116,8 +92,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f8da402c4f4abb4bb4c9ad5d2b8f207, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageText: {fileID: 4254530827805094201}
-  deleteTime: 3
-  randomX: {x: -1, y: 1}
-  randomY: {x: 1.5, y: 3.5}
-  rb2d: {fileID: 4254530827805094203}
+  IsCritical: 0
+  _textComponent: {fileID: 4254530827805094201}

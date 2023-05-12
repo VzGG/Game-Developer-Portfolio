@@ -49,10 +49,50 @@ namespace Oswald.Player
         [SerializeField] public Skill[] skills = new Skill[2];  // Define what to add in this skill list, can be bow skill, sword attack skill (TO BE ADDED)
         public float SkillEnergy { private get; set; } = 0f;
 
-        public bool canCritical {  private get; set; } = false;
-        public float criticalDamageMultiplier { get; set; } = 1f;
-        public float criticalChance { get; set; } = 0f;
-        private bool isCritical = false;
+        #region My stats
+
+        [SerializeField] public bool _canCritical = false;
+
+        private const float _baseCriticalDamageMultiplier = 1f;
+        private float _criticalDamageMultiplier = 1f;
+        public float CriticalDamage 
+        {
+            get
+            {
+                return _criticalDamageMultiplier;
+            }
+            set
+            {
+                _criticalDamageMultiplier = value;
+            }
+        }
+        [SerializeField] private float _criticalChance = 0f;
+        public float CriticalChance 
+        {
+            get
+            {
+                return _criticalChance;
+            }
+            set
+            {
+                _criticalChance = value;
+
+                if (_criticalChance >= 100f)
+                    _criticalChance = _criticalChanceCap;     // Reached the cap!
+
+                if (_criticalChance <= 0f)
+                {
+                    _canCritical = false;
+                }
+                    
+                else
+                    _canCritical = true;
+            }
+        }
+        private bool isCritical = false;                    // If true, increase damage via critical damage!
+        private float _criticalChanceCap = 100f;
+
+        #endregion My stats
 
         #region Getter and Setters
 
@@ -65,22 +105,30 @@ namespace Oswald.Player
 
         #endregion
 
-        private void CriticalHit()
+        private float CriticalHit()
         {
-            if (!canCritical) { return; }
+            if (!_canCritical) 
+            {
+                return _baseCriticalDamageMultiplier;
+            }
 
             int randomChance = Random.Range(0, 100);
-            if (randomChance < criticalChance)
+            if (randomChance < CriticalChance)
             {
-                Debug.Log("Critical hit!");
                 isCritical = true;
-                criticalDamageMultiplier = 2.5f;
+                //CriticalDamage = 2.5f;
+                return _criticalDamageMultiplier;
+
+            }
+            else
+            {
+                return _baseCriticalDamageMultiplier;
             }
         }
 
-        private void ResetCriticalDamageMultiplier()
+        private void ResetCriticalHit()
         {
-            criticalDamageMultiplier = 1f;
+            //CriticalDamage = 1f;
             isCritical = false;
         }
 
@@ -197,7 +245,7 @@ namespace Oswald.Player
         // Called in the animation tab - from Character's animation.
         private void AnimationEventAttack_Bow()
         {
-            CriticalHit();
+            float criticalBonus = CriticalHit();
 
             GameObject newArrowProjectile = Instantiate(arrowProjectile, transform.position, Quaternion.identity);
             ArrowProjectile aP = newArrowProjectile.GetComponent<ArrowProjectile>();
@@ -205,8 +253,8 @@ namespace Oswald.Player
             aP.isCritical = this.isCritical;
 
             aP.SetPlayerController(this.GetComponent<PlayerController>());
-            //aP.SetBowDamage(bowDamage + bowSkillDamage);
-            aP.SetBowDamage( (bowDamage + skillDamage) * criticalDamageMultiplier );
+            aP.SetBowDamage((bowDamage + skillDamage) * criticalBonus);
+
             aP.SetPlayerScale(this.transform.localScale);
             // Determine the hit effect when spawning projectile. The value is changed by the PlayerNextAnim class.
             aP.SetOnHitEffect(localOnHit);
@@ -220,7 +268,7 @@ namespace Oswald.Player
             //myEnergy.UseEnergy(bowEnergy);
             myEnergy.UseEnergy(bowEnergy + SkillEnergy);
 
-            ResetCriticalDamageMultiplier();
+            ResetCriticalHit();
         }
 
         // Called in the animation tab - from Character's animation. Multiplier is set in the animation tab also.
@@ -228,14 +276,14 @@ namespace Oswald.Player
         {
             if (MyTargets == null) { Debug.Log("Attacking the air..."); return; }
 
-            CriticalHit();
+            float criticalBonus = CriticalHit();
 
             // Anyone in the hitbox (they should all be in the list of targets) should get damaged.
             // Also add pushback to the enemy.
             for (int i = 0; i < MyTargets.Count; i++)
             {
                 MyTargets[i].gameObject.GetComponent<EnemyController>().
-                            EnemyTakeDamage( ((myDamage * multiplier) + jumpAttackLandedBonus + skillDamage) * criticalDamageMultiplier,
+                            EnemyTakeDamage(((myDamage * multiplier) + jumpAttackLandedBonus + skillDamage) * criticalBonus,
                             gameObject,
                             localFirstPushback,
                             isCritical);
@@ -246,7 +294,7 @@ namespace Oswald.Player
             Debug.Log("using energy, you might be forgetting incase of a bug");
             myEnergy.UseEnergy(attackEnergy + SkillEnergy);
 
-            ResetCriticalDamageMultiplier();
+            ResetCriticalHit();
         }
         // Called in the animation tab - the player's sword air attack 3.
         private void IncreaseJump3LandAttackValue()

@@ -18,7 +18,7 @@ namespace Oswald.Player
 
         MyEquipment characterEquipment;
 
-        [SerializeField][SerializeReference] public IInteractableEnvironment interactableEnvironment;
+        public IInteractableEnvironment interactableEnvironment;
 
         // Reference
         PlayerAttack myAttack;
@@ -122,7 +122,7 @@ namespace Oswald.Player
             myAttack.MyTargets = myTarget.GetTargets();         // Update your player attack's local target.
 
 
-            myHealth.HealthRegen();                             // Does not regen if you don't have the legendary helmet
+            myHealth.HealthRegeneration();                             // Does not regen if you don't have the legendary helmet
 
 
             // For interactable environment
@@ -131,7 +131,6 @@ namespace Oswald.Player
                 Debug.Log("interactable environment?: " + interactableEnvironment);
                 if (interactableEnvironment != null)
                 {
-                    
                     interactableEnvironment.Interaction(this);
                 }
             }

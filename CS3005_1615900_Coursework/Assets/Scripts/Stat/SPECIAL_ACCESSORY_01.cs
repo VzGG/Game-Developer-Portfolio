@@ -5,7 +5,7 @@ using UnityEngine;
 public class SPECIAL_ACCESSORY_01 : SPECIAL
 {
     private float _damageReductionBonus = 20f;
-    private float _evasionRateBonus = 12.5f;
+    private float _evasionRateBonus = 12.5f;                // 12.5% to evade
     private float _healthRegenBonus = 8f;
     private float _criticalChanceBonus = 12.5f;
     private float _criticalDamageMultiplierBonus = 0.75f;
@@ -13,154 +13,41 @@ public class SPECIAL_ACCESSORY_01 : SPECIAL
     public SPECIAL_ACCESSORY_01()
     {
         this.Value = 10f;                                   // +10 atk bonus
-        this.Description = "Special effect: grant 20% damage reduction, 12.5% evasion, 8 health regen, 12.5% chance to critical to deal 75% more damage";
-        this.RatingPerStat = 3f;
+        this.Description = "Special effect: grants 10 bonus damage, 20% damage reduction, 12.5% evasion, 8 health regen, 12.5% chance to critical to deal 75% more damage";
+        this.RatingPerStat = 30f;
         this._ratingerPerStatBonus = 0;
     }
 
-    public override void SpecialEffect(object obj)
+    public override void SpecialEffect(MyStat myStat)
     {
-        base.SpecialEffect(obj);
+        base.SpecialEffect(myStat);
+
+        myStat.ATK += this.Value;
+
+        myStat.CriticalChance += this._criticalChanceBonus;
+        myStat.CriticalDamage += this._criticalDamageMultiplierBonus;
+
+        myStat.HealthRegen += this._healthRegenBonus;
+
+        myStat.EvasionRate += this._evasionRateBonus;
+
+        myStat.DamageReduction += this._damageReductionBonus;
 
     }
 
-    public override void SpecialEffect(params object[] obj)
+    public override void RemoveSpecialEffect(MyStat myStat)
     {
-        base.SpecialEffect(obj);
+        base.RemoveSpecialEffect(myStat);
 
-        Debug.Log("Component count: " + obj.Length);
+        myStat.ATK -= this.Value;
 
-        // Apply all around legendary stat but weaker versions
-        bool foundAttackComponent = false;
-        bool foundHealthComponent = false;
+        myStat.CriticalChance -= this._criticalChanceBonus;
+        myStat.CriticalDamage -= this._criticalDamageMultiplierBonus;
 
-        foreach (Object cObj in obj)
-        {
-            Debug.Log("Obj type: " + cObj.GetType());
+        myStat.HealthRegen -= this._healthRegenBonus;
 
-            // 2 Legendary effects for PlayerAttack: Bonus damage, and crit chance
-            if (cObj.GetType() == typeof(Oswald.Player.PlayerAttack))
-            {
-                if (foundAttackComponent) { continue; }
+        myStat.EvasionRate -= this._evasionRateBonus;
 
-
-                Oswald.Player.PlayerAttack playerAttack = (Oswald.Player.PlayerAttack)cObj;
-
-                // Weaker version of Legendary Glove
-                playerAttack.canCritical = true;
-                playerAttack.criticalChance += this._criticalChanceBonus;
-                playerAttack.criticalDamageMultiplier += this._criticalDamageMultiplierBonus;
-
-                // Legendary effect of Accessory
-                playerAttack.SetMyDamage(playerAttack.GetMyDamage() + this.Value);
-                playerAttack.SetBowDamage(playerAttack.GetMyBowDamage() + this.Value);
-
-                // Stop running this if statement twice
-                foundAttackComponent = true;
-            }
-            // 2 Legendary effects for Health: Health regen and Evasion
-            else if (cObj.GetType() == typeof(Health))
-            {
-                if (foundHealthComponent) { continue; }
-
-                // THIS IS CALLED TWICE!!! -> make it so that it is called once
-                Debug.Log("Health comp if statement called");
-
-                Health health = (Health)cObj;
-
-                // Weaker version of Legendary Helmet
-                health.canRegen = true;
-                health.healthRegen += this._healthRegenBonus;
-
-                // Weaker version of Legendary Boots
-                health.canEvadeDamage = true;
-                health.evasionRate += this._evasionRateBonus;
-
-                foundHealthComponent = true;
-            }
-            // 1 Legendary effect for Armour: Damage reduction
-            else if (cObj.GetType() == typeof(Armour))
-            {
-                // Weaker version of Legendary Plate
-                Armour armour = (Armour)cObj;
-
-                armour.canDamageReduction = true;
-                armour.damageReduction += this._damageReductionBonus;
-            }
-        }
-    }
-
-    
-    public override void RemoveSpecialEffect(params object[] obj)
-    {
-        base.RemoveSpecialEffect(obj);
-
-        bool foundAttackComponent = false;
-        bool foundHealthComponent = false;
-
-        foreach (Object cObj in obj)
-        {
-            Debug.Log("Obj type: " + cObj.GetType());
-
-            // 2 Legendary effects for PlayerAttack: Bonus damage, and crit chance
-            if (cObj.GetType() == typeof(Oswald.Player.PlayerAttack))
-            {
-                if (foundAttackComponent) { continue; }
-
-
-                Oswald.Player.PlayerAttack playerAttack = (Oswald.Player.PlayerAttack)cObj;
-
-                playerAttack.criticalChance -= this._criticalChanceBonus;
-                playerAttack.criticalDamageMultiplier -= this._criticalDamageMultiplierBonus;
-
-                // Legendary effect of Accessory
-                playerAttack.SetMyDamage(playerAttack.GetMyDamage() - this.Value);
-                playerAttack.SetBowDamage(playerAttack.GetMyBowDamage() - this.Value);
-
-                if (playerAttack.criticalChance <= 0)
-                {
-                    playerAttack.canCritical = false;
-                }
-
-
-                // Stop running this if statement twice
-                foundAttackComponent = true;
-            }
-            // 2 Legendary effects for Health: Health regen and Evasion
-            else if (cObj.GetType() == typeof(Health))
-            {
-                if (foundHealthComponent) { continue; }
-
-                // THIS IS CALLED TWICE!!! -> make it so that it is called once
-                Debug.Log("Health comp if statement called");
-
-                Health health = (Health)cObj;
-
-                // Weaker version of Legendary Helmet
-                health.healthRegen -= this._healthRegenBonus;
-
-                // Weaker version of Legendary Boots
-                health.evasionRate -= this._evasionRateBonus;
-
-                if (health.healthRegen <= 0f)
-                    health.canRegen = false;
-
-                if (health.evasionRate <= 0f)
-                    health.canEvadeDamage = false;
-
-                foundHealthComponent = true;
-            }
-            // 1 Legendary effect for Armour: Damage reduction
-            else if (cObj.GetType() == typeof(Armour))
-            {
-                // Weaker version of Legendary Plate
-                Armour armour = (Armour)cObj;
-
-                armour.damageReduction -= this._damageReductionBonus;
-
-                if (armour.damageReduction <= 0f)
-                    armour.canDamageReduction = false;
-            }
-        }
+        myStat.DamageReduction -= this._damageReductionBonus;
     }
 }

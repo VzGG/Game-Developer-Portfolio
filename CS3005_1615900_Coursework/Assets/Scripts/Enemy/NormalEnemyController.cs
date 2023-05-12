@@ -224,10 +224,6 @@ namespace Oswald.Enemy
             }
         }
 
-        [SerializeField] GameObject damageText;
-
-        
-
         #region Taking Damage Logic
         public override void EnemyTakeDamage(float damage, GameObject attacker, Vector2 pushback, bool criticalDamage)
         {
@@ -244,18 +240,9 @@ namespace Oswald.Enemy
             StartCoroutine("ChangeIsHit");
 
 
-
-            // Creates the UI for taking damage.
-            GameObject d_textGameObj = Instantiate(damageText, damageNumberCanvas.transform, true);
-            d_textGameObj.transform.position = this.transform.position;
-            Text d_text = d_textGameObj.GetComponent<Text>();
-            d_text.text = Mathf.RoundToInt(damage).ToString();
-            //d_textGameObj.GetComponent<Text>().text = Mathf.RoundToInt(damage).ToString();
-            if (criticalDamage)
-            {
-                d_text.text += "!";
-                d_text.color = Color.yellow;
-            }
+            // Displays the UI for taking damage.
+            damageNumbers.IsCritical = criticalDamage;
+            damageNumbers.DamageText = Mathf.RoundToInt(damage).ToString();
 
             if (attacker.tag.Equals("Player"))
             {

@@ -12,23 +12,17 @@ public class SPECIAL_HELMET_01 : SPECIAL
         this._ratingerPerStatBonus = 0;
     }
 
-    public override void SpecialEffect(System.Object obj)
+    public override void SpecialEffect(MyStat myStat)
     {
-        base.SpecialEffect(obj);
+        base.SpecialEffect(myStat);
 
-        // Apply hp regen by +50
-        Health health = (Health)obj;
-        health.canRegen = true;
-        health.healthRegen += this.Value;
+        myStat.HealthRegen += this.Value;
     }
 
-    public override void RemoveSpecialEffect(object obj)
+    public override void RemoveSpecialEffect(MyStat myStat)
     {
-        base.RemoveSpecialEffect(obj);
+        base.RemoveSpecialEffect(myStat);
 
-        Health health = (Health)obj;
-        health.healthRegen -= this.Value;
-        if (health.healthRegen <= 0f)
-            health.canRegen = false;
+        myStat.HealthRegen -= this.Value;
     }
 }

@@ -415,6 +415,9 @@ MonoBehaviour:
   originalColor: {r: 0, g: 0, b: 0, a: 0}
   hurtColor: {r: 0, g: 0, b: 0, a: 0}
   hurtDuration: 0.5
+  _evasionRate: 0
+  evadeColor: {r: 0, g: 0, b: 0, a: 0}
+  evadeDuration: 0.1
   isBoss: 0
   isHitDuringEnrage: 0
   accumulatedDamage: 0
@@ -507,12 +510,14 @@ MonoBehaviour:
   isAttacking: 0
   xScale: 1
   EnemyMovement: {fileID: 1022413648581879261}
+  damageNumbers: {fileID: 0}
   attackPattern: 0
   enemyUI: {fileID: 8298635742504170207}
   walkEdgeChecker: {fileID: 0}
   currentBehaviourState: 0
   _isHit: 0
-  damageText: {fileID: 4254530827805094206, guid: c5a82a5bfa9838948a076eeed0f5f33d, type: 3}
+  time: 0
+  isStartWait: 0
   cooldown: 1
 --- !u!114 &8298635742504170207
 MonoBehaviour:
@@ -527,6 +532,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyCanvas: {fileID: 2495368155251702246}
+  enemyHealthSupportBar: {fileID: 3688805700644481148}
   enemyHealthBar: {fileID: 3907906230368505904}
   enemyBreakBar: {fileID: 4647182347757438739}
   offsetPosition: {x: 0, y: -0.075, z: 0}
@@ -667,6 +673,17 @@ Canvas:
   m_CorrespondingSourceObject: {fileID: 2266733445280651889, guid: 2a71d2c4412efa346b9af441bec2485c, type: 3}
   m_PrefabInstance: {fileID: 4455284967750640535}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3688805700644481148 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1073298373654842347, guid: 2a71d2c4412efa346b9af441bec2485c, type: 3}
+  m_PrefabInstance: {fileID: 4455284967750640535}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &3907906230368505904 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 860176603627172775, guid: 2a71d2c4412efa346b9af441bec2485c, type: 3}

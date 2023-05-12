@@ -61,39 +61,24 @@ public class MyEquipment : MonoBehaviour
 
             else if (stat.GetType() == typeof(SPECIAL_HELMET_01))
             {
-                Debug.Log("Helmet legendary stat equipped!");
-
-
                 // This is the legendary stat index (usually the last index = 4)
-                equipment.stats[i].SpecialEffect(GetComponent<Health>());
+                equipment.stats[i].SpecialEffect(myStat);
             }
             else if (stat.GetType() == typeof(SPECIAL_PLATE_01))
             {
-                Debug.Log("Plate legendary stat equipped!");
-
-                equipment.stats[i].SpecialEffect(GetComponent<Armour>());
+                equipment.stats[i].SpecialEffect(myStat);
             }
             else if (stat.GetType() == typeof(SPECIAL_GLOVE_01))
             {
-                Debug.Log("Glove legendary stat equipped!");
-
-                equipment.stats[i].SpecialEffect(GetComponent<Oswald.Player.PlayerAttack>());
+                equipment.stats[i].SpecialEffect(myStat);
             }
             else if (stat.GetType() == typeof(SPECIAL_BOOTS_01))
             {
-                Debug.Log("Boot legendary stat equipped!");
-
-                equipment.stats[i].SpecialEffect(GetComponent<Health>());
+                equipment.stats[i].SpecialEffect(myStat);
             }
             else if (stat.GetType() == typeof(SPECIAL_ACCESSORY_01))
             {
-                Debug.Log("Accessory legendary stat equipped!");
-
-                equipment.stats[i].SpecialEffect(
-                    GetComponent<Oswald.Player.PlayerAttack>(), 
-                    GetComponent<Health>(), 
-                    GetComponent<Health>(), 
-                    GetComponent<Armour>());
+                equipment.stats[i].SpecialEffect(myStat);
             }
         }
     }
@@ -124,5 +109,15 @@ public class MyEquipment : MonoBehaviour
         // TO-DO: also apply ATK SPD!
 
         //
+
+        // For SPECIAL STATS
+        health.HealthRegen = myStat.HealthRegen;
+
+        armour.DamageReduction = myStat.DamageReduction;
+
+        playerAttack.CriticalChance = myStat.CriticalChance;
+        playerAttack.CriticalDamage = myStat.CriticalDamage;
+
+        health.EvasionRate = myStat.EvasionRate;
     }
 }

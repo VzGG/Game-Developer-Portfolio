@@ -14,7 +14,32 @@ public class Armour : MonoBehaviour
     [SerializeField] private float _armour = 0f;
 
     public bool canDamageReduction { get; set; } = false;
-    public float damageReduction { get; set; } = 0f;
+    [SerializeField] private float _damageReduction = 0f;
+    public float DamageReduction 
+    { 
+        get
+        {
+            return _damageReduction;
+        } 
+        set
+        {
+            _damageReduction = value;
+
+            // Prevent going over the limit
+            if (_damageReduction > _damageReductionCap)
+            {
+                _damageReduction = _damageReductionCap;
+            }
+
+            // Turn on/off damage reduction
+            if (_damageReduction <= 0f)
+                canDamageReduction = false;
+            else
+                canDamageReduction = true;
+        } 
+    }
+    // 90 = 90%
+    private float _damageReductionCap = 90f;
 
     public float GetMaxArmour() { return this._MaxArmour; }
     public float GetArmour() { return this._armour; }
@@ -32,7 +57,7 @@ public class Armour : MonoBehaviour
     // Change the given damage and don't make a copy via "Ref" keyword
     public float ReduceDamage(float damage)
     {
-        float reducedDamage = damage * (1f - (damageReduction / 100f));
+        float reducedDamage = damage * (1f - (DamageReduction / 100f));
         return reducedDamage;
     }
 }

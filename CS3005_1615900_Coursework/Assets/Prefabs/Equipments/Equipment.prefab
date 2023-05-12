@@ -267,7 +267,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 3}
+  m_AnchoredPosition: {x: 0, y: 6}
   m_SizeDelta: {x: 240, y: 111}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &809948950143644084
@@ -751,7 +751,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 3}
+  m_AnchoredPosition: {x: 0, y: 6}
   m_SizeDelta: {x: 240, y: 111}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8440518441310253699
@@ -816,9 +816,9 @@ GameObject:
   m_Component:
   - component: {fileID: 9176948457875662473}
   - component: {fileID: 2216913247403278455}
-  - component: {fileID: 5906849883325226334}
   - component: {fileID: 2463210957639004212}
   - component: {fileID: 2929372701734053653}
+  - component: {fileID: 5906849883325226334}
   m_Layer: 23
   m_Name: Equipment
   m_TagString: Untagged
@@ -893,33 +893,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &5906849883325226334
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9030490782143457951}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf17b7da86f55df44bb0a26044ce604f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sprite: {fileID: 0}
-  category: 0
-  rarity: 0
-  _boxCollider2DForUI: {fileID: 1749150783216795235}
-  _promptUI: {fileID: 6407050362763838948}
-  _equipmentDetailUI: {fileID: 6012973096336477010}
-  _statMetaText: {fileID: 6322396013422603562}
-  _statText: {fileID: 132713642656788231}
-  _nameText: {fileID: 8549598554506624316}
-  _ratingText: {fileID: 2723352950971943216}
-  _descriptionText: {fileID: 5095775635827757149}
-  stats: []
-  rating: 1
-  references:
-    version: 1
 --- !u!61 &2463210957639004212
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -967,6 +940,34 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &5906849883325226334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9030490782143457951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf17b7da86f55df44bb0a26044ce604f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprite: {fileID: 0}
+  category: 0
+  rarity: 0
+  _boxCollider2DForUI: {fileID: 1749150783216795235}
+  _promptUI: {fileID: 6407050362763838948}
+  _equipmentDetailUI: {fileID: 6012973096336477010}
+  _statMetaText: {fileID: 6322396013422603562}
+  _statText: {fileID: 132713642656788231}
+  _nameText: {fileID: 8549598554506624316}
+  _ratingText: {fileID: 2723352950971943216}
+  _descriptionText: {fileID: 5095775635827757149}
+  _audioClip: {fileID: 8300000, guid: f93e072c46dc93047bcd3f027df54ff5, type: 3}
+  stats: []
+  rating: 1
+  references:
+    version: 1
 --- !u!1 &9141725239583083699
 GameObject:
   m_ObjectHideFlags: 0
@@ -1002,7 +1003,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -16}
-  m_SizeDelta: {x: 240, y: 50}
+  m_SizeDelta: {x: 240, y: 85}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4701000878956324068
 CanvasRenderer:
@@ -1045,5 +1046,5 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 0.65
-  m_Text: 'Special effect: grant 20% damage reduction, 12.5% evasion, 8 health regen,
-    12.5% chance to critical to deal 75% more damage'
+  m_Text: 'Special effect: grants 10 bonus damage, 20% damage reduction, 12.5% evasion,
+    8 health regen, 12.5% chance to critical to deal 75% more damage'

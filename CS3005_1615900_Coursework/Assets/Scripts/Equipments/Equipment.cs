@@ -12,13 +12,16 @@ public class Equipment : MonoBehaviour, IInteractableEnvironment
     public Rarity rarity;
     //public int weight;
     [SerializeField] private BoxCollider2D _boxCollider2DForUI;
-    [SerializeField] GameObject _promptUI;
-    [SerializeField] GameObject _equipmentDetailUI;
-    [SerializeField] Text _statMetaText;
-    [SerializeField] Text _statText;
-    [SerializeField] Text _nameText;
-    [SerializeField] Text _ratingText;
-    [SerializeField] Text _descriptionText;
+    [SerializeField] private GameObject _promptUI;
+    [SerializeField] private GameObject _equipmentDetailUI;
+    [SerializeField] private Text _statMetaText;
+    [SerializeField] private Text _statText;
+    [SerializeField] private Text _nameText;
+    [SerializeField] private Text _ratingText;
+    [SerializeField] private Text _descriptionText;
+
+    // To-do: consider making Sound Manager?
+    [SerializeField] private AudioClip _audioClip;
 
     private Color _nameTextColour
     {
@@ -46,7 +49,22 @@ public class Equipment : MonoBehaviour, IInteractableEnvironment
                 return stats[4].GetDescription();
             }
             else
-                return "To-Do: ADD description for rarities that are not legendary";
+            {
+                string desc = "";
+
+                if (category == EquipmentCategory.Helmet)
+                    desc = "Helps the wearer survive the fights longer.";
+                else if (category == EquipmentCategory.Plate)
+                    desc = "Makes the wearer receive less lethal attacks.";
+                else if (category == EquipmentCategory.Gloves)
+                    desc = "Makes the wearer hit faster.";
+                else if (category == EquipmentCategory.Boots)
+                    desc = "Makes the wearer last the fights longer";
+                else if (category == EquipmentCategory.Accessory)
+                    desc = "Makes the wearer recover faster.";
+
+                return desc;
+            }
         }
     }
 
@@ -82,8 +100,6 @@ public class Equipment : MonoBehaviour, IInteractableEnvironment
 
     private void AddThisEquipment(UnityEngine.Object obj)
     {
-        // call what is in the player pick.cs in here?
-
         // You can use var for typing less - type var instead of Oswald.Player.PlayerController type
         var playerController = (Oswald.Player.PlayerController)obj;
 
@@ -93,6 +109,7 @@ public class Equipment : MonoBehaviour, IInteractableEnvironment
         _boxCollider2DForUI.enabled = false;
 
         // Play SFX
+        playerController.GetComponent<AudioSource>().PlayOneShot(_audioClip);
     }
 
     #region Collision Detection
@@ -102,8 +119,6 @@ public class Equipment : MonoBehaviour, IInteractableEnvironment
         if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
             ShowInteractionUI();
-
-            Debug.Log("player equipment!");
 
             // Set player's reference to this IInteractable
             Oswald.Player.PlayerController player = collision.gameObject.GetComponent<Oswald.Player.PlayerController>();
@@ -116,8 +131,6 @@ public class Equipment : MonoBehaviour, IInteractableEnvironment
         if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
             HideInteractionUI();
-
-            Debug.Log("player now leaves player equipment!");
 
             // Remove reference so we cannot use the interaction method
             Oswald.Player.PlayerController player = collision.gameObject.GetComponent<Oswald.Player.PlayerController>();
@@ -226,7 +239,7 @@ public static class RarityUtility
         28, // Uncommon
         15, // Rare
         7,  // Epic
-        3   // Legendary
+        360   // Legendary
     };
 
     // Credit to: https://www.youtube.com/watch?v=Nu-HEbb_z54 for the inspiration
