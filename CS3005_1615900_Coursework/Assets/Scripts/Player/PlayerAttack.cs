@@ -30,6 +30,9 @@ namespace Oswald.Player
         [SerializeField] Energy myEnergy;
         [SerializeField] BoxCollider2D myHitBox;                                                // The player's hitbox - when the player attacks, anyone in it should get damaged.
 
+        
+
+
         public List<Health> MyTargets { private get; set; } = new List<Health>();
 
         [Header("Sound")]
@@ -51,8 +54,32 @@ namespace Oswald.Player
 
         #region My stats
 
-        [SerializeField] public bool _canCritical = false;
+        public Animator animator;
+        public Animation anim;
 
+        private const float _baseAttackSpeed = 100f;
+        private float _attackSpeed = 100f;
+        public float AttackSpeed
+        {
+            get
+            {
+                return _attackSpeed;
+            }
+            set
+            {
+                _attackSpeed = value;
+
+                // Setting the motion speed: https://stackoverflow.com/questions/39524914/change-the-speed-of-animation-at-runtime-in-unity-c-sharp
+                UpdateAttackAnimationSpeed();
+            }
+        }
+
+        public void UpdateAttackAnimationSpeed()
+        {
+            animator.SetFloat("AnimationSpeed", _attackSpeed / 100f );
+        }
+
+        [SerializeField] public bool _canCritical = false;
         private const float _baseCriticalDamageMultiplier = 1f;
         private float _criticalDamageMultiplier = 1f;
         public float CriticalDamage 
@@ -116,7 +143,6 @@ namespace Oswald.Player
             if (randomChance < CriticalChance)
             {
                 isCritical = true;
-                //CriticalDamage = 2.5f;
                 return _criticalDamageMultiplier;
 
             }
@@ -128,7 +154,6 @@ namespace Oswald.Player
 
         private void ResetCriticalHit()
         {
-            //CriticalDamage = 1f;
             isCritical = false;
         }
 

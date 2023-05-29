@@ -48,6 +48,8 @@ namespace Oswald.Manager
                     instantiatedPortal = Instantiate(portal, portalLocation.position, transform.rotation);
                     // Pass the string name of the scene name to be able to load the next level
                     instantiatedPortal.GetComponent<Portal>().SetSceneNameOfNextLevel(sceneNameOfNextLevel);
+
+                    FindObjectOfType<RewardsManager>().SpawnRewards();
                 }
             }
         }

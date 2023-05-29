@@ -20,6 +20,11 @@ public class EquipmentRandomizer : MonoBehaviour
     [SerializeField] bool isThereLegendary = false;
     [SerializeField] GameObject legendaryEquipmentObj;
 
+    private void Awake()
+    {
+        LoadSprites();
+    }
+
     // These are the legendary types, use reflection to create an instance of each type.
     Type[] legendaryTypes = new Type[]
     {
@@ -87,8 +92,6 @@ public class EquipmentRandomizer : MonoBehaviour
     /// <param name="spawnPosition"></param>
     public Equipment GenerateEquipment(Vector2 spawnPosition)
     {
-        //int randomEquipmentSpawned = UnityEngine.Random.Range(10, 100);
-
         // 1 for now -> each enemy is guranteed to spawn an item for now
         int randomEquipmentSpawned = 1;
 
@@ -112,14 +115,6 @@ public class EquipmentRandomizer : MonoBehaviour
             for (int j = 0; j < (int)equipment.rarity; j++)
             {
                 // For legendary stat
-
-                //
-
-                // NEED ONE OF THIS FOR EPIC!
-                    // For epic, provide a percentage based bonus instead of flat ones!
-
-                //
-
                 if (j == ((int)Rarity.Legendary-1))
                 {
                     int randomClassIndex = UnityEngine.Random.Range(0, legendaryTypes.Length);
@@ -132,36 +127,42 @@ public class EquipmentRandomizer : MonoBehaviour
                     equipment.sprite = RandomSprite(equipment.category, equipment.rarity);
                     equipment.SetSpriteRendererSprite();
                 }
-                else
+                // For epic stat
+                else if (j == (int)Rarity.Epic-1)
                 {
-                    Stat randomStat = StatUtility.RandomStat(j);
+                    // Should be the same stat as the first stat, but it becomes percentage based!
+                    Stat epicStat = StatUtility.RandomStat(equipment.stats[0].GetType());
+                    equipment.stats.Add(epicStat);
+                    equipment.rating += epicStat.Value * epicStat.GetRatingPerStat() * (1f + epicStat.GetRatingPerStatBonus());
+                }
+                // For common stat
+                else if (j == (int)Rarity.Common-1)
+                {
+                    Stat randomStat = StatUtility.RandomStat(equipment.category);
                     equipment.stats.Add(randomStat);
                     // Determine equipment rating
+                    equipment.rating += randomStat.Value * randomStat.GetRatingPerStat() * (1f + randomStat.GetRatingPerStatBonus());
+                }
+                // For Uncommon, Rare stat - both are basically random
+                else
+                {
+                    Stat randomStat = StatUtility.RandomStat();
+                    equipment.stats.Add(randomStat);
                     equipment.rating += randomStat.Value * randomStat.GetRatingPerStat() * (1f + randomStat.GetRatingPerStatBonus());
                 }
             }
 
             gameObject.name = $"{equipment.rarity.ToString().ToUpper()} {equipment.category.ToString().ToUpper()}";
+            equipment.name = gameObject.name;
 
             _spawnedEquipment[i] = equipment;
 
             // Determine equipment weight - weight is between n and n-max
 
-            // To do: make categories have their own common stats found often
-                    // Example: Helmet category has more chance of landing HP, EN, DEF
-                    // Example: Plate category has more chance of landing DEF
-                    // Example: Glove cateogry has more chance of landing ATK SPD, ATK 
-                    // Example: Boots has more chance of landing EN RGN, ATK
-                    // Example: Accessory has more chance of landing EN, HP, ATK
-                    // ATK stat is more landed on Gloves and accesory.
+            // to-do: implement atk spd for normal attacks only (Sword and bow and aerial)
+                // Sword Main (ground done)
 
-            // To do: consider what happens if we get the same legendary twice i.e., 2 legendary plate, what is the total damage reduction
-            // 2x 60% = 120% damage reduction? or diminish that
-            // 60% +        (DONE)
-                // what about removal? there should be a cap on removal?
-
-            // To-do: UI for removing items
-            // to-do: 
+            // To-do: fix player pickup and any item that adds or remove should be adding to the MYSTAT instead of directly to the components
         }
 
         return _spawnedEquipment[0];

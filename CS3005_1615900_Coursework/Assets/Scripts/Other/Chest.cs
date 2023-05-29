@@ -10,6 +10,8 @@ public class Chest : MonoBehaviour, IInteractableEnvironment
     private Vector2 _initialMovement = new Vector2(0f, 3.5f);
     private float _waitDuration = 0.5f;
 
+    public GameObject spawnedEquipmentGameObj;
+
     private void OpenChestAnimation()
     {
         // There is only 1 parameter for all chests!
@@ -32,10 +34,13 @@ public class Chest : MonoBehaviour, IInteractableEnvironment
         yield return new WaitForSeconds(_waitDuration);
 
         // Call equipment randomizer to generate you an item
-        GameObject equipmentGameObj = FindObjectOfType<EquipmentRandomizer>().GenerateEquipment(transform.position).gameObject;
+        //GameObject equipmentGameObj = FindObjectOfType<EquipmentRandomizer>().GenerateEquipment(transform.position).gameObject;
+
+        spawnedEquipmentGameObj = FindObjectOfType<EquipmentRandomizer>().GenerateEquipment(transform.position).gameObject;
 
         // Add an opening effect
-        equipmentGameObj.GetComponent<Rigidbody2D>().velocity = new Vector2(_initialMovement.x, _initialMovement.y);
+        //equipmentGameObj.GetComponent<Rigidbody2D>().velocity = new Vector2(_initialMovement.x, _initialMovement.y);
+        spawnedEquipmentGameObj.GetComponent<Rigidbody2D>().velocity = new Vector2(_initialMovement.x, _initialMovement.y);
 
         // Disable this behaviour
         this.enabled = false;
@@ -43,7 +48,8 @@ public class Chest : MonoBehaviour, IInteractableEnvironment
         _boxCollider2DForUI.enabled = false;
 
         // Disable equipment collider for a moment to prevent players instantly equipping it.
-        BoxCollider2D equipmentBody = equipmentGameObj.transform.GetChild(0).gameObject.GetComponent<BoxCollider2D>();
+        //BoxCollider2D equipmentBody = equipmentGameObj.transform.GetChild(0).gameObject.GetComponent<BoxCollider2D>();
+        BoxCollider2D equipmentBody = spawnedEquipmentGameObj.transform.GetChild(0).gameObject.GetComponent<BoxCollider2D>();
         equipmentBody.enabled = false;
 
         yield return new WaitForSeconds(1.5f);

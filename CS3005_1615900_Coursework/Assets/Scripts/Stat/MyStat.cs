@@ -13,29 +13,48 @@ public class MyStat
     public float ATK = 5f;
     public float DEF = 0f;
     public float ENRGN = 5f;
-    public float ATKSPD = 1f;
+    public float ATKSPD = 100f;
+
+    public float HPPercent = 100f;
+    public float ENPercent = 100f;
+    public float ATKPercent = 100f;
+    public float DEFPercent = 100f;
+    public float ENRGNPercent = 100f;
+    public float ATKSPDPercent = 100f;
 
     public float HealthRegen = 0f;              // Helmet
-    public float DamageReduction = 0f;          // Plate
+    public float DamageReduction = 0f;
+    // Plate
     public float CriticalChance = 0f;           // Glove
     public float CriticalDamage = 1f;           // Glove
     public float EvasionRate = 0f;              // Boots
 
-    // Accessory is all of the special stat above
+    public float DisplayDamageReduction()
+    {
+        if (DamageReduction > 90f)
+            return 90f;
+        else
+            return DamageReduction;
+    }
 
+    public float DisplayCriticalChance()
+    {
+        if (CriticalChance > 100f)
+            return 100f;
+        else
+            return CriticalChance;
+    }
+
+    public float DisplyEvasionRate()
+    {
+        if (EvasionRate > 90f)
+            return 90f;
+        else
+            return EvasionRate;
+    }
 
     public MyStat()
     {
 
-    }
-
-    public MyStat(float givenHP, float givenEN, float givenATK, float givenDEF, float givenENRGN, float givenATKSPD)
-    {
-        HP = givenHP;
-        EN = givenEN;
-        ATK = givenATK;
-        DEF = givenDEF;
-        ENRGN = givenENRGN;
-        ATKSPD = givenATKSPD;
     }
 }

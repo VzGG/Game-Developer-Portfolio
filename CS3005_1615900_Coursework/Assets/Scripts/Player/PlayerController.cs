@@ -15,6 +15,10 @@ namespace Oswald.Player
         [SerializeField] MyStat characterStat;
 
         public MyStat GetMyStat() { return characterStat; }
+        public MyEquipment GetMyEquipment() { return characterEquipment; }
+        public Health GetHealth() { return this.myHealth; }
+        public Energy GetEnergy() { return this.myEnergy; }
+        public Armour GetArmour() { return this.myArmour; }
 
         MyEquipment characterEquipment;
 
@@ -81,11 +85,6 @@ namespace Oswald.Player
         }
         private void SetReferences()
         {
-            // Delete LATER!
-            FindObjectOfType<EquipmentRandomizer>().LoadSprites();
-            //FindObjectOfType<EquipmentRandomizer>().GenerateEquipment();
-           // FindObjectOfType<EquipmentRandomizer>().AddEquipmentToPlayer();
-
             // Setup base stats
             // Get equipment stats
             // Apply stats
@@ -103,6 +102,7 @@ namespace Oswald.Player
             myTarget = GetComponent<Target>();
 
             PlayerNextAnim.SetPlayerController(this);       // Set the player controller in the other class to start passing booleans needed to do mid air attacks.
+            FindObjectOfType<EquipmentManager>().PlayerController = this;
         }
 
         #endregion Initialization
@@ -161,6 +161,8 @@ namespace Oswald.Player
                 {
                     // Otherwise if we just landed, go straight to the idle animation.
                     animatorController.ChangeAnimController(AnimatorController.AnimStates.Main);
+                    myAttack.UpdateAttackAnimationSpeed();
+
                     isMidAir = false;
                 }
             }

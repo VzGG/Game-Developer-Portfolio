@@ -12,7 +12,22 @@ public class DamageNumbers : MonoBehaviour
     private float _displayTextDuration = 2f;
     private string _damageText = "";
 
-    public string DamageText 
+    private float _damageNumber = 0f;
+    public float DamageNumber 
+    { 
+        get 
+        { 
+            return _damageNumber; 
+        }
+        set
+        {
+            _damageNumber = value;
+
+            DamageText = _damageNumber.ToString();
+        }
+    }
+
+    private string DamageText 
     { 
         get
         {
@@ -30,11 +45,6 @@ public class DamageNumbers : MonoBehaviour
 
     private IEnumerator DisplayDamageNumber()
     {
-        _textComponent.text = "";
-
-        yield return new WaitForSeconds(0.01f);
-
-
         _textComponent.text = DamageText;
 
         if (IsCritical)
@@ -48,5 +58,6 @@ public class DamageNumbers : MonoBehaviour
         // Clear the text after a few seconds
         _textComponent.color = Color.white;
         _textComponent.text = "";
+        _damageNumber = 0f;
     }
 }

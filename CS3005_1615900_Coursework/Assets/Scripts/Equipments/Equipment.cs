@@ -20,10 +20,9 @@ public class Equipment : MonoBehaviour, IInteractableEnvironment
     [SerializeField] private Text _ratingText;
     [SerializeField] private Text _descriptionText;
 
-    // To-do: consider making Sound Manager?
     [SerializeField] private AudioClip _audioClip;
 
-    private Color _nameTextColour
+    public Color _nameTextColour
     {
         get
         {
@@ -40,7 +39,7 @@ public class Equipment : MonoBehaviour, IInteractableEnvironment
         }
     }
 
-    private string _description
+    public string _description
     { 
         get
         {
@@ -106,16 +105,19 @@ public class Equipment : MonoBehaviour, IInteractableEnvironment
         MyEquipment playerEquipment = playerController.GetComponent<MyEquipment>();
         playerEquipment.AddEquipment(this, playerController);
 
-        _boxCollider2DForUI.enabled = false;
+        //_boxCollider2DForUI.enabled = false;
 
         // Play SFX
         playerController.GetComponent<AudioSource>().PlayOneShot(_audioClip);
+
+        FindObjectOfType<RewardsManager>().RewardIsSelected(this.gameObject);
     }
 
     #region Collision Detection
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        Debug.Log("Interacting with someone!");
         if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
             ShowInteractionUI();
@@ -157,16 +159,19 @@ public class Equipment : MonoBehaviour, IInteractableEnvironment
         _statMetaText.text = "";
         _statText.text = "";
 
-        foreach (Stat stat in this.stats)
+        for(int i = 0; i < stats.Count; i++) //(Stat stat in this.stats)
         {
-            _statMetaText.text += $"{stat.GetName()}\n";
+            _statMetaText.text += $"{stats[i].GetName()}\n";
 
-            _statText.text += $"{stat.Value}\n";
+            if (i == 3)
+                _statText.text += $"{stats[i].Value}%\n";
+            else
+                _statText.text += $"{stats[i].Value}\n";
         }
 
         _nameText.text = $"{this.name}";
         _nameText.color = _nameTextColour;
-        _ratingText.text = $"{this.rating}";
+        _ratingText.text = $"{Mathf.RoundToInt(this.rating)}";
 
         _descriptionText.text = _description;
     }
@@ -239,7 +244,7 @@ public static class RarityUtility
         28, // Uncommon
         15, // Rare
         7,  // Epic
-        360   // Legendary
+        3   // Legendary
     };
 
     // Credit to: https://www.youtube.com/watch?v=Nu-HEbb_z54 for the inspiration

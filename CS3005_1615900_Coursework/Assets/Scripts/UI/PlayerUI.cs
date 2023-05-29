@@ -96,15 +96,16 @@ namespace Oswald.UI
 
             if (Input.GetKeyDown(KeyCode.Escape))
             {
+                Debug.Log("Pressing escape! for player combos!");
                 // Display the player's currently equipped text.
-                PlayerAttack playerAttack = myHealth.GetComponent<PlayerAttack>();
-                string airCombo = playerAttack.MyWeapon.AirComboList;
-                string groundedCombo = playerAttack.MyWeapon.GroundedComboList;
-                _comboList.text = airCombo + "\n\n" + groundedCombo;
-                // Show combo UI - use this "!" for the bool display.
-                // Initial value is false - so reverse it means it will be true.
-                _isActive = !_isActive;     
-                _comboPanel.SetActive(_isActive);
+                //PlayerAttack playerAttack = myHealth.GetComponent<PlayerAttack>();
+                //string airCombo = playerAttack.MyWeapon.AirComboList;
+                //string groundedCombo = playerAttack.MyWeapon.GroundedComboList;
+                //_comboList.text = airCombo + "\n\n" + groundedCombo;
+                //// Show combo UI - use this "!" for the bool display.
+                //// Initial value is false - so reverse it means it will be true.
+                //_isActive = !_isActive;     
+                //_comboPanel.SetActive(_isActive);
             }
 
 

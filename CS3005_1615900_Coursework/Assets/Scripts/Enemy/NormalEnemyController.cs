@@ -242,7 +242,8 @@ namespace Oswald.Enemy
 
             // Displays the UI for taking damage.
             damageNumbers.IsCritical = criticalDamage;
-            damageNumbers.DamageText = Mathf.RoundToInt(damage).ToString();
+            //damageNumbers.DamageText = Mathf.RoundToInt(damage).ToString();
+            damageNumbers.DamageNumber += Mathf.RoundToInt(damage);
 
             if (attacker.tag.Equals("Player"))
             {
