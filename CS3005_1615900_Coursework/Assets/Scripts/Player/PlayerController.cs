@@ -107,6 +107,8 @@ namespace Oswald.Player
 
         #endregion Initialization
 
+        float fallingTime = 0f;
+
         #region Player Controls and Behaviour
         /// <summary>
         /// Contains the player frame by frame logic. i.e., movement, attacking, etc.
@@ -146,8 +148,25 @@ namespace Oswald.Player
             // Always change to the jump anim when we are not touching the ground
             if (!myColl2D.IsTouchingLayers(LayerMask.GetMask("Ground")))
             {
-                animatorController.ChangeAnimController(myJumpLevelAnimState);
-                isMidAir = true;
+                // To-do: need to add timer to stop it instantly going to the jump state, BUT this causes JUMP TO BE DELAYED TOO
+
+                // Need to have a state for falling! i.e., not touching ground!
+
+                // This still shows the jump state over time as this timer increases
+                fallingTime += Time.deltaTime;
+
+                //if (fallingTime > 1f)
+                //{
+                //    // Show falling state
+                //    animatorController.ChangeAnimController(myJumpLevelAnimState);
+                //    isMidAir = true;
+
+                //    fallingTime = 0;
+                //}
+
+
+                //animatorController.ChangeAnimController(myJumpLevelAnimState);
+                //isMidAir = true;
             }
             else
             {

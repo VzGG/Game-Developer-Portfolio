@@ -72,6 +72,8 @@ namespace Oswald.Manager
         int executionCounter = 0;
         void RecordTimeForLevel1_2_3()
         {
+            if (storyManager == null) { return; }
+
             executionCounter++;
             if (executionCounter == 1)
             {

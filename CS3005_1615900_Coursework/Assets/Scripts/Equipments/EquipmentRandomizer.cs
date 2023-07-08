@@ -17,9 +17,6 @@ public class EquipmentRandomizer : MonoBehaviour
     [SerializeField] private Equipment[] _spawnedEquipment;
     [SerializeField] private GameObject _prefabEquipment;
 
-    [SerializeField] bool isThereLegendary = false;
-    [SerializeField] GameObject legendaryEquipmentObj;
-
     private void Awake()
     {
         LoadSprites();

@@ -14,7 +14,7 @@ namespace Oswald.Enemy
     public abstract class EnemyController : MonoBehaviour
     {
 
-        [SerializeField] protected Canvas damageNumberCanvas;
+        //[SerializeField] protected Canvas damageNumberCanvas;
         [SerializeField] protected Animator anim;
         //[SerializeField] protected RuntimeAnimatorController deadAnimController;
         [SerializeField] protected AnimatorController animatorController;
@@ -41,6 +41,7 @@ namespace Oswald.Enemy
         [SerializeField] protected float currentAttackTime = 0f;        // Attack time counter used to as a timer for attacking at every intervals.
         [SerializeField] protected bool isAttacking = false;            // The attack status of the enemy, used to fully commit attacks even when it is hurt (hurt animation triggering).
         [SerializeField] protected float xScale = 0f;                   // Define this in the Editor, define differently for Gobli (0.6f), Skeleton (1f) and Boss.
+        [SerializeField] protected float yScale = 0f;                   // Define this in the Editor
 
         [SerializeField] protected EnemyMovement EnemyMovement;
 
@@ -70,16 +71,16 @@ namespace Oswald.Enemy
         /// Looks at the player when attacking
         /// </summary>
         /// <param name="xScale"></param>
-        protected void LookAtPlayer(float xScale)
+        protected void LookAtPlayer(float xScale, float yScale)
         {
             if (this.transform.position.x > target.GetTargets()[0].transform.position.x)
             {
-                transform.localScale = new Vector3(-xScale, transform.localScale.y, transform.localScale.y);
+                transform.localScale = new Vector3(-xScale, yScale, transform.localScale.y);
                 isFacingRight = false;
             }
             else if (this.transform.position.x < target.GetTargets()[0].transform.position.x)
             {
-                transform.localScale = new Vector3(xScale, transform.localScale.y, transform.localScale.y);
+                transform.localScale = new Vector3(xScale, yScale, transform.localScale.y);
                 isFacingRight = true;
             }
         }
@@ -110,11 +111,11 @@ namespace Oswald.Enemy
             {
                 if (isFacingRight)
                 {
-                    EnemyMovement.Move(rb2D, animatorController, 0.75f);
+                    EnemyMovement.Move(rb2D, animatorController, 0.75f, xScale);
                 }
                 else
                 {
-                    EnemyMovement.Move(rb2D, animatorController, -0.75f);
+                    EnemyMovement.Move(rb2D, animatorController, -0.75f, xScale);
                 }
 
             }

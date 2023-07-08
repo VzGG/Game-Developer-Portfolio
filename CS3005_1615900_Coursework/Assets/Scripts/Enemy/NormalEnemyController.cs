@@ -49,6 +49,7 @@ namespace Oswald.Enemy
         /// </summary>
         private void FixedUpdate()
         {
+            Debug.Log("Enemy xy scale: " + transform.localScale);
             this.enemyUI.UpdatePosition(this.transform.position);
             this.EnemyAI();
         }
@@ -154,7 +155,8 @@ namespace Oswald.Enemy
                 {
                     this.rb2D.velocity = new Vector2(-moveX, this.rb2D.velocity.y);
                     // Flip the enemy to the left - have to set to a value instead of transform.localscale.x to prevent flipping every frame.
-                    transform.localScale = new Vector3(-xScale, this.transform.localScale.y, this.transform.localScale.z);
+                    //transform.localScale = new Vector3(-xScale, this.transform.localScale.y, this.transform.localScale.z);
+                    transform.localScale = new Vector3(-xScale, yScale, this.transform.localScale.z);
                     isFacingRight = false;
                 }
                 //else if (this.transform.position.x < this.target.transform.position.x)
@@ -162,7 +164,8 @@ namespace Oswald.Enemy
                 {
                     // If player is on the right, move Gobli towards the right direction.
                     this.rb2D.velocity = new Vector2(moveX, this.rb2D.velocity.y);
-                    transform.localScale = new Vector3(xScale, this.transform.localScale.y, this.transform.localScale.z);
+                    //transform.localScale = new Vector3(xScale, this.transform.localScale.y, this.transform.localScale.z);
+                    transform.localScale = new Vector3(xScale, yScale, this.transform.localScale.z);
                     isFacingRight = true;
                 }
             }
@@ -175,7 +178,8 @@ namespace Oswald.Enemy
                 if (currentAttackTime >= attackRate && !isAttacking)
                 {
                     isAttacking = true;
-                    LookAtPlayer(this.xScale);
+                    //LookAtPlayer(this.xScale);
+                    LookAtPlayer(this.xScale, this.yScale);
                     // Then attack
                     anim.SetTrigger("isAttacking");
 

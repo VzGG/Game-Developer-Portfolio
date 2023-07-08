@@ -184,6 +184,7 @@ GameObject:
   - component: {fileID: 3618418565558930303}
   - component: {fileID: 2249322409310421505}
   - component: {fileID: 5702924102155043258}
+  - component: {fileID: 3551224811410635126}
   m_Layer: 9
   m_Name: Character
   m_TagString: Player
@@ -468,6 +469,9 @@ MonoBehaviour:
   skills:
   - {fileID: 0}
   - {fileID: 0}
+  animator: {fileID: 9057973526240010893}
+  _canCritical: 0
+  _criticalChance: 0
 --- !u!114 &9057973526240010888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -489,6 +493,7 @@ MonoBehaviour:
   originalColor: {r: 1, g: 1, b: 1, a: 1}
   hurtColor: {r: 1, g: 0, b: 0, a: 1}
   hurtDuration: 0.5
+  _evasionRate: 0
   evadeColor: {r: 0.6415094, g: 0.6415094, b: 0.6415094, a: 0.59607846}
   evadeDuration: 0.1
   isBoss: 0
@@ -555,12 +560,23 @@ MonoBehaviour:
     DEF: 0
     ENRGN: 5
     ATKSPD: 1
+    HPPercent: 100
+    ENPercent: 100
+    ATKPercent: 100
+    DEFPercent: 100
+    ENRGNPercent: 100
+    ATKSPDPercent: 100
+    HealthRegen: 0
+    DamageReduction: 0
+    CriticalChance: 0
+    CriticalDamage: 1
+    EvasionRate: 0
   animatorController: {fileID: 3618418565558930303}
   timeManager: {fileID: 0}
   myColl2D: {fileID: 9057973526240010891}
   isMidAir: 0
-  myJumpLevelAnimState: 0
-  material2D: {fileID: 0}
+  myJumpLevelAnimState: 2
+  material2D: {fileID: 6200000, guid: 85aab4ea5265a6e41b093118b49976fb, type: 2}
 --- !u!114 &3618418565558930303
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -611,3 +627,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13319aae0e52e6f41a424e74137a627e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _MaxArmour: 0
+  _armour: 0
+  _damageReduction: 0
+--- !u!114 &3551224811410635126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9057973526240010880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81be7265b8e7a4a4582af9d1e1e3e622, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myEquipment: []

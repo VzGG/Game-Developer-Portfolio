@@ -55,7 +55,6 @@ namespace Oswald.Player
         #region My stats
 
         public Animator animator;
-        public Animation anim;
 
         private const float _baseAttackSpeed = 100f;
         private float _attackSpeed = 100f;

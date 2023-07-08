@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1819608761308734431
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1819608761308734416}
+  - component: {fileID: 1819608761308734417}
+  m_Layer: 0
+  m_Name: EquipmentRandomzier
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1819608761308734416
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1819608761308734431}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1819608761308734417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1819608761308734431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a0dd461c05dcc945922404797ca28fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  helmetSprites:
+  - {fileID: 3162567876823930883, guid: 2f0c3fced6b7bfc4fb85447f11039b25, type: 3}
+  - {fileID: 4591095995056961379, guid: 2f0c3fced6b7bfc4fb85447f11039b25, type: 3}
+  - {fileID: 1930365335857138742, guid: 2f0c3fced6b7bfc4fb85447f11039b25, type: 3}
+  - {fileID: 2036035021129622761, guid: 2f0c3fced6b7bfc4fb85447f11039b25, type: 3}
+  plateSprites:
+  - {fileID: -347525013461943914, guid: 2f0c3fced6b7bfc4fb85447f11039b25, type: 3}
+  - {fileID: -4994327948959105598, guid: 2f0c3fced6b7bfc4fb85447f11039b25, type: 3}
+  - {fileID: 8333120456735060383, guid: 2f0c3fced6b7bfc4fb85447f11039b25, type: 3}
+  - {fileID: -9177468656427087523, guid: 2f0c3fced6b7bfc4fb85447f11039b25, type: 3}
+  gloveSprites:
+  - {fileID: -6571062494500539849, guid: 2f0c3fced6b7bfc4fb85447f11039b25, type: 3}
+  - {fileID: 6138378969696141571, guid: 2f0c3fced6b7bfc4fb85447f11039b25, type: 3}
+  - {fileID: -4293383407698819790, guid: 2f0c3fced6b7bfc4fb85447f11039b25, type: 3}
+  - {fileID: 3350420768382118562, guid: 2f0c3fced6b7bfc4fb85447f11039b25, type: 3}
+  bootSprites:
+  - {fileID: 6884699132681556930, guid: 2f0c3fced6b7bfc4fb85447f11039b25, type: 3}
+  - {fileID: 7189775407310231179, guid: 2f0c3fced6b7bfc4fb85447f11039b25, type: 3}
+  - {fileID: 6482953682450307093, guid: 2f0c3fced6b7bfc4fb85447f11039b25, type: 3}
+  - {fileID: 1438219111659547533, guid: 2f0c3fced6b7bfc4fb85447f11039b25, type: 3}
+  accessorySprites:
+  - {fileID: -5391477449805069460, guid: 2f0c3fced6b7bfc4fb85447f11039b25, type: 3}
+  - {fileID: 1949526560958714085, guid: 2f0c3fced6b7bfc4fb85447f11039b25, type: 3}
+  - {fileID: 1537835575722628517, guid: 2f0c3fced6b7bfc4fb85447f11039b25, type: 3}
+  - {fileID: 7387516690597139808, guid: 2f0c3fced6b7bfc4fb85447f11039b25, type: 3}
+  _presetSprites: []
+  _spawnedEquipment: []
+  _prefabEquipment: {fileID: 9030490782143457951, guid: 8a0f6b5fece50c642a52166a8da6b05b, type: 3}
