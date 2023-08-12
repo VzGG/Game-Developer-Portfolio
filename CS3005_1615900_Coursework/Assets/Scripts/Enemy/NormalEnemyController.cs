@@ -49,7 +49,7 @@ namespace Oswald.Enemy
         /// </summary>
         private void FixedUpdate()
         {
-            Debug.Log("Enemy xy scale: " + transform.localScale);
+            //Debug.Log("Enemy xy scale: " + transform.localScale);
             this.enemyUI.UpdatePosition(this.transform.position);
             this.EnemyAI();
         }
@@ -57,6 +57,7 @@ namespace Oswald.Enemy
 
         [SerializeField] float time = 0f;
         [SerializeField] bool isStartWait = false;
+
         /// <summary>
         /// The enemy's AI behaviour. There are 2 states; (1) the enemy patrols and idles around the platform/stage; (2) enemy moves towards the player and attack.
         /// </summary>

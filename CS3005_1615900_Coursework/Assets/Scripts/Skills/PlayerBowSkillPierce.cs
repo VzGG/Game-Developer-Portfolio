@@ -24,7 +24,7 @@ public class PlayerBowSkillPierce : Skill
 
         yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("Player_Bow_Attack") == true);
 
-        if (playerController.isMidAir)
+        if (playerController._isMidAir)
             rb2d.velocity = new Vector2(rb2d.velocity.x, 3.5f);
 
         playerAttack.localOnHit = ArrowProjectile.OnHitEffect.Pierce;
@@ -36,13 +36,13 @@ public class PlayerBowSkillPierce : Skill
 
         yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("Player_Bow_Attack 0") == true);
 
-        if (playerController.isMidAir)
+        if (playerController._isMidAir)
             rb2d.velocity = new Vector2(rb2d.velocity.x, 3.5f);
         playerAttack.skillDamage = this.Damage[1];
 
         yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("Player_Bow_Attack 1") == true);
 
-        if (playerController.isMidAir)
+        if (playerController._isMidAir)
             rb2d.velocity = new Vector2(rb2d.velocity.x, 3.5f);
         playerAttack.skillDamage = this.Damage[2];
 

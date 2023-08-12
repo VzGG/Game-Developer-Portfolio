@@ -124,7 +124,7 @@ public class Equipment : MonoBehaviour, IInteractableEnvironment
 
             // Set player's reference to this IInteractable
             Oswald.Player.PlayerController player = collision.gameObject.GetComponent<Oswald.Player.PlayerController>();
-            player.interactableEnvironment = this;
+            player.InteractableEnvironment = this;
         }
     }
 
@@ -136,7 +136,7 @@ public class Equipment : MonoBehaviour, IInteractableEnvironment
 
             // Remove reference so we cannot use the interaction method
             Oswald.Player.PlayerController player = collision.gameObject.GetComponent<Oswald.Player.PlayerController>();
-            player.interactableEnvironment = null;
+            player.InteractableEnvironment = null;
         }
     }
 

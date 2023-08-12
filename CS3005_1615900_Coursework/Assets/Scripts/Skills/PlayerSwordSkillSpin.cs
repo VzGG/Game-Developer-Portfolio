@@ -42,21 +42,21 @@ public class PlayerSwordSkillSpin : Skill
         // Wait for anim 1 to enter state. See animator tab.
         yield return new WaitUntil(() => animatorController.GetAnimator().GetCurrentAnimatorStateInfo(0).IsName("Player_Sword_Attack_3") == true);
 
-        if (playerController.isMidAir)
+        if (playerController._isMidAir)
             rb2d.velocity = new Vector2(rb2d.velocity.x, 3f);
         playerAttack.skillDamage = this.Damage[0];
 
         // Wait for anim 2 to enter state. See animator tab.
         yield return new WaitUntil(() => animatorController.GetAnimator().GetCurrentAnimatorStateInfo(0).IsName("Player_Sword_Attack_3 0") == true);
 
-        if (playerController.isMidAir)
+        if (playerController._isMidAir)
             rb2d.velocity = new Vector2(rb2d.velocity.x, 3f);
         playerAttack.skillDamage = this.Damage[1];
 
         // Wait for anim 3 to enter state. See animator tab.
         yield return new WaitUntil(() => animatorController.GetAnimator().GetCurrentAnimatorStateInfo(0).IsName("Player_Sword_Attack_3 1") == true);
 
-        if (playerController.isMidAir)
+        if (playerController._isMidAir)
             rb2d.velocity = new Vector2(rb2d.velocity.x, 3f);
         playerAttack.skillDamage = this.Damage[2];
 

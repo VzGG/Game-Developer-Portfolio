@@ -14,12 +14,17 @@ public class Energy : MonoBehaviour
     [SerializeField] float time = 0f;
     [SerializeField] float regenWaitTime = 3f;
     [SerializeField] bool isStartWait = false;
+
+    #region Getter Setter
     public float GetEnergy() { return this.energy; }
     public float GetEnergyPercentage() { return energy / maxEnergy; }
     public float GetMaxEnergy() { return this.maxEnergy; }
     public void SetEnergy(float energy) { this.energy = energy; }
     public void SetMaxEnergy(float maxEnergy) { this.maxEnergy = maxEnergy; }
     public void SetEnergyRegen(float energyRegen) { this.energyRegeneration = energyRegen; }
+    #endregion
+
+    public bool HasEnergy() { return this.energy > 0f; }
     public void UseEnergy(float energy) 
     {
         isEnergyBeingUsed = true;

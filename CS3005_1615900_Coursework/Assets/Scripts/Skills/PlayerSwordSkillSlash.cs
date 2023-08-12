@@ -27,7 +27,7 @@ public class PlayerSwordSkillSlash : Skill
         // Don't run below until the animation state is at the first one
         yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("Player_Sword_Attack_2") == true);
 
-        if (playerController.isMidAir)
+        if (playerController._isMidAir)
             rb2d.velocity = new Vector2(rb2d.velocity.x, 3f);
 
         playerAttack.skillDamage = this.Damage[0];
@@ -39,7 +39,7 @@ public class PlayerSwordSkillSlash : Skill
         // Wait for second animation state to enter.
         yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("Player_Sword_Attack_1 0") == true);
 
-        if (playerController.isMidAir)
+        if (playerController._isMidAir)
             rb2d.velocity = new Vector2(rb2d.velocity.x, 3f);
 
         playerAttack.skillDamage = this.Damage[1];

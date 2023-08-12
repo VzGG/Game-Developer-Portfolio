@@ -27,8 +27,12 @@ public class AnimatorController : MonoBehaviour
         SkillSwordSpinLv1
     }
 
+    private AnimStates currentAnimState;
+
     public void ChangeAnimController(AnimStates animStates)
     {
+        currentAnimState = animStates;
+
         int index = ((int)animStates);
         RuntimeAnimatorController chosenAnimController = animControllers[index];
 
@@ -43,6 +47,11 @@ public class AnimatorController : MonoBehaviour
     public void ChangeAnimationBool(string animParameter, bool status)
     {
         animator.SetBool(animParameter, status);
+    }
+
+    public AnimStates GetCurrentAnimState()
+    {
+        return currentAnimState;
     }
 
     public Animator GetAnimator() { return this.animator; }

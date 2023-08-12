@@ -25,7 +25,7 @@ public class PlayerBowSkillNoPierce : Skill
         // The yield returns below are used like async and await functions.
         yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("Player_Bow_Attack") == true);
         // After entering the first bow attack animation state, change all projectile attacks to non piercing attacks.
-        if (playerController.isMidAir)
+        if (playerController._isMidAir)
             rb2d.velocity = new Vector2(rb2d.velocity.x, 3.5f);
 
         playerAttack.localOnHit = ArrowProjectile.OnHitEffect.NoPierce;
@@ -35,12 +35,12 @@ public class PlayerBowSkillNoPierce : Skill
 
         yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("Player_Bow_Attack 1") == true);
 
-        if (playerController.isMidAir)
+        if (playerController._isMidAir)
             rb2d.velocity = new Vector2(rb2d.velocity.x, 3.5f);
 
         yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("Player_Bow_Attack 0") == true);
 
-        if (playerController.isMidAir)
+        if (playerController._isMidAir)
             rb2d.velocity = new Vector2(rb2d.velocity.x, 3.5f);
 
         // End of last animation. 

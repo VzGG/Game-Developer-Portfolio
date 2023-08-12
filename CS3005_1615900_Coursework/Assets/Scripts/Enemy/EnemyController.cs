@@ -13,7 +13,6 @@ namespace Oswald.Enemy
     /// </summary>
     public abstract class EnemyController : MonoBehaviour
     {
-
         //[SerializeField] protected Canvas damageNumberCanvas;
         [SerializeField] protected Animator anim;
         //[SerializeField] protected RuntimeAnimatorController deadAnimController;

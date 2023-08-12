@@ -3084,6 +3084,49 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &138772030
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 138772032}
+  - component: {fileID: 138772031}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &138772031
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 138772030}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 378be54c668285b40af688c563fc4a0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &138772032
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 138772030}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.3536137, y: 0.32857597, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &175474836
 GameObject:
   m_ObjectHideFlags: 0
@@ -41098,7 +41141,7 @@ PrefabInstance:
     - target: {fileID: 2477244563795348160, guid: 1beecad5cc425d3409d43734b322e8b1, type: 3}
       propertyPath: m_Icon
       value: 
-      objectReference: {fileID: 2800000, guid: 71ebafeef3c03457483266a33ab2b270, type: 3}
+      objectReference: {fileID: 6519382022992737161, guid: 0000000000000000d000000000000000, type: 0}
     - target: {fileID: 2477244563795348160, guid: 1beecad5cc425d3409d43734b322e8b1, type: 3}
       propertyPath: m_Name
       value: DialogueSpot
@@ -43458,6 +43501,10 @@ PrefabInstance:
       propertyPath: timeManager
       value: 
       objectReference: {fileID: 1759904286}
+    - target: {fileID: 6237933760249786851, guid: f31553829344fdb42a7c78ff689e1630, type: 3}
+      propertyPath: _timeManager
+      value: 
+      objectReference: {fileID: 1759904286}
     - target: {fileID: 9057973526240010880, guid: f31553829344fdb42a7c78ff689e1630, type: 3}
       propertyPath: m_Name
       value: Character
@@ -43486,10 +43533,14 @@ PrefabInstance:
       propertyPath: timeManager
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 9057973526240010891, guid: f31553829344fdb42a7c78ff689e1630, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9057973526240010893, guid: f31553829344fdb42a7c78ff689e1630, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: a3bc2370998ad6b4ca569280580cf327, type: 2}
+      objectReference: {fileID: 9100000, guid: ed0ba4db53feaf04ba06153ec299af2f, type: 2}
     - target: {fileID: 9057973526240010894, guid: f31553829344fdb42a7c78ff689e1630, type: 3}
       propertyPath: m_RootOrder
       value: 2

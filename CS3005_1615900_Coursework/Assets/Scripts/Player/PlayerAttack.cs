@@ -128,6 +128,8 @@ namespace Oswald.Player
         public float GetMyDamage() { return myDamage; }
         public void SetHasBow(bool status) { this.hasBow = status; }
         public BoxCollider2D GetMyHitBox() { return this.myHitBox; }
+        public Skill GetFirstSkill() { return skills[0]; }
+        public Skill GetSecondSkill() { return skills[1]; }
 
         #endregion
 
@@ -262,6 +264,10 @@ namespace Oswald.Player
             StartCoroutine(skills[skillSlot].Effect(animatorController));
         }
 
+        public void SkillAttack(AnimatorController animatorController, Skill skill)
+        {
+            StartCoroutine(skill.Effect(animatorController));
+        }
         #endregion
 
         #region Called in the Animator's Animation Event - specifically the sword attack and bow attack animations
