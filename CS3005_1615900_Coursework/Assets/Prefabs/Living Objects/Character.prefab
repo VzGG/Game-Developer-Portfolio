@@ -575,8 +575,8 @@ MonoBehaviour:
   _timeManager: {fileID: 0}
   _myColl2D: {fileID: 9057973526240010891}
   _isMidAir: 0
-  _myJumpLevelAnimState: 0
-  _material2D: {fileID: 0}
+  _myJumpLevelAnimState: 2
+  _material2D: {fileID: 6200000, guid: 85aab4ea5265a6e41b093118b49976fb, type: 2}
 --- !u!114 &3618418565558930303
 MonoBehaviour:
   m_ObjectHideFlags: 0

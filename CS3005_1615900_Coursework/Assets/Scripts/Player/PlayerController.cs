@@ -14,7 +14,7 @@ namespace Oswald.Player
     {
         #region Fields
 
-        [SerializeField] MyStat characterStat;
+        [SerializeField] private MyStat _characterStat;
 
         // Reference
         private PlayerAttack _myAttack;
@@ -23,21 +23,19 @@ namespace Oswald.Player
         private Energy _myEnergy;
         private Armour _myArmour;
         private Target _myTarget;
-        [SerializeField] private AnimatorController _animatorController;             // The animator controller handler. Pass this around other components to change animation/controller.
-        [SerializeField] private TimeManager _timeManager;                           // Set this value in the editor for each level.
-        [SerializeField] private Collider2D _myColl2D;                               // Set in the inspector.
-        private Rigidbody2D _rb2d;                                                   // Initialize at the start of player creation.
-        private SpriteRenderer _spriteRenderer;                              // The sprite is what the player looks like.
+        [SerializeField] private AnimatorController _animatorController;            // The animator controller handler. Pass this around other components to change animation/controller.
+        [SerializeField] private TimeManager _timeManager;                          // Set this value in the editor for each level.
+        [SerializeField] private Collider2D _myColl2D;                              // Set in the inspector.
+        private Rigidbody2D _rb2d;                                                  // Initialize at the start of player creation.
+        private SpriteRenderer _spriteRenderer;                                     // The sprite is what the player looks like.
                                                                             
-        private bool _isUsingActionAnim = false;                             // The players main action status used to only have 1 action at a time and without any action buffers.
+        private bool _isUsingActionAnim = false;                                    // The players main action status used to only have 1 action at a time and without any action buffers.
         public bool _isMidAir = false;                                              // Used to determine whether the player changes animation jump animation or idle animation.
-        private bool _isJumpAttack3 = false;                                         // Used to determine whether the player uses the final jump attack and lands on the ground.
-        private bool _isNextAttackBow = false;                                       // Determine whether the player, mid air, can attack with bow next.
-        private bool _isNextAttackSword = false;                                     // Determine whether the player, mid air, can attack with sword next.
+        private bool _isJumpAttack3 = false;                                        // Used to determine whether the player uses the final jump attack and lands on the ground.
+        private bool _isNextAttackBow = false;                                      // Determine whether the player, mid air, can attack with bow next.
+        private bool _isNextAttackSword = false;                                    // Determine whether the player, mid air, can attack with sword next.
         private bool _disableAttack = false;
 
-        //int skillSlot1 = 0;
-        //int skillSlot2 = 1;
         private MyEquipment _characterEquipment;
         public IInteractableEnvironment InteractableEnvironment;
         [SerializeField] private AnimatorController.AnimStates _myJumpLevelAnimState;
@@ -69,7 +67,7 @@ namespace Oswald.Player
 
         #region Character Stat methods
 
-        public MyStat GetMyStat() { return characterStat; }
+        public MyStat GetMyStat() { return _characterStat; }
         public MyEquipment GetMyEquipment() { return _characterEquipment; }
         public Health GetHealth() { return this._myHealth; }
         public Energy GetEnergy() { return this._myEnergy; }
@@ -81,10 +79,7 @@ namespace Oswald.Player
 
         public void SetTimeManager(TimeManager timeManager) { this._timeManager = timeManager; }     // Set this to the timeManager we have at each level, because this gets missing at the end of each level w/o it
         public PlayerAttack GetPlayerAttack() { return this._myAttack; }
-        public void SetIsMidAir(bool isMidAir)
-        {
-            this._isMidAir = isMidAir;
-        }
+        public void SetIsMidAir(bool isMidAir) { this._isMidAir = isMidAir; }
 
         #endregion
 
@@ -116,7 +111,7 @@ namespace Oswald.Player
             // Get equipment stats
             // Apply stats
 
-            characterStat = new MyStat();
+            _characterStat = new MyStat();
             _characterEquipment = GetComponent<MyEquipment>();
 
             _myAttack = GetComponent<PlayerAttack>();
@@ -140,17 +135,18 @@ namespace Oswald.Player
         /// </summary>
         private void PlayerBehaviour()
         {
-            if (_myHealth.GetHealth() <= 0f) { return; }         // Stops any logic below when player dies
-            if (_timeManager == null) { return; }                // Stop null reference error
-            if (_timeManager.GetIsTimeStopped()) { return; }     // Pause time should stop any action and physics movement - https://gamedevbeginner.com/the-right-way-to-pause-the-game-in-unity/#exclude_objects_from_pause
+            if (_myHealth.GetHealth() <= 0f) { return; }            // Stops any logic below when player dies
+            if (_timeManager == null) { return; }                   // Stop null reference error
+            if (_timeManager.GetIsTimeStopped()) { return; }        // Pause time should stop any action and physics movement - https://gamedevbeginner.com/the-right-way-to-pause-the-game-in-unity/#exclude_objects_from_pause
 
 
-            _myEnergy.EnergyRegen();                             // Always regenerate my energy
-            _myAttack.MyTargets = _myTarget.GetTargets();         // Update your player attack's local target.
+            _myEnergy.EnergyRegen();                                // Always regenerate my energy
+            _myAttack.MyTargets = _myTarget.GetTargets();           // Update your player attack's local target.
 
 
-            _myHealth.HealthRegeneration();                             // Does not regen if you don't have the legendary helmet
+            _myHealth.HealthRegeneration();                         // Does not regen if you don't have the legendary helmet
 
+            Debug.Log($"isMidAir: {_isMidAir}");
             // For interactable environment
             if (_interact)
             {
@@ -161,8 +157,6 @@ namespace Oswald.Player
                 }
             }
 
-
-            //if (myAttack.skills[0].GetActivateSkill() == true || myAttack.skills[1].GetActivateSkill() == true)
             if (_myAttack.GetFirstSkill().GetActivateSkill() == true || _myAttack.GetSecondSkill().GetActivateSkill() == true)
             {
                 return;
@@ -209,16 +203,12 @@ namespace Oswald.Player
                 _myMovement.Jump(_rb2d, _myEnergy, _animatorController, _myJumpLevelAnimState);
                 SetIsMidAir(true);
             }
-            //else if (_skill1 && myAttack.skills[skillSlot1].GetCanActivateSkill())
             else if (_skill1 && _myAttack.GetFirstSkill().GetCanActivateSkill())
             {
-                //myAttack.SkillAttack(animatorController, skillSlot1);
                 _myAttack.SkillAttack(_animatorController, _myAttack.GetFirstSkill());
             }
-            //else if (_skill2 && myAttack.skills[skillSlot2].GetCanActivateSkill())
             else if (_skill2 && _myAttack.GetSecondSkill().GetCanActivateSkill())
             {
-                //myAttack.SkillAttack(animatorController, skillSlot2);
                 _myAttack.SkillAttack(_animatorController, _myAttack.GetSecondSkill());
             }
         }
@@ -263,9 +253,8 @@ namespace Oswald.Player
                     // Otherwise if we just landed, go straight to the idle animation.
                     _animatorController.ChangeAnimController(AnimatorController.AnimStates.Main);
                     _myAttack.UpdateAttackAnimationSpeed();
-
-                    SetIsMidAir(false);
                 }
+                SetIsMidAir(false);
             }
 
             if (collision.gameObject.layer == LayerMask.NameToLayer("EnemyProjectile") && collision.gameObject.tag == "EnemyProjectile")
