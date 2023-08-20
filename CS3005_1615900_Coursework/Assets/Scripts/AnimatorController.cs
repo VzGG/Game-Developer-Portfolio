@@ -24,7 +24,8 @@ public class AnimatorController : MonoBehaviour
         JumpLv3,
         SkillBowPierceLv1,
         SkillBowNoPierceLv1,
-        SkillSwordSpinLv1
+        SkillSwordSpinLv1,
+        SkillSwordSlashLv1
     }
 
     private AnimStates currentAnimState;

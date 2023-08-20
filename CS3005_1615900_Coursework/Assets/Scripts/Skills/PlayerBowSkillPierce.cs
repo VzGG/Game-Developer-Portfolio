@@ -11,16 +11,32 @@ public class PlayerBowSkillPierce : Skill
     public override IEnumerator Effect(AnimatorController animatorController)
     {
         // Show animation of the skill.
-        Debug.Log("Activate pierce skill");
-        this.ActivateSkill = true;
+        yield return StartCoroutine(ChangeSkillAnimation(animatorController));
+
         PlayerController playerController = animatorController.GetComponent<PlayerController>();
-        PlayerAttack playerAttack = playerController.GetPlayerAttack();
-        Rigidbody2D rb2d = playerController.GetComponent<Rigidbody2D>();
-        //PlayerAttack playerAttack = animatorController.GetComponent<PlayerController>().GetPlayerAttack();
-        Animator animator = animatorController.GetComponent<Animator>();
-        animator.runtimeAnimatorController = this.runtimeAnimatorController;
-        animator.SetTrigger(this.AnimParameter);
-        this.CanActivateSkill = false;
+
+        yield return StartCoroutine(BeforeEffect(playerController));
+
+        yield return StartCoroutine(ApplyEffect(playerController));
+
+        yield return StartCoroutine(RevertEffect(playerController));
+
+        yield return StartCoroutine(ActivateCooldown());
+
+        Debug.Log("Can now activate skill again");
+        this.CanActivateSkill = true;
+    }
+
+    protected override IEnumerator BeforeEffect(PlayerController playerController)
+    {
+        yield return null;
+    }
+
+    protected override IEnumerator ApplyEffect(PlayerController playerController)
+    {
+        var animator = playerController.GetAnimatorController().GetAnimator();
+        var rb2d = playerController.GetComponent<Rigidbody2D>();
+        var playerAttack = playerController.GetPlayerAttack();
 
         yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("Player_Bow_Attack") == true);
 
@@ -51,6 +67,12 @@ public class PlayerBowSkillPierce : Skill
         yield return new WaitWhile(() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime <= 1.0f &&
         animator.GetCurrentAnimatorStateInfo(0).IsName("Player_Bow_Attack 1") == true);
         Debug.Log("Skill pierece finished");
+    }
+
+    protected override IEnumerator RevertEffect(PlayerController playerController)
+    {
+        var playerAttack = playerController.GetPlayerAttack();
+        var animatorController = playerController.GetAnimatorController();
 
         playerAttack.skillDamage = 0;
         playerAttack.SkillEnergy = 0;
@@ -59,21 +81,12 @@ public class PlayerBowSkillPierce : Skill
 
         this.ActivateSkill = false;
 
+        // Change the animation back
+        if (playerController._isMidAir)
+            animatorController.ChangeAnimController(playerController.GetJumpLevelAnimState());
+        else
+            animatorController.ChangeAnimController(AnimatorController.AnimStates.Main);
 
-        // Ensure that this skill can only be activated when there is no more cooldown.
-        bool onCooldown = true;
-        float interval = 0.01f;
-        while (onCooldown)
-        {
-            yield return new WaitForSeconds(interval);
-            Timer += interval;
-            if (Timer >= Cooldown)
-            {
-                Timer = 0f;
-                onCooldown = false;
-            }
-        }
-        Debug.Log("Can now activate skill again");
-        this.CanActivateSkill = true;
+        yield return null;
     }
 }

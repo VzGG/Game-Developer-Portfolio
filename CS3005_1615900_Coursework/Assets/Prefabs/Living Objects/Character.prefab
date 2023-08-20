@@ -553,13 +553,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3afd3f9eb853f4479d2521449199e48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterStat:
+  _characterStat:
     HP: 100
     EN: 100
     ATK: 5
     DEF: 0
     ENRGN: 5
-    ATKSPD: 1
+    ATKSPD: 100
     HPPercent: 100
     ENPercent: 100
     ATKPercent: 100
@@ -599,6 +599,7 @@ MonoBehaviour:
   - {fileID: 9100000, guid: 1ce2ad2edcd41f94e96b80f8222b816e, type: 2}
   - {fileID: 9100000, guid: 7f1c4de1cbd6c404c959a291a22b3f8c, type: 2}
   - {fileID: 9100000, guid: 1264d688fd8c9bf47b9d6377ac726778, type: 2}
+  - {fileID: 9100000, guid: 80c4186b62d492146b580e6f0e6034d9, type: 2}
 --- !u!114 &2249322409310421505
 MonoBehaviour:
   m_ObjectHideFlags: 0

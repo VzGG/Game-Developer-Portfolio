@@ -35,6 +35,7 @@ namespace Oswald.Player
         private bool _isNextAttackBow = false;                                      // Determine whether the player, mid air, can attack with bow next.
         private bool _isNextAttackSword = false;                                    // Determine whether the player, mid air, can attack with sword next.
         private bool _disableAttack = false;
+        private string animParamName = "isRunning";
 
         private MyEquipment _characterEquipment;
         public IInteractableEnvironment InteractableEnvironment;
@@ -80,6 +81,8 @@ namespace Oswald.Player
         public void SetTimeManager(TimeManager timeManager) { this._timeManager = timeManager; }     // Set this to the timeManager we have at each level, because this gets missing at the end of each level w/o it
         public PlayerAttack GetPlayerAttack() { return this._myAttack; }
         public void SetIsMidAir(bool isMidAir) { this._isMidAir = isMidAir; }
+        public AnimatorController.AnimStates GetJumpLevelAnimState() { return _myJumpLevelAnimState; }
+        public AnimatorController GetAnimatorController() { return this._animatorController; }
 
         #endregion
 
@@ -146,7 +149,7 @@ namespace Oswald.Player
 
             _myHealth.HealthRegeneration();                         // Does not regen if you don't have the legendary helmet
 
-            Debug.Log($"isMidAir: {_isMidAir}");
+            //Debug.Log($"isMidAir: {_isMidAir}");
             // For interactable environment
             if (_interact)
             {
@@ -156,9 +159,11 @@ namespace Oswald.Player
                     InteractableEnvironment.Interaction(this);
                 }
             }
+            
 
             if (_myAttack.GetFirstSkill().GetActivateSkill() == true || _myAttack.GetSecondSkill().GetActivateSkill() == true)
             {
+                //Debug.Log("Skill has been activated, cannot proceed with any other actions");
                 return;
             }
 
@@ -185,8 +190,14 @@ namespace Oswald.Player
             if (_myMovement.GetIsSliding()) { return; }
 
 
+            // Stops debug log warning from happening
+            if (_isMidAir)
+                animParamName = string.Empty;
+            else
+                animParamName = "isRunning";
+
             // Get A/D or LEFT/RIGHT arrow keys which gives a value between -1 and 1 for moving left or right.
-            _myMovement.Move(_rb2d, _animatorController, _moveX);
+            _myMovement.Move(_rb2d, _animatorController, _moveX, animParamName);
 
 
             // Cannot do any action based when the player does not have any energy.
@@ -239,7 +250,8 @@ namespace Oswald.Player
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
-            if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
+            //if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
+            if (collision.gameObject.layer == LayerMask.NameToLayer("Ground") && collision.GetContact(0).otherCollider.name.Equals(_myColl2D.gameObject.name))
             {
                 Debug.Log("Touched ground");
                 // During mid jump attack 3 animation and landed on the ground, show the landed attack animation.
@@ -247,6 +259,10 @@ namespace Oswald.Player
                 {
                     // This is from a different animation controller - mostly still in Jump controller
                     _animatorController.ChangeAnimationTrigger("isLanded");
+                }
+                else if (_myAttack.GetFirstSkill().GetActivateSkill() == true || _myAttack.GetSecondSkill().GetActivateSkill() == true)
+                {
+                    Debug.Log("skill is activated, don't change to any states");
                 }
                 else
                 {

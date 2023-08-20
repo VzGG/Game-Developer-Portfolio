@@ -13,20 +13,27 @@ public class PlayerSwordSkillSpin : Skill
     public override IEnumerator Effect(AnimatorController animatorController)
     {
         // Show animation for the skill.
-        this.ActivateSkill = true;
-        animatorController.ChangeAnimController(AnimStates);
-        animatorController.ChangeAnimationTrigger(AnimParameter);
-        this.CanActivateSkill = false;
+        yield return StartCoroutine(ChangeSkillAnimation(animatorController));
 
         PlayerController playerController = animatorController.GetComponent<PlayerController>();
-        PlayerAttack playerAttack = playerController.GetPlayerAttack();
-        //PlayerAttack playerAttack = animatorController.GetComponent<PlayerController>().GetPlayerAttack();
 
-        Rigidbody2D rb2d = playerController.GetComponent<Rigidbody2D>();
-        // Update skill energy that is used to reduce the current energy.
-        playerAttack.SkillEnergy = this.EnergyUsage;
+        yield return StartCoroutine(BeforeEffect(playerController));
 
-        // Make search target box bigger - Search Target GameObject.
+        yield return StartCoroutine(ApplyEffect(playerController));
+
+        yield return StartCoroutine(RevertEffect(playerController));
+
+        yield return StartCoroutine(ActivateCooldown());
+
+        Debug.Log("Can now activate skill again");
+        this.CanActivateSkill = true;
+    }
+
+    protected override IEnumerator BeforeEffect(PlayerController playerController)
+    {
+        var animatorController = playerController.GetAnimatorController();
+        var playerAttack = playerController.GetPlayerAttack();
+
         BoxCollider2D targetBoxCollider2D = animatorController.GetComponent<Target>().GetBoxCollider2D();
         targetBoxCollider2D.size = new Vector2(_sizeIncrease.x, targetBoxCollider2D.size.y);
         targetBoxCollider2D.offset = _offset;
@@ -39,7 +46,15 @@ public class PlayerSwordSkillSpin : Skill
         // Change the push back to the reverse pushback.
         playerAttack.localFirstPushback = _skillPushback;
 
-        // Wait for anim 1 to enter state. See animator tab.
+        yield return null;
+    }
+
+    protected override IEnumerator ApplyEffect(PlayerController playerController)
+    {
+        var rb2d = playerController.GetComponent<Rigidbody2D>();
+        var playerAttack = playerController.GetPlayerAttack();
+        var animatorController = playerController.GetAnimatorController();
+
         yield return new WaitUntil(() => animatorController.GetAnimator().GetCurrentAnimatorStateInfo(0).IsName("Player_Sword_Attack_3") == true);
 
         if (playerController._isMidAir)
@@ -60,14 +75,19 @@ public class PlayerSwordSkillSpin : Skill
             rb2d.velocity = new Vector2(rb2d.velocity.x, 3f);
         playerAttack.skillDamage = this.Damage[2];
 
-        // Wait until the activate skill is of this skills is false, then run everything below.
-        //yield return new WaitWhile(() => this.ActivateSkill == true);
-
         // Wait until it is the final animation and the final animation finished.
         yield return new WaitWhile(() =>
         animatorController.GetAnimator().GetCurrentAnimatorStateInfo(0).normalizedTime <= 1.0f &&
         animatorController.GetAnimator().GetCurrentAnimatorStateInfo(0).IsName("Player_Sword_Attack_3 1") == true);
         Debug.Log("Skill animation just finished. Wait for cooldown to finish before activating skill.".ToUpper());
+    }
+
+    protected override IEnumerator RevertEffect(PlayerController playerController)
+    {
+        var playerAttack = playerController.GetPlayerAttack();
+        var boxCollider2D = playerAttack.GetMyHitBox();
+        var targetBoxCollider2D = playerController.GetAnimatorController().GetComponent<Target>().GetBoxCollider2D();
+        var animatorController = playerController.GetAnimatorController();
 
         playerAttack.SkillEnergy = 0;
         playerAttack.skillDamage = 0f;
@@ -84,20 +104,12 @@ public class PlayerSwordSkillSpin : Skill
         // Deactivate skill.
         this.ActivateSkill = false;
 
-        //yield return new WaitForSeconds(skillCooldown); // Easier way but need to track the timer.
-        bool onCooldown = true;
-        float interval = 0.1f;
-        while (onCooldown)
-        {
-            yield return new WaitForSeconds(interval);
-            Timer += interval;
-            if (Timer >= Cooldown)
-            {
-                Timer = 0f;
-                onCooldown = false;
-            }
-        }
-        Debug.Log("Can now activate skill again");
-        this.CanActivateSkill = true;
+        // Change the animation back
+        if (playerController._isMidAir)
+            animatorController.ChangeAnimController(playerController.GetJumpLevelAnimState());
+        else
+            animatorController.ChangeAnimController(AnimatorController.AnimStates.Main);
+
+        yield return null;
     }
 }

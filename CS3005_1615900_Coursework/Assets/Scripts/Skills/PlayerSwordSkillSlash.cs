@@ -12,17 +12,37 @@ public class PlayerSwordSkillSlash : Skill
 
     public override IEnumerator Effect(AnimatorController animatorController)
     {
-        this.ActivateSkill = true;
+        //this.ActivateSkill = true;
+        //animatorController.ChangeAnimController(AnimStates);
+        //animatorController.ChangeAnimationTrigger(AnimParameter);
+        //this.CanActivateSkill = false;
+        yield return StartCoroutine(ChangeSkillAnimation(animatorController));
+
         PlayerController playerController = animatorController.GetComponent<PlayerController>();
-        PlayerAttack playerAttack = playerController.GetPlayerAttack();
-        Animator animator = animatorController.GetComponent<Animator>();
-        animator.runtimeAnimatorController = this.runtimeAnimatorController;
-        animator.SetTrigger(this.AnimParameter);
-        this.CanActivateSkill = false;
 
-        Rigidbody2D rb2d = playerController.GetComponent<Rigidbody2D>();
-        BoxCollider2D targetBoxCollider2D = playerController.GetComponent<Target>().GetBoxCollider2D();
+        yield return StartCoroutine(BeforeEffect(playerController));
 
+        yield return StartCoroutine(ApplyEffect(playerController));
+
+        yield return StartCoroutine(RevertEffect(playerController));
+
+        yield return StartCoroutine(ActivateCooldown());
+
+        Debug.Log("Can now activate skill again");
+        this.CanActivateSkill = true;
+    }
+
+    protected override IEnumerator BeforeEffect(PlayerController playerController)
+    {
+        yield return null;
+    }
+
+    protected override IEnumerator ApplyEffect(PlayerController playerController)
+    {
+        var animator = playerController.GetAnimatorController().GetAnimator();
+        var rb2d = playerController.GetComponent<Rigidbody2D>();
+        var playerAttack = playerController.GetPlayerAttack();
+        var targetBoxCollider2D = playerController.GetAnimatorController().GetComponent<Target>().GetBoxCollider2D();
 
         // Don't run below until the animation state is at the first one
         yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("Player_Sword_Attack_2") == true);
@@ -60,6 +80,13 @@ public class PlayerSwordSkillSlash : Skill
             animator.GetCurrentAnimatorStateInfo(0).IsName("Player_Sword_Attack_3") == true);
 
         Debug.Log("Sword slash finished");
+    }
+
+    protected override IEnumerator RevertEffect(PlayerController playerController)
+    {
+        var playerAttack = playerController.GetPlayerAttack();
+        var targetBoxCollider2D = playerController.GetAnimatorController().GetComponent<Target>().GetBoxCollider2D();
+        var animatorController = playerController.GetAnimatorController();
 
         playerAttack.skillDamage = 0;
         playerAttack.SkillEnergy = 0;
@@ -70,19 +97,12 @@ public class PlayerSwordSkillSlash : Skill
 
         this.ActivateSkill = false;
 
-        bool onCooldown = true;
-        float interval = 0.01f;
-        while (onCooldown)
-        {
-            yield return new WaitForSeconds(interval);
-            Timer += interval;
-            if (Timer >= Cooldown)
-            {
-                Timer = 0f;
-                onCooldown = false;
-            }
-        }
-        Debug.Log("Can now activate skill again");
-        this.CanActivateSkill = true;
+        // Change the animation back
+        if (playerController._isMidAir)
+            animatorController.ChangeAnimController(playerController.GetJumpLevelAnimState());
+        else
+            animatorController.ChangeAnimController(AnimatorController.AnimStates.Main);
+
+        yield return null;
     }
 }

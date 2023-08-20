@@ -110,11 +110,11 @@ namespace Oswald.Enemy
             {
                 if (isFacingRight)
                 {
-                    EnemyMovement.Move(rb2D, animatorController, 0.75f, xScale);
+                    EnemyMovement.Move(rb2D, animatorController, 0.75f, "isRunning", xScale);
                 }
                 else
                 {
-                    EnemyMovement.Move(rb2D, animatorController, -0.75f, xScale);
+                    EnemyMovement.Move(rb2D, animatorController, -0.75f, "isRunning",  xScale);
                 }
 
             }

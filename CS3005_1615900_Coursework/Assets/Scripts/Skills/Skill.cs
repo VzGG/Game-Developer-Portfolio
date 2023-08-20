@@ -1,3 +1,4 @@
+using Oswald.Player;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,6 +19,9 @@ public abstract class Skill : MonoBehaviour
     [SerializeField] protected bool CanActivateSkill = true;                                    // Determines whether the skill can be used the holder.
     [SerializeField] protected bool ActivateSkill = false;                                      // Determines that the holder must fully commit to this skill and must not be able to do other actions while doing so. 
     [SerializeField] Sprite skillIcon;
+    protected bool onCooldown = true;
+    protected float cooldownInterval = 0.1f;
+
     public float[] GetDamage() { return this.Damage; }
     public float GetTimer() { return this.Timer; }
     public float GetCooldown() { return this.Cooldown; }
@@ -33,5 +37,32 @@ public abstract class Skill : MonoBehaviour
     /// <param name="animatorController"></param>
     /// <returns></returns>
     public abstract IEnumerator Effect(AnimatorController animatorController);
+    protected abstract IEnumerator BeforeEffect(PlayerController playerController);
+    protected abstract IEnumerator ApplyEffect(PlayerController playerController);
+    protected abstract IEnumerator RevertEffect(PlayerController playerController);
+    protected IEnumerator ChangeSkillAnimation(AnimatorController animatorController)
+    {
+        this.ActivateSkill = true;
+        animatorController.ChangeAnimController(AnimStates);
+        animatorController.ChangeAnimationTrigger(AnimParameter);
+        this.CanActivateSkill = false;
 
+        yield return null;
+    }
+
+    protected IEnumerator ActivateCooldown()
+    {
+        Debug.Log("Activating cooldown timer");
+        onCooldown = true;
+        while (onCooldown)
+        {
+            yield return new WaitForSeconds(cooldownInterval);
+            Timer += cooldownInterval;
+            if (Timer >= Cooldown)
+            {
+                Timer = 0f;
+                onCooldown = false;
+            }
+        }
+    }
 }

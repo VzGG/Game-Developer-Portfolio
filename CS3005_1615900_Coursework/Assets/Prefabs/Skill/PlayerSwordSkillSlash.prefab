@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   runtimeAnimatorController: {fileID: 9100000, guid: 80c4186b62d492146b580e6f0e6034d9, type: 2}
-  AnimStates: 0
+  AnimStates: 8
   AnimParameter: isAttacking
   Damage:
   - 40
