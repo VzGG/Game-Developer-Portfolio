@@ -8,25 +8,6 @@ public class PlayerBowSkillPierce : Skill
     [SerializeField] private Vector2 _skillPushbackFirst;       // Define in the inspector.
     [SerializeField] private Vector2 _skillPushbackStay;        // Define in the inspector.
 
-    public override IEnumerator Effect(AnimatorController animatorController)
-    {
-        // Show animation of the skill.
-        yield return StartCoroutine(ChangeSkillAnimation(animatorController));
-
-        PlayerController playerController = animatorController.GetComponent<PlayerController>();
-
-        yield return StartCoroutine(BeforeEffect(playerController));
-
-        yield return StartCoroutine(ApplyEffect(playerController));
-
-        yield return StartCoroutine(RevertEffect(playerController));
-
-        yield return StartCoroutine(ActivateCooldown());
-
-        Debug.Log("Can now activate skill again");
-        this.CanActivateSkill = true;
-    }
-
     protected override IEnumerator BeforeEffect(PlayerController playerController)
     {
         yield return null;
@@ -71,21 +52,14 @@ public class PlayerBowSkillPierce : Skill
 
     protected override IEnumerator RevertEffect(PlayerController playerController)
     {
+        yield return base.RevertEffect(playerController);
+
         var playerAttack = playerController.GetPlayerAttack();
-        var animatorController = playerController.GetAnimatorController();
 
         playerAttack.skillDamage = 0;
         playerAttack.SkillEnergy = 0;
         playerAttack.localFirstPushback = Vector2.zero;
         playerAttack.localStayHitPushback = Vector2.zero;
-
-        this.ActivateSkill = false;
-
-        // Change the animation back
-        if (playerController._isMidAir)
-            animatorController.ChangeAnimController(playerController.GetJumpLevelAnimState());
-        else
-            animatorController.ChangeAnimController(AnimatorController.AnimStates.Main);
 
         yield return null;
     }

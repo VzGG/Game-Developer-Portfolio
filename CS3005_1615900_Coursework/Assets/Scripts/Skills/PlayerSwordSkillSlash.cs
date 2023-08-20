@@ -10,28 +10,6 @@ public class PlayerSwordSkillSlash : Skill
     [SerializeField] private Vector2 _offset;
     [SerializeField] private Vector2[] _skillPushbacks;
 
-    public override IEnumerator Effect(AnimatorController animatorController)
-    {
-        //this.ActivateSkill = true;
-        //animatorController.ChangeAnimController(AnimStates);
-        //animatorController.ChangeAnimationTrigger(AnimParameter);
-        //this.CanActivateSkill = false;
-        yield return StartCoroutine(ChangeSkillAnimation(animatorController));
-
-        PlayerController playerController = animatorController.GetComponent<PlayerController>();
-
-        yield return StartCoroutine(BeforeEffect(playerController));
-
-        yield return StartCoroutine(ApplyEffect(playerController));
-
-        yield return StartCoroutine(RevertEffect(playerController));
-
-        yield return StartCoroutine(ActivateCooldown());
-
-        Debug.Log("Can now activate skill again");
-        this.CanActivateSkill = true;
-    }
-
     protected override IEnumerator BeforeEffect(PlayerController playerController)
     {
         yield return null;
@@ -84,9 +62,10 @@ public class PlayerSwordSkillSlash : Skill
 
     protected override IEnumerator RevertEffect(PlayerController playerController)
     {
+        yield return base.RevertEffect(playerController);
+
         var playerAttack = playerController.GetPlayerAttack();
         var targetBoxCollider2D = playerController.GetAnimatorController().GetComponent<Target>().GetBoxCollider2D();
-        var animatorController = playerController.GetAnimatorController();
 
         playerAttack.skillDamage = 0;
         playerAttack.SkillEnergy = 0;
@@ -94,14 +73,6 @@ public class PlayerSwordSkillSlash : Skill
         playerAttack.localStayHitPushback = Vector2.zero;
         targetBoxCollider2D.size = new Vector2(PlayerAttack.SmallHitboxSizeX, targetBoxCollider2D.size.y);
         targetBoxCollider2D.offset = new Vector2(PlayerAttack.SmallHitboxOffsetX, targetBoxCollider2D.offset.y);
-
-        this.ActivateSkill = false;
-
-        // Change the animation back
-        if (playerController._isMidAir)
-            animatorController.ChangeAnimController(playerController.GetJumpLevelAnimState());
-        else
-            animatorController.ChangeAnimController(AnimatorController.AnimStates.Main);
 
         yield return null;
     }

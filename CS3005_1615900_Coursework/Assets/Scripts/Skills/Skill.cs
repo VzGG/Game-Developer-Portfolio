@@ -30,16 +30,47 @@ public abstract class Skill : MonoBehaviour
     public Sprite GetSkillIcon() { return this.skillIcon; }
     public void SetActivateSkill(bool status) { this.ActivateSkill = status; }
 
+    protected abstract IEnumerator BeforeEffect(PlayerController playerController);
+    protected abstract IEnumerator ApplyEffect(PlayerController playerController);
+    //protected abstract IEnumerator RevertEffect(PlayerController playerController);
+
+    protected virtual IEnumerator RevertEffect(PlayerController playerController)
+    {
+        var animatorController = playerController.GetAnimatorController();
+
+        this.ActivateSkill = false;
+
+        if (playerController._isMidAir)
+            animatorController.ChangeAnimController(playerController.GetJumpLevelAnimState());
+        else
+            animatorController.ChangeAnimController(AnimatorController.AnimStates.Main);
+        yield return null;
+    }
+
     /// <summary>
     /// The skill's effect, define in each child class. Each have their own effect, but the caller of this method does not care about what it does,
     /// it should only care about calling it.
     /// </summary>
     /// <param name="animatorController"></param>
     /// <returns></returns>
-    public abstract IEnumerator Effect(AnimatorController animatorController);
-    protected abstract IEnumerator BeforeEffect(PlayerController playerController);
-    protected abstract IEnumerator ApplyEffect(PlayerController playerController);
-    protected abstract IEnumerator RevertEffect(PlayerController playerController);
+    public IEnumerator Effect(AnimatorController animatorController)
+    {
+        yield return StartCoroutine(ChangeSkillAnimation(animatorController));
+
+        PlayerController playerController = animatorController.GetComponent<PlayerController>();
+
+        yield return StartCoroutine(BeforeEffect(playerController));
+
+        yield return StartCoroutine(ApplyEffect(playerController));
+
+        yield return StartCoroutine(RevertEffect(playerController));
+
+        yield return StartCoroutine(ActivateCooldown());
+
+        Debug.Log("Can now activate skill again");
+        CanBeActivated();
+    }
+
     protected IEnumerator ChangeSkillAnimation(AnimatorController animatorController)
     {
         this.ActivateSkill = true;
@@ -65,4 +96,6 @@ public abstract class Skill : MonoBehaviour
             }
         }
     }
+
+    protected void CanBeActivated() => this.CanActivateSkill = true;
 }
