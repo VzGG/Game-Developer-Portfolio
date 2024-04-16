@@ -8,6 +8,7 @@
   - [Augment System](#augment-system)
   - [Randomised And Balanced Ship Parts](#randomised-and-balanced-ship-parts)
 - Project 2: Oswald: The Saviour's Freedom (Individual Coursework Project)
+  - [New updates](#equipment-and-chest-system) 
   - [Combat Gameplay](#combat-gameplay-with-audio)
   - [Unlocking Bow Attack](#unlocking-bow-attack-with-audio)
   - [Level Designs](#level-designs-with-audio)
@@ -63,6 +64,24 @@ At every run the player has randomised but balanced ship parts. A weapon, for in
 A 2D RPG Platform game where the player must traverse through 3 levels with each level having their own conditions to progress through the next level. Progress through the levels as quick as possible and the game's story may differ.
 
 Development Time: 1 Month
+
+> [!NOTE]
+> The section below consists of updates that were not implemented during my university time and was not done within 1 month. Also note that this update is not fully functional and requires more tweaking though it can be accessed by selecting this branch instead.
+
+##### **Equipment and Chest System**  
+https://github.com/VzGG/Game-Developer-Portfolio/assets/115569550/fcedcb61-9052-479d-8393-407a5bdbcb33
+
+
+Updated the UI, added an equipment, chest and inventory system! Players can now obtain, at the end of each stage, equipment that can be equipped or unequipped at any time.
+
+##### **Introducing aerial combos and break system**
+https://github.com/VzGG/Game-Developer-Portfolio/assets/115569550/0499ddbf-9f73-4ec5-808a-6cce2a25e3fd
+
+
+Players can now perform aerial attacks at any time, it is especially useful for breaking the enemy as seen in the blue bar just above the health bar (red bar). Breaking the enemy essentially enables the player's attack to launch the enemy up in the air.
+
+> [!NOTE]
+> End of new update information.
 
 ##### **Combat Gameplay (With Audio)** 
 https://user-images.githubusercontent.com/115569550/195849173-953b1aeb-9d5f-49df-9bb2-01f17f4f2fde.mp4
