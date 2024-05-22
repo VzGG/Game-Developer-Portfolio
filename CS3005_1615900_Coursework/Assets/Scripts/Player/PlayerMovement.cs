@@ -46,7 +46,7 @@ namespace Oswald.Player
         public IEnumerator Slide(Rigidbody2D myRB2D, AnimatorController animatorController, Energy myEnergy)
         {
             // Move the player forward in its facing direction.
-            myRB2D.velocity = new Vector2(slideSpeed * transform.localScale.x, myRB2D.velocity.y);
+            myRB2D.AddForce(Vector2.right * slideSpeed * transform.localScale.x, ForceMode2D.Impulse);
             canSlide = false;
             isSliding = true;
 
