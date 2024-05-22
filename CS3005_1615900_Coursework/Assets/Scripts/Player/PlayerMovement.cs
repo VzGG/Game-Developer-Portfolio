@@ -38,7 +38,7 @@ namespace Oswald.Player
 
         public void Jump(Rigidbody2D myRB2D, Energy myEnergy, AnimatorController animatorController, AnimatorController.AnimStates animStates)
         {
-            myRB2D.velocity = new Vector2(myRB2D.velocity.x, jumpSpeed);
+            myRB2D.AddForce(Vector2.up * jumpSpeed, ForceMode2D.Impulse);
             animatorController.ChangeAnimController(animStates);
             myEnergy.UseEnergy(jumpEnergy);
         }
