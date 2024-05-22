@@ -36,6 +36,7 @@ namespace Oswald.Player
         private bool _isNextAttackSword = false;                                    // Determine whether the player, mid air, can attack with sword next.
         private bool _disableAttack = false;
         private string animParamName = "isRunning";
+        private bool _canJump = true;
 
         private MyEquipment _characterEquipment;
         public IInteractableEnvironment InteractableEnvironment;
@@ -209,10 +210,11 @@ namespace Oswald.Player
                 // If we press left shift and we can dash, proceed to dash.
                 StartCoroutine(_myMovement.Slide(_rb2d, _animatorController, _myEnergy));
             }
-            else if (_jump && _myColl2D.IsTouchingLayers(LayerMask.GetMask("Ground")))
+            else if (_jump && _canJump)
             {
                 _myMovement.Jump(_rb2d, _myEnergy, _animatorController, _myJumpLevelAnimState);
                 SetIsMidAir(true);
+                _canJump = false;
             }
             else if (_skill1 && _myAttack.GetFirstSkill().GetCanActivateSkill())
             {
@@ -253,6 +255,7 @@ namespace Oswald.Player
             //if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
             if (collision.gameObject.layer == LayerMask.NameToLayer("Ground") && collision.GetContact(0).otherCollider.name.Equals(_myColl2D.gameObject.name))
             {
+                _canJump = true;
                 Debug.Log("Touched ground");
                 // During mid jump attack 3 animation and landed on the ground, show the landed attack animation.
                 if (_isJumpAttack3)
