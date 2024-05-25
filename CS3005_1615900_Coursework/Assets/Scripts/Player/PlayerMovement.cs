@@ -38,7 +38,7 @@ namespace Oswald.Player
 
         public void Jump(Rigidbody2D myRB2D, Energy myEnergy, AnimatorController animatorController, AnimatorController.AnimStates animStates)
         {
-            myRB2D.AddForce(Vector2.up * jumpSpeed, ForceMode2D.Impulse);
+            myRB2D.velocity = new Vector2(myRB2D.velocity.x, jumpSpeed);
             animatorController.ChangeAnimController(animStates);
             myEnergy.UseEnergy(jumpEnergy);
         }
@@ -49,7 +49,7 @@ namespace Oswald.Player
             myRB2D.AddForce(Vector2.right * slideSpeed * transform.localScale.x, ForceMode2D.Impulse);
             canSlide = false;
             isSliding = true;
-
+            
             // Remove the player's gravity.
             myRB2D.gravityScale = 0;
 

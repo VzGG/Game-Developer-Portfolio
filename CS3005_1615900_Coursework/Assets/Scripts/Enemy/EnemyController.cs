@@ -165,7 +165,7 @@ namespace Oswald.Enemy
             try
             {
                 characterHealth = target.GetTargets()[0].GetComponent<Health>();
-                touchingCharacter = hitBox.IsTouching(target.GetTargets()[0].GetComponentInChildren<CapsuleCollider2D>());
+                touchingCharacter = hitBox.IsTouching(target.GetTargets()[0].GetComponentInChildren<Collider2D>());
             }
             catch (NullReferenceException e)
             {

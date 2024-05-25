@@ -19,7 +19,7 @@ namespace Oswald.Story
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (this.thisCollider2d.IsTouching(collision.gameObject.GetComponent<CapsuleCollider2D>()))
+            if (this.thisCollider2d.IsTouching(collision.gameObject.GetComponent<Collider2D>()))
             {
                 // Create the dialogie
                 Instantiate(dialogueManager.InstantiateDialogue(dialogueIndex));
