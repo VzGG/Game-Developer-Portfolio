@@ -150,7 +150,6 @@ namespace Oswald.Player
 
             _myHealth.HealthRegeneration();                         // Does not regen if you don't have the legendary helmet
 
-            //Debug.Log($"isMidAir: {_isMidAir}");
             // For interactable environment
             if (_interact)
             {
@@ -252,7 +251,6 @@ namespace Oswald.Player
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
-            //if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
             if (collision.gameObject.layer == LayerMask.NameToLayer("Ground") && collision.GetContact(0).otherCollider.name.Equals(_myColl2D.gameObject.name))
             {
                 _canJump = true;
@@ -262,6 +260,7 @@ namespace Oswald.Player
                 {
                     // This is from a different animation controller - mostly still in Jump controller
                     _animatorController.ChangeAnimationTrigger("isLanded");
+                    StartCoroutine(_myAttack.WaitUntilAnimatorFinished(_animatorController));
                 }
                 else if (_myAttack.GetFirstSkill().GetActivateSkill() == true || _myAttack.GetSecondSkill().GetActivateSkill() == true)
                 {

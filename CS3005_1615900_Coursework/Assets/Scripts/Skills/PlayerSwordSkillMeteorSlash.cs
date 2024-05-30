@@ -46,6 +46,9 @@ public class PlayerSwordSkillMeteorSlash : Skill
         yield return base.RevertEffect(playerController);
 
         // do any revert here
+        var playerAttack = playerController.GetPlayerAttack();
+
+        playerAttack.UpdateAttackAnimationSpeed();
 
         yield return null;
     }

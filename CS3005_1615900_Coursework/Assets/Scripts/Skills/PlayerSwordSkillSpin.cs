@@ -71,6 +71,7 @@ public class PlayerSwordSkillSpin : Skill
         var boxCollider2D = playerAttack.GetMyHitBox();
         var targetBoxCollider2D = playerController.GetAnimatorController().GetComponent<Target>().GetBoxCollider2D();
 
+        playerAttack.UpdateAttackAnimationSpeed();
         playerAttack.SkillEnergy = 0;
         playerAttack.skillDamage = 0f;
         // Make the skill attack hitbox smaller, back to original hitbox size.

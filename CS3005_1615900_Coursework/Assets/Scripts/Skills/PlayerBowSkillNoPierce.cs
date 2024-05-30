@@ -50,6 +50,7 @@ public class PlayerBowSkillNoPierce : Skill
 
         var playerAttack = playerController.GetPlayerAttack();
 
+        playerAttack.UpdateAttackAnimationSpeed();
         playerAttack.skillDamage = 0;
         playerAttack.SkillEnergy = 0;
         playerAttack.localFirstPushback = Vector2.zero;

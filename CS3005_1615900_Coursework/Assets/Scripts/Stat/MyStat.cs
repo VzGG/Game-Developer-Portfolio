@@ -12,7 +12,7 @@ public class MyStat
     public float EN = 100f;
     public float ATK = 5f;
     public float DEF = 0f;
-    public float ENRGN = 5f;
+    public float ENRGN = 10f;
     public float ATKSPD = 100f;
 
     public float HPPercent = 100f;

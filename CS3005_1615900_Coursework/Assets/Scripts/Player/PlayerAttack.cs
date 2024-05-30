@@ -361,5 +361,11 @@ namespace Oswald.Player
 
         #endregion
 
+        public IEnumerator WaitUntilAnimatorFinished(AnimatorController animatorController)
+        {
+            yield return new WaitUntil(() => animatorController.GetCurrentAnimState() == AnimatorController.AnimStates.Main);
+
+            UpdateAttackAnimationSpeed();
+        }
     }
 }

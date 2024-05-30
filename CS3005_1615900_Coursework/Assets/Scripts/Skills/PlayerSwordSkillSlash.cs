@@ -67,6 +67,7 @@ public class PlayerSwordSkillSlash : Skill
         var playerAttack = playerController.GetPlayerAttack();
         var targetBoxCollider2D = playerController.GetAnimatorController().GetComponent<Target>().GetBoxCollider2D();
 
+        playerAttack.UpdateAttackAnimationSpeed();
         playerAttack.skillDamage = 0;
         playerAttack.SkillEnergy = 0;
         playerAttack.localFirstPushback = Vector2.zero;
