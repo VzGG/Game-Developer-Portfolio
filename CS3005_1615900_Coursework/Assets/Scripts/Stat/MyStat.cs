@@ -29,6 +29,14 @@ public class MyStat
     public float CriticalDamage = 1f;           // Glove
     public float EvasionRate = 0f;              // Boots
 
+    public float DisplayAttackSpeed()
+    {
+        if (ATKSPD > 250f)
+            return 250f;
+        else
+            return ATKSPD;
+    }
+
     public float DisplayDamageReduction()
     {
         if (DamageReduction > 90f)

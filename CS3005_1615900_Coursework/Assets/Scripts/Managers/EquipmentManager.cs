@@ -105,7 +105,7 @@ public class EquipmentManager : MonoBehaviour
         UpdateUIStat(_atkStat, nameof(myStat.ATK).ToString(), myStat.ATK.ToString());
         UpdateUIStat(_defStat, nameof(myStat.DEF).ToString(), myStat.DEF.ToString());
         UpdateUIStat(_enrgnStat, nameof(myStat.ENRGN).ToString(), myStat.ENRGN.ToString());
-        UpdateUIStat(_atkspdStat, nameof(myStat.ATKSPD).ToString(), myStat.ATKSPD.ToString());
+        UpdateUIStat(_atkspdStat, nameof(myStat.ATKSPD).ToString(), myStat.DisplayAttackSpeed().ToString());
 
         UpdateUIStat(_hpPercentStat, nameof(myStat.HPPercent).ToString(), myStat.HPPercent.ToString() + "%");
         UpdateUIStat(_enPercentStat, nameof(myStat.ENPercent).ToString(), myStat.ENPercent.ToString() + "%");

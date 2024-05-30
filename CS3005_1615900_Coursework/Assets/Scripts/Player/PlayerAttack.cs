@@ -68,10 +68,14 @@ namespace Oswald.Player
             {
                 _attackSpeed = value;
 
+                if (_attackSpeed > _attackSpeedCap) 
+                    _attackSpeed = _attackSpeedCap;
+
                 // Setting the motion speed: https://stackoverflow.com/questions/39524914/change-the-speed-of-animation-at-runtime-in-unity-c-sharp
                 UpdateAttackAnimationSpeed();
             }
         }
+        private float _attackSpeedCap = 250f;
 
         public void UpdateAttackAnimationSpeed()
         {
