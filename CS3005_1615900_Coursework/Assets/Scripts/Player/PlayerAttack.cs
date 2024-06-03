@@ -162,7 +162,7 @@ namespace Oswald.Player
             isCritical = false;
         }
 
-        #region Sword Attack
+        #region Primary Attack - Sword Attack
 
         /// <summary>
         /// The updated attack based from the weapon class
@@ -212,14 +212,26 @@ namespace Oswald.Player
             }
         }
 
-        #endregion Sword Attack
+        #endregion Primary Attack - Sword Attack
+
+        #region Secondary Attack
+
+        public void SecondaryAttack(Rigidbody2D myRB2D, bool isMidAir, bool isNextSecondaryAttack)
+        {
+            if (MyWeapon.SecondaryWeapon == Weapon.Secondary.Bow)
+            {
+                BowAttack(myRB2D, isMidAir, isNextSecondaryAttack);
+            }
+            
+        }
+
+        #endregion
 
         #region Bow Attack
 
         // Probably need to rename this method to secondary attack
-        public void BowAttack(Rigidbody2D myRB2D, bool isMidAir, bool isNextAttackBow)
+        private void BowAttack(Rigidbody2D myRB2D, bool isMidAir, bool isNextAttackBow)
         {
-            if (MyWeapon.SecondaryWeapon == null) { return; }
             Animator animator = GetComponent<Animator>();
             if (isMidAir)
             {

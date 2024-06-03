@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &8399460094657564383
+--- !u!1 &7808230178092410756
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,22 +8,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8399460094657564381}
-  - component: {fileID: 8399460094657564382}
+  - component: {fileID: 8789526239231522045}
+  - component: {fileID: 9162762944966918139}
   m_Layer: 0
-  m_Name: Sword
+  m_Name: ComboManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8399460094657564381
+--- !u!4 &8789526239231522045
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8399460094657564383}
+  m_GameObject: {fileID: 7808230178092410756}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -31,30 +31,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8399460094657564382
+--- !u!114 &9162762944966918139
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8399460094657564383}
+  m_GameObject: {fileID: 7808230178092410756}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ffad4390754e9754b9b3420bf9c809ca, type: 3}
+  m_Script: {fileID: 11500000, guid: 36a560d3be74d54468eb156b76f53267, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AirComboAnimController: {fileID: 9100000, guid: ed0ba4db53feaf04ba06153ec299af2f, type: 2}
-  GroundedComboAnimController: {fileID: 9100000, guid: a3bc2370998ad6b4ca569280580cf327, type: 2}
-  AirComboList: 'Sword Air Combo 1: SPACE > LMB > LMB > LMB
-
-    Sword Bow Air Combo
-    1: SPACE > LMB > LMB > RMB
-
-    Sword Bow Air Infinite: SPACE > LMB > LMB > RMB
-    > LMB >  LMB > RMB > ...'
-  GroundedComboList: 'Sword Attack: LMB (Can chain)
-
-    Bow Attack: RMB (Can chain)'
-  _weaponDamage: 5
-  _weaponEnergy: 5
-  SecondaryWeapon: {fileID: 0}
+  _weapon: {fileID: 0}
+  _prefabComboTextPanel: {fileID: 6855326163565354571, guid: bf3926b5cf12f47428f2393d8c1e7eea, type: 3}

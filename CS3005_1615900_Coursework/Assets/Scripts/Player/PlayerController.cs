@@ -178,7 +178,7 @@ namespace Oswald.Player
             else if (_secondaryAttack && _myEnergy.HasEnergy())
             {
                 // When we right click, proceed to use special attack - bow
-                _myAttack.BowAttack(_rb2d, _isMidAir, _isNextAttackBow);
+                _myAttack.SecondaryAttack(_rb2d, _isMidAir, _isNextAttackBow);
             }
 
 
