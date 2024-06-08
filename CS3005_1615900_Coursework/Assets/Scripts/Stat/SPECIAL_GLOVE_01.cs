@@ -10,7 +10,7 @@ public class SPECIAL_GLOVE_01 : SPECIAL
     public SPECIAL_GLOVE_01()
     {
         this.Value = 25f;               // 25% chance
-        this.Description = "Special: grant 25% chance to critical hits that deal 150% more damage.";
+        this.Description = $"Special: grant {Value}% chance to critical hits that deal {_criticalMultiplierBonus * 100f}% more damage.";
         this.RatingPerStat = 12f;
         this._ratingerPerStatBonus = 0;
     }

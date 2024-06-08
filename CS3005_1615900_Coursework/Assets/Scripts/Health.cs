@@ -47,59 +47,11 @@ public class Health : MonoBehaviour
         }
     }
 
-    // For evasion
-    public bool canEvadeDamage { private get; set; } = false;
-
-    [SerializeField] private float _evasionRate = 0f;
-    public float EvasionRate { 
-        get
-        {
-            return _evasionRate;
-        }
-        set
-        {
-            _evasionRate = value;
-
-            if (_evasionRate > _evasionRateCap)
-            {
-                _evasionRate = _evasionRateCap;
-            }
-
-            if (_evasionRate <= 0f)
-                canEvadeDamage = false;
-            else
-                canEvadeDamage = true;
-        } 
-    }
-    private float _evasionRateCap = 90f;
-
-    public bool isEvading { get; private set; } = false;
-    public Color evadeColor;
-    public float evadeDuration = 0.1f;
-
     public void SetHealth(float health) { this.health = health; }
     public void SetMaxHealth(float maxHealth) { this.maxHealth = maxHealth; }
     public float GetHealth() { return this.health; }
     public float GetMaxHealth() { return this.maxHealth; }
     public float GetHealthPercentage() { return health / maxHealth; }
-
-    public void CanEvadeDamage()
-    {
-        Debug.Log("Evading allowed?: " + canEvadeDamage + "\nEvasion rate: " + EvasionRate);
-        if (!canEvadeDamage) { return; }
-
-        int chanceToEvade = UnityEngine.Random.Range(0, 100);
-        if (chanceToEvade < EvasionRate)
-        {
-            // Do nothing because we evade
-            isEvading = true;
-        }
-    }
-
-    public void ResetEvade()
-    {
-        isEvading = false;
-    }
 
     public void TakeDamage(float damage)
     {
@@ -188,15 +140,6 @@ public class Health : MonoBehaviour
         // Wait n seconds
         yield return new WaitForSeconds(hurtDuration);
         // Change colour back to original colour
-        spriteRenderer.color = originalColor;
-    }
-
-    public IEnumerator EvadeVFX(SpriteRenderer spriteRenderer)
-    {
-        spriteRenderer.color = evadeColor;
-
-        yield return new WaitForSeconds(evadeDuration);
-
         spriteRenderer.color = originalColor;
     }
 

@@ -27,7 +27,7 @@ public class MyStat
     // Plate
     public float CriticalChance = 0f;           // Glove
     public float CriticalDamage = 1f;           // Glove
-    public float EvasionRate = 0f;              // Boots
+    public float EnergyCostReduction = 0f;              // Boots
 
     public float DisplayAttackSpeed()
     {
@@ -53,12 +53,12 @@ public class MyStat
             return CriticalChance;
     }
 
-    public float DisplyEvasionRate()
+    public float DisplayEnergyCostReduction()
     {
-        if (EvasionRate > 90f)
+        if (EnergyCostReduction > 90f)
             return 90f;
         else
-            return EvasionRate;
+            return EnergyCostReduction;
     }
 
     public MyStat()

@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 6841393322732675338}
   - component: {fileID: 6841393322732675349}
   - component: {fileID: 6841393322732675339}
-  - component: {fileID: 6841393322732675336}
   - component: {fileID: 6841393322732675342}
   - component: {fileID: 6841393322732675337}
+  - component: {fileID: 7340368668176142843}
   m_Layer: 14
   m_Name: Healing Potion
   m_TagString: Item
@@ -105,21 +105,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &6841393322732675336
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6841393322732675348}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9eed901e6305caf4db2c2b376b87d61b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemName: Healing Potion
-  itemType: Potion
-  itemValue: 25
 --- !u!50 &6841393322732675342
 Rigidbody2D:
   serializedVersion: 4
@@ -167,3 +152,21 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.16, y: 0.16}
   m_EdgeRadius: 0
+--- !u!114 &7340368668176142843
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6841393322732675348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fe6fef9eb62e9f4db48736a549fb00d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _itemName: Healing Potion
+  itemType: 
+  _itemValue: 25
+  _duration: 10
+  _collider2D: {fileID: 6841393322732675337}
+  _spriteRenderer: {fileID: 6841393322732675349}

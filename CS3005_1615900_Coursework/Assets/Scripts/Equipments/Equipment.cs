@@ -234,6 +234,9 @@ public enum Rarity
     Legendary = 5
 }
 
+/// <summary>
+/// Developer: Change the probabilities to determine the chances. The total doesn't have to add up to 100. It can work on any total sum.
+/// </summary>
 public static class RarityUtility
 {
     public static readonly Rarity[] rarities = (Rarity[])Enum.GetValues(typeof(Rarity));

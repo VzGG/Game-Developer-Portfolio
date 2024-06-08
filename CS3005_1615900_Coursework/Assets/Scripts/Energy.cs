@@ -15,6 +15,25 @@ public class Energy : MonoBehaviour
     [SerializeField] float regenWaitTime = 3f;
     [SerializeField] bool isStartWait = false;
 
+    private float _energyCostReduction = 0f;                    // 0 means 0%, 90 means 90%
+    private float _evasionRateCap = 90f;
+    public float EnergyCostReduction
+    {
+        get
+        {
+            return _energyCostReduction;
+        }
+        set
+        {
+            _energyCostReduction = value;
+
+            if (_energyCostReduction > _evasionRateCap)
+            {
+                _energyCostReduction = _evasionRateCap;
+            }
+        }
+    }
+
     #region Getter Setter
     public float GetEnergy() { return this.energy; }
     public float GetEnergyPercentage() { return energy / maxEnergy; }
@@ -22,6 +41,7 @@ public class Energy : MonoBehaviour
     public void SetEnergy(float energy) { this.energy = energy; }
     public void SetMaxEnergy(float maxEnergy) { this.maxEnergy = maxEnergy; }
     public void SetEnergyRegen(float energyRegen) { this.energyRegeneration = energyRegen; }
+    public float GetEnergyRegen() { return this.energyRegeneration; }
     #endregion
 
     public bool HasEnergy() { return this.energy > 0f; }
@@ -30,7 +50,7 @@ public class Energy : MonoBehaviour
         isEnergyBeingUsed = true;
         isStartWait = false;
 
-        this.energy = Mathf.Max(this.energy - energy, 0f); 
+        this.energy = Mathf.Max(this.energy - (energy * (1 - (_energyCostReduction / 100f) )), 0f); 
     }
 
     /// <summary>

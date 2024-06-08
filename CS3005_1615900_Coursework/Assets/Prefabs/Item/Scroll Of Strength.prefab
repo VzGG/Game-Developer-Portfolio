@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 6247041090435185717}
   - component: {fileID: 6247041090435185706}
   - component: {fileID: 6247041090435185716}
-  - component: {fileID: 6247041090435185719}
   - component: {fileID: 6247041090435185713}
   - component: {fileID: 6247041090435185718}
+  - component: {fileID: 7278451568763392446}
   m_Layer: 14
   m_Name: Scroll Of Strength
   m_TagString: Item
@@ -105,21 +105,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &6247041090435185719
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6247041090435185707}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9eed901e6305caf4db2c2b376b87d61b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemName: Scroll Of Strength
-  itemType: Stat
-  itemValue: 5
 --- !u!50 &6247041090435185713
 Rigidbody2D:
   serializedVersion: 4
@@ -151,7 +136,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -167,3 +152,21 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.16, y: 0.16}
   m_EdgeRadius: 0
+--- !u!114 &7278451568763392446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6247041090435185707}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36685277306888d4abcc70126b435d06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _itemName: Scroll Of Strength
+  itemType: 
+  _itemValue: 20
+  _duration: 10
+  _collider2D: {fileID: 6247041090435185718}
+  _spriteRenderer: {fileID: 6247041090435185706}

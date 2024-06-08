@@ -117,7 +117,7 @@ public class MyEquipment : MonoBehaviour
 
     public void RemoveEquipment(int index, Oswald.Player.PlayerController playerController, Oswald.Manager.TimeManager timeManager)
     {
-        ApplyStat(index, playerController);
+        ApplyEquipmentToStats(index, playerController);
         UpdateStat(playerController.GetMyStat(),
             playerController.gameObject.GetComponent<Health>(),
             playerController.gameObject.GetComponent<Energy>(),
@@ -146,7 +146,7 @@ public class MyEquipment : MonoBehaviour
     /// <summary>
     /// Apply stat negatively
     /// </summary>
-    private void ApplyStat(int index, Oswald.Player.PlayerController playerController)
+    private void ApplyEquipmentToStats(int index, Oswald.Player.PlayerController playerController)
     {
         Equipment equipment = myEquipment[index];
         MyStat myStat = playerController.GetMyStat();
@@ -286,6 +286,6 @@ public class MyEquipment : MonoBehaviour
         playerAttack.CriticalChance = myStat.CriticalChance;
         playerAttack.CriticalDamage = myStat.CriticalDamage;
 
-        health.EvasionRate = myStat.EvasionRate;
+        energy.EnergyCostReduction = myStat.EnergyCostReduction;
     }
 }

@@ -1341,7 +1341,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 0.65
-  m_Text: EVASION
+  m_Text: ENERGY COST REDUCTION
 --- !u!1 &1361599628354489785
 GameObject:
   m_ObjectHideFlags: 0
@@ -3430,7 +3430,7 @@ GameObject:
   - component: {fileID: 1888694710299476274}
   - component: {fileID: 3745782314508715819}
   m_Layer: 5
-  m_Name: EVASION Stat
+  m_Name: ENERGY COST REDUCTION Stat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9572,7 +9572,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5676283844778238608
 RectTransform:
   m_ObjectHideFlags: 0

@@ -1,3 +1,4 @@
+using Oswald.Manager;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,13 +7,17 @@ using UnityEngine.UI;
 public class ComboManager : MonoBehaviour
 {
     [SerializeField] private Weapon _weapon;
+    [SerializeField] private TimeManager _timeManager;
 
     [SerializeField] private GameObject _comboPanel;
     [SerializeField] private GameObject _prefabComboTextPanel;
 
     private void Update()
     {
+        if (_timeManager == null) { return; }
         if (_weapon == null) { return; }
+
+        if (_timeManager.GetIsTimeStopped()) { return; }
 
         if (Input.GetKeyDown(KeyCode.J))
         {

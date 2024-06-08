@@ -7,7 +7,7 @@ public class SPECIAL_PLATE_01 : SPECIAL
     public SPECIAL_PLATE_01()
     {
         this.Value = 60f;
-        this.Description = "Special: grants 60% damage reduction to all attacks received.";
+        this.Description = $"Special: grants {Value}% damage reduction to all attacks received.";
         this.RatingPerStat = 4.25f;
         this._ratingerPerStatBonus = 0;
     }

@@ -60,7 +60,7 @@ public class EquipmentManager : MonoBehaviour
     [SerializeField] private GameObject _damagereductionStat;
     [SerializeField] private GameObject _criticalchanceStat;
     [SerializeField] private GameObject _criticaldamageStat;
-    [SerializeField] private GameObject _evasionrateStat;
+    [SerializeField] private GameObject _energyCostReductionStat;
     #endregion
 
     #region Equipment Slots
@@ -118,7 +118,7 @@ public class EquipmentManager : MonoBehaviour
         UpdateUIStat(_damagereductionStat, nameof(myStat.DamageReduction).ToString(), myStat.DisplayDamageReduction().ToString() + "%");
         UpdateUIStat(_criticalchanceStat, nameof(myStat.CriticalChance).ToString(), myStat.DisplayCriticalChance().ToString() + "%");
         UpdateUIStat(_criticaldamageStat, nameof(myStat.CriticalDamage).ToString(), (myStat.CriticalDamage * 100f).ToString() + "%");
-        UpdateUIStat(_evasionrateStat, nameof(myStat.EvasionRate).ToString(), myStat.DisplyEvasionRate().ToString() + "%");
+        UpdateUIStat(_energyCostReductionStat, nameof(myStat.EnergyCostReduction).ToString(), myStat.DisplayEnergyCostReduction().ToString() + "%");
     }
 
     private void UpdateUIStat(GameObject statGameObj, string metaValue, string statValue)

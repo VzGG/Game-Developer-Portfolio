@@ -10,20 +10,8 @@ namespace Oswald.Player
     {
         [Header("My Bow")]
         [SerializeField] GameObject myForgottenBow;
-        [Space]
-        [Header("My scroll of strengths")]
-        // [SerializeField] int numberOfScrollOfStrengths = 0;
-        [SerializeField] List<GameObject> myScrollOfStrengths = new List<GameObject>();
+
         [SerializeField] DialogueManager dialogueManager;
-
-        [Space]
-        [Header("Attack properties")]
-        [SerializeField] PlayerAttack playerAttack;
-
-        [Space]
-        [Header("Health and Energy Properties")]
-        [SerializeField] Health myHealth;
-        [SerializeField] Energy myEnergy;
 
         [Space]
         [Header("Pickup sound effects")]
@@ -38,12 +26,18 @@ namespace Oswald.Player
 
         public void SetMyDialogueManager(DialogueManager dialogueManager) { this.dialogueManager = dialogueManager; }
 
+
         // The player's body (body and feet) collides with the item and the item can only touch these layers (player)
         private void OnTriggerEnter2D(Collider2D collision)
         {
             // Debug.Log("collided: " + collision.gameObject.name + " | " + collision.gameObject.layer + " | " + LayerMask.NameToLayer("Item"));
-
             if (collision.gameObject.layer == LayerMask.NameToLayer("Item"))
+            {
+                Item item = collision.gameObject.GetComponent<Item>();
+                item.Effect(dialogueManager, GetComponent<PlayerController>(), audioSource, itemPickupSFX);
+            }
+
+            /*if (collision.gameObject.layer == LayerMask.NameToLayer("Item"))
             {
                 Item pickedUpItem = collision.gameObject.GetComponent<Item>();
                 if (pickedUpItem.GetItemName() == "Oswald's Bow")
@@ -58,32 +52,6 @@ namespace Oswald.Player
                     playerAttack.SetBowDamage(playerAttack.GetMyBowDamage() + collision.gameObject.GetComponent<Item>().GetItemValue());    // Pass the damage value to the player attack, then the player attack passes the value to the arrow projectile on instatiation
 
                     collision.gameObject.SetActive(false);          // Hide the physical item
-                }
-                else if (pickedUpItem.GetItemName() == "Scroll Of Strength")
-                {
-                    // Increase scroll of strength number and this number times by the Item's value is added to the player's total damage, also add a dialogue here
-                    myScrollOfStrengths.Add(collision.gameObject);
-                    // Debug.Log("PLAY SCROLL OF STRENGTH DIALOGUE");
-                    int dialogueNumber = 4;                                     // Play the scroll of strength dialogue
-                    Instantiate(dialogueManager.InstantiateDialogue(dialogueNumber));
-                    // Update player attack damage
-                    float itemAttackValue = collision.gameObject.GetComponent<Item>().GetItemValue();
-                    playerAttack.SetMyDamage(playerAttack.GetMyDamage() + itemAttackValue);
-                    playerAttack.SetBowDamage(playerAttack.GetMyBowDamage() + itemAttackValue);
-
-                    collision.gameObject.SetActive(false);                      // When they are inactive, the script is also inactive - maybe not inactive in for these - also think about changing in new scenes later 
-                }
-                else if (pickedUpItem.GetItemName() == "Healing Potion")
-                {
-                    myHealth.SetHealth(myHealth.GetHealth() + pickedUpItem.GetItemValue());
-                    myHealth.SetMaxHealth(myHealth.GetMaxHealth() + pickedUpItem.GetItemValue());   // Also update the max health
-                    collision.gameObject.SetActive(false);
-                }
-                else if (pickedUpItem.GetItemName() == "Energy Potion")
-                {
-                    myEnergy.SetEnergy(myEnergy.GetEnergy() + pickedUpItem.GetItemValue());
-                    myEnergy.SetMaxEnergy(myEnergy.GetMaxEnergy() + pickedUpItem.GetItemValue());   // Also update the max energy
-                    collision.gameObject.SetActive(false);
                 }
                 else if (pickedUpItem.GetItemName() == "Quarter Key")
                 {
@@ -104,7 +72,7 @@ namespace Oswald.Player
                 }
                 audioSource.PlayOneShot(itemPickupSFX);
 
-            }
+            }*/
 
         }
 

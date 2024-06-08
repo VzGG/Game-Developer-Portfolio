@@ -129,6 +129,9 @@ namespace Oswald.Player
 
             PlayerNextAnim.SetPlayerController(this);       // Set the player controller in the other class to start passing booleans needed to do mid air attacks.
             FindObjectOfType<EquipmentManager>().PlayerController = this;
+
+            // Initially update the stats into all the components
+            _characterEquipment.UpdateStat(_characterStat, _myHealth, _myEnergy, _myArmour, _myAttack);
         }
 
         #endregion Initialization
@@ -293,16 +296,6 @@ namespace Oswald.Player
         public void PlayerTakeDamage(float damage)
         {
             if (_myHealth.GetHealth() <= 0f) { return; }
-
-            // Don't take any damage when we are evading 
-            _myHealth.CanEvadeDamage();
-            if (_myHealth.isEvading)
-            {
-                Debug.Log("Evading!");
-                _myHealth.ResetEvade();
-                StartCoroutine(_myHealth.EvadeVFX(this._spriteRenderer));
-                return;
-            }
 
             float takeDamage = damage;
 

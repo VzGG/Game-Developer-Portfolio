@@ -7,7 +7,7 @@ public class SPECIAL_HELMET_01 : SPECIAL
     public SPECIAL_HELMET_01()
     {
         this.Value = 50;
-        this.Description = "Special: grants 50 health regen.";
+        this.Description = $"Special: grants {Value} health regen.";
         this.RatingPerStat = 7;
         this._ratingerPerStatBonus = 0;
     }

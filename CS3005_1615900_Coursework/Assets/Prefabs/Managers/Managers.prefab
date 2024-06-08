@@ -176,6 +176,10 @@ PrefabInstance:
       propertyPath: _comboPanel
       value: 
       objectReference: {fileID: 6910280205855318220}
+    - target: {fileID: 9162762944966918139, guid: 3c9b277c8e24cd64682f7ae184025ea9, type: 3}
+      propertyPath: _timeManager
+      value: 
+      objectReference: {fileID: 1976055373442172342}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3c9b277c8e24cd64682f7ae184025ea9, type: 3}
 --- !u!4 &8282404675753171700 stripped
@@ -383,6 +387,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7211972123893995963}
     - target: {fileID: 3684869498630610078, guid: 8caedf3a4aec07045bdf6a989b1f7d8f, type: 3}
+      propertyPath: _energyCostReductionStat
+      value: 
+      objectReference: {fileID: 1246899844809694396}
+    - target: {fileID: 3684869498630610078, guid: 8caedf3a4aec07045bdf6a989b1f7d8f, type: 3}
       propertyPath: equipmentSlots.Array.data[0]
       value: 
       objectReference: {fileID: 6213433796576021624}
@@ -501,6 +509,10 @@ PrefabInstance:
     - target: {fileID: 3296055408655045285, guid: 68d6d81d3737fad41b9c9da875a3a3db, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 145.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 3522305714939326270, guid: 68d6d81d3737fad41b9c9da875a3a3db, type: 3}
+      propertyPath: m_Name
+      value: ENERGY COST REDUCTION Stat
       objectReference: {fileID: 0}
     - target: {fileID: 5151766209211196105, guid: 68d6d81d3737fad41b9c9da875a3a3db, type: 3}
       propertyPath: m_AnchoredPosition.y
