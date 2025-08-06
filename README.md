@@ -15,7 +15,6 @@
   - [Boss Battle Behaviour And Phases](#boss-battle-behaviours-and-phases-with-audio)
 
 **Contact Info**
-  - Phone Number: 07563932638
   - Email Address: valdezg@hotmail.co.uk
   
 **How To Access The Projects**
